@@ -15,47 +15,46 @@ typedef unsigned long long u64;
 #define SCREENHEIGHT 160 // Height of the GBA display
 #define SCREENWIDTH  240 // Width of the GBA display
 
+// Pointer to the start of video memory
+extern volatile unsigned short *videoBuffer;
+
 // Finds 1D position from 2D coordinates
 #define OFFSET(x, y, width) ((y) * (width) + (x))
 
 // Display control register
 #define REG_DISPCTL (*(volatile unsigned short *)0x4000000)
-extern volatile unsigned short* videoBuffer;
 
 // Bits for display control register
 #define MODE(x) ((x) & 7) // Sets GBA video mode (REG_DISPCTL)
-#define MODE3 MODE(3) // Enables Mode 3 (REG_DISPCTL)
-#define BG_ENABLE(x) (1 << (8 + ((x) % 4))) // Enables specified background (REG_DISPCTL)
-#define BG2_ENABLE (BG_ENABLE(2)) // Enables BG2 (REG_DISPCTL)
+#define BG_ENABLE(x) (1 << (8 + (x % 4))) // Enables specified background (REG_DISPCTL)
+#define BG2_ENABLE   (1<<10)
 
 // Read-only, holds which scanline is being drawn
 #define REG_VCOUNT (*(volatile unsigned short *)0x4000006)
 
-// Checks for collision between two rectangles
-int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-
 // Waits until scanline has just become 160
 void waitForVBlank();
 
+// Checks for collision between two rectangles
+int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
+
 // Color
-#define RGB(R, G, B) (((R) & 31) | ((G) & 31) << 5 | ((B) & 31) << 10)
-#define BLACK   RGB(0, 0, 0)
-#define WHITE   RGB(31, 31, 31)
-#define GRAY    RGB(15, 15, 15)
-#define RED     RGB(31, 0, 0)
-#define GREEN   RGB(0, 31, 0)
-#define BLUE    RGB(0, 0, 31)
-#define CYAN    RGB(0, 31, 31)
-#define MAGENTA RGB(31, 0, 31)
-#define YELLOW  RGB(31, 31, 0)
-#define BROWN   RGB(20, 10, 5)
+#define COLOR(r, g, b) ((r) | (g) << 5 | (b) << 10)
+#define BLACK   COLOR(0,0,0)
+#define WHITE   COLOR(31,31,31)
+#define GRAY    COLOR(15,15,15)
+#define RED     COLOR(31,0,0)
+#define GREEN   COLOR(0,31,0)
+#define BLUE    COLOR(0,0,31)
+#define CYAN    COLOR(0,31,31)
+#define MAGENTA COLOR(31,0,31)
+#define YELLOW  COLOR(31,31,0)
+#define ORANGE COLOR(31,10,5)
 
 // Mode 3 Drawing Functions
 #define setPixel(x, y, color) (videoBuffer[OFFSET(x, y, SCREENWIDTH)] = color)
-void drawRectangle(int x, int y, int width, int height, volatile unsigned short color);
+void drawRect(int x, int y, int width, int height, volatile unsigned short color);
 void fillScreen(volatile unsigned short color);
-void drawChar(int x, int y, char ch, unsigned short color);
-void drawString(int x, int y, char *str, unsigned short color);
 
 // Buttons
 #define REG_BUTTONS (*(volatile unsigned short *)0x04000130) // Buttons down register
@@ -70,10 +69,10 @@ void drawString(int x, int y, char *str, unsigned short color);
 #define BUTTON_RSHOULDER (1<<8) // Mask for RIGHT SHOULDER button (REG_BUTTONS or REG_KEYCNT)
 #define BUTTON_LSHOULDER (1<<9) // Mask for LEFT SHOULDER button (REG_BUTTONS or REG_KEYCNT)
 
+// Button checks
 extern unsigned short oldButtons; // Keeps track of buttons pressed in previous frame
-extern unsigned short buttons; // Keeps track of buttons pressed in current frame
-
-#define BUTTON_HELD(key) (~buttons & key) // Checks if a button is currently pressed
-#define BUTTON_PRESSED(key) ((BUTTON_HELD(key) && !(~oldButtons & key))) // Checks if a button is currently pressed and wasn't in the previous frame
+extern unsigned short buttons;
+#define BUTTON_HELD(key)    (~(REG_BUTTONS) & (key)) // Checks if a button is currently pressed
+#define BUTTON_PRESSED(key) (!(~(oldButtons) & (key)) && (~REG_BUTTONS & (key))) // Checks if a button is currently pressed and wasn't in the previous frame
 
 #endif

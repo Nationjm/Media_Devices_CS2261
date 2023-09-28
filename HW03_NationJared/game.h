@@ -1,2 +1,7 @@
-// This is my .h file
-// I'm making temporary edits to it to test github desktop
+#define ORANGE RGB(31, 20, 0)
+
+void start(int drawStart);
+void game();
+void pause();
+void win();
+void lose();
