@@ -1495,6 +1495,7 @@ void initialize()
 
 
 
+    *(volatile u16*)0x04000084 = (1<<7);
 
 
     *(volatile u16*)0x04000080 = (((5) & 7) << 0) |

@@ -344,19 +344,19 @@ main:
 	.data
 	.align	1
 	.set	.LANCHOR0,. + 0
-	.type	red.4022, %object
-	.size	red.4022, 2
-red.4022:
+	.type	red.4028, %object
+	.size	red.4028, 2
+red.4028:
 	.short	31
-	.type	blue.4024, %object
-	.size	blue.4024, 2
-blue.4024:
+	.type	blue.4030, %object
+	.size	blue.4030, 2
+blue.4030:
 	.short	31
 	.bss
 	.align	1
 	.set	.LANCHOR1,. + 0
-	.type	green.4023, %object
-	.size	green.4023, 2
-green.4023:
+	.type	green.4029, %object
+	.size	green.4029, 2
+green.4029:
 	.space	2
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

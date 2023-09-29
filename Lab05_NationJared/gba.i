@@ -65,7 +65,7 @@ void drawRect(int x, int y, int width, int height, volatile unsigned short color
 
 
     for (int i = 0; i < height; i++) {
-        DMANow(3, color, videoBuffer[((y + i) * (240) + (x))], (1 << 31) | (0 << 26) | (2 << 23) | (0 << 21) | width);
+        DMANow(3, &color, &videoBuffer[((y + i) * (240) + (x))], (1 << 31) | (0 << 26) | (2 << 23) | (0 << 21) | width);
     }
 
 }

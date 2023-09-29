@@ -5,13 +5,15 @@
 void DMANow(int channel, volatile void* src, volatile void* dst, unsigned int cnt);
 
 // ACTIVITY 2
-// typedef volatile struct {
-    
+typedef volatile struct {
+    volatile void *src;
+    volatile void *dst;
+    unsigned int cnt;
 
-// } DMA;
+} DMA;
 
-// extern DMA* dma;
-// #define REG_DMA ((DMA*) 0x40000B0)
+extern DMA* dma;
+#define REG_DMA ((DMA*) 0x40000B0)
 
 #define DMA_DESTINATION_INCREMENT (0 << 21) // Increment destination (move "forwards" in memory)
 #define DMA_DESTINATION_DECREMENT (1 << 21) // Decrement destination (move "backwards" in memory)

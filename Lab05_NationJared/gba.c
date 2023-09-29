@@ -13,7 +13,7 @@ void drawRect(int x, int y, int width, int height, volatile unsigned short color
     //     }
     // }
     for (int i = 0; i < height; i++) {
-        DMANow(3, color, videoBuffer[OFFSET(x, y + i, SCREENWIDTH)], DMA_ON | DMA_16 | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | width);
+        DMANow(3, &color, &videoBuffer[OFFSET(x, y + i, SCREENWIDTH)], DMA_ON | DMA_16 | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | width);
     }
     
 }

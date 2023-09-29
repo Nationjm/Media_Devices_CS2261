@@ -475,13 +475,18 @@ updateBlocks:
 	str	r3, [r5, #20]
 	str	r2, [r5, #16]
 .L61:
-	mov	r2, #0
-	ldr	r1, .L73+8
-	ldr	r3, [r1]
+	mov	r1, #0
+	mov	r2, #67108864
+	mov	ip, #16896
+	ldr	r0, .L73+8
+	ldr	r3, [r0]
 	add	r3, r3, #1
-	str	r3, [r1]
-	str	r2, [r4, #28]
-	str	r2, [r4, #32]
+	str	r3, [r0]
+	ldr	r3, .L73+12
+	str	r1, [r4, #28]
+	str	r1, [r4, #32]
+	strh	ip, [r2, #104]	@ movhi
+	strh	r3, [r2, #108]	@ movhi
 	add	sp, sp, #16
 	@ sp needed
 	pop	{r4, r5, r6, lr}
@@ -516,6 +521,7 @@ updateBlocks:
 	.word	ball
 	.word	collision
 	.word	score
+	.word	-30804
 	.size	updateBlocks, .-updateBlocks
 	.align	2
 	.global	updateGame
@@ -527,11 +533,12 @@ updateGame:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, r5, r6, lr}
+	push	{r4, r5, r6, r7, r8, lr}
 	ldr	r6, .L87
 	bl	updatePlayer
-	mov	r4, r6
+	mov	r7, r6
 	bl	updateBall
+	mov	r4, r6
 	add	r5, r6, #1200
 .L76:
 	mov	r0, r4
@@ -555,26 +562,31 @@ updateGame:
 	ldr	r3, .L87+12
 	str	r2, [r3]
 .L75:
-	pop	{r4, r5, r6, lr}
+	pop	{r4, r5, r6, r7, r8, lr}
 	bx	lr
 .L86:
-	ldr	r3, .L87+12
-	ldr	r2, [r3]
-	cmp	r2, #0
+	ldr	r2, .L87+12
+	ldr	r3, [r2]
+	cmp	r3, #0
 	bne	.L75
 	mov	r1, #1
-	mov	r2, r1
-	str	r1, [r3]
-.L81:
-	ldr	r3, [r6, #28]
-	cmp	r3, #0
-	streq	r2, [r6, #28]
-	streq	r3, [r6, #32]
+	str	r1, [r2]
+	b	.L81
+.L80:
+	add	r3, r3, #1
+	cmp	r3, #30
 	add	r6, r6, #40
-	cmp	r6, r5
-	bne	.L81
-	pop	{r4, r5, r6, lr}
-	bx	lr
+	beq	.L75
+.L81:
+	ldr	r2, [r6, #28]
+	cmp	r2, #0
+	bne	.L80
+	mov	r1, #1
+	add	r3, r3, r3, lsl #2
+	add	r3, r7, r3, lsl #3
+	str	r2, [r3, #32]
+	str	r1, [r3, #28]
+	b	.L75
 .L88:
 	.align	2
 .L87:
@@ -767,26 +779,33 @@ newBlock:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
+	mov	ip, #1
+	ldr	r0, .L116
+	ldr	r1, .L116+4
+	mov	r3, #0
+	mov	r2, r0
+	str	ip, [r1]
+	b	.L114
+.L112:
+	add	r3, r3, #1
+	cmp	r3, #30
+	add	r2, r2, #40
+	bxeq	lr
+.L114:
+	ldr	r1, [r2, #28]
+	cmp	r1, #0
+	bne	.L112
 	mov	r2, #1
-	mov	r0, r2
-	ldr	r1, .L116
-	ldr	r3, .L116+4
-	str	r2, [r1]
-	add	r1, r3, #1200
-.L113:
-	ldr	r2, [r3, #28]
-	cmp	r2, #0
-	streq	r0, [r3, #28]
-	streq	r2, [r3, #32]
-	add	r3, r3, #40
-	cmp	r3, r1
-	bne	.L113
+	add	r3, r3, r3, lsl #2
+	add	r3, r0, r3, lsl #3
+	str	r1, [r3, #32]
+	str	r2, [r3, #28]
 	bx	lr
 .L117:
 	.align	2
 .L116:
-	.word	spawned
 	.word	blocks
+	.word	spawned
 	.size	newBlock, .-newBlock
 	.comm	spawned,4,4
 	.comm	score,4,4

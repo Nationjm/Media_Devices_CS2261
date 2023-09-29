@@ -190,7 +190,8 @@ void updateBlocks(BLOCK* b) {
             
 
             // TODO 4.1: play the sound specified in the pdf
-            
+            REG_SND2CNT = DMG_ENV_VOL(4) | DMG_DIRECTION_DECR | DMG_STEP_TIME(2);
+            REG_SND2FREQ = NOTE_G6 | SND_RESET;
         }
     }
 }
@@ -236,6 +237,7 @@ void newBlock() {
         if (blocks[i].active == 0) {
             blocks[i].active = 1;
             blocks[i].erased = 0;
+            break;
         }
     }
     

@@ -82,6 +82,7 @@ void initialize()
 
     // enabling + setting up sound
     // TODO 4.0: enable sounds in the sound on/off register
+    REG_SOUNDCNT_X = SND_ENABLED;
     
 
     REG_SOUNDCNT_L = DMG_VOL_LEFT(5) |

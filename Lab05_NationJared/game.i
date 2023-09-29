@@ -1190,7 +1190,8 @@ void updateBlocks(BLOCK* b) {
 
 
 
-
+            *(volatile u16*)0x04000068 = (((4) & 15) << 12) | (0 << 11) | (((2) & 7) << 8);
+            *(volatile u16*)0x0400006C = NOTE_G6 | (1<<15);
         }
     }
 }
@@ -1236,6 +1237,7 @@ void newBlock() {
         if (blocks[i].active == 0) {
             blocks[i].active = 1;
             blocks[i].erased = 0;
+            break;
         }
     }
 

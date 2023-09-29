@@ -116,9 +116,6 @@ void draw() {
 
         fillScreen(backgroundColor);
 
-        // ACTIVITY 1
-        
-
     }
 
     drawRectangle(rectangle.oldX, rectangle.oldY, rectangle.width, rectangle.height, backgroundColor);

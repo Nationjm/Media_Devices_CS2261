@@ -23,30 +23,29 @@ drawRect:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	subs	ip, r3, #0
 	bxle	lr
-	push	{r4, lr}
-	mov	r4, #0
-	ldr	lr, .L11
+	push	{r4, r5, lr}
+	mov	lr, #0
+	ldr	r5, .L11
 	add	ip, r1, ip
-	ldr	r3, [lr]
+	ldr	r3, [r5]
 	rsb	r1, r1, r1, lsl #4
 	rsb	ip, ip, ip, lsl #4
+	add	r4, r0, r1, lsl #4
 	add	ip, r0, ip, lsl #4
-	add	r0, r0, r1, lsl #4
-	add	ip, r3, ip, lsl #1
-	ldr	r1, [lr, #4]
-	add	r3, r3, r0, lsl #1
-	orr	lr, r2, #-2130706432
+	ldr	r1, [r5, #4]
+	orr	r0, r2, #-2130706432
+	add	r2, r3, ip, lsl #1
+	add	r3, r3, r4, lsl #1
 .L3:
-	ldrh	r0, [sp, #8]
-	ldrh	r2, [r3]
-	add	r3, r3, #480
-	cmp	r3, ip
-	str	r4, [r1, #44]
-	str	r0, [r1, #36]
-	str	r2, [r1, #40]
+	add	ip, sp, #12
 	str	lr, [r1, #44]
+	str	ip, [r1, #36]
+	str	r3, [r1, #40]
+	add	r3, r3, #480
+	cmp	r3, r2
+	str	r0, [r1, #44]
 	bne	.L3
-	pop	{r4, lr}
+	pop	{r4, r5, lr}
 	bx	lr
 .L12:
 	.align	2

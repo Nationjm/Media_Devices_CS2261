@@ -21,8 +21,24 @@ DMANow:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
+	push	{r4, lr}
+	mov	r4, #0
+	ldr	ip, .L4
+	ldr	lr, [ip]
+	add	r0, r0, r0, lsl #1
+	add	ip, lr, r0, lsl #2
+	orr	r3, r3, #-2147483648
+	lsl	r0, r0, #2
+	str	r4, [ip, #8]
+	str	r1, [lr, r0]
+	str	r2, [ip, #4]
+	pop	{r4, lr}
+	str	r3, [ip, #8]
 	bx	lr
+.L5:
+	.align	2
+.L4:
+	.word	.LANCHOR0
 	.size	DMANow, .-DMANow
 	.align	2
 	.global	fillScreen
@@ -34,24 +50,28 @@ fillScreen:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	ldr	r3, .L7
-	sub	sp, sp, #8
-	ldr	r2, [r3]
+	str	lr, [sp, #-4]!
+	mov	lr, #0
+	ldr	r2, .L8
+	sub	sp, sp, #12
+	ldr	r3, [r2]
+	ldr	r1, .L8+4
+	ldr	r2, [r2, #4]
+	add	ip, sp, #6
 	strh	r0, [sp, #6]	@ movhi
-	add	r1, r2, #76800
-.L4:
-	ldrh	r3, [sp, #6]
-	strh	r3, [r2], #2	@ movhi
-	cmp	r2, r1
-	bne	.L4
-	add	sp, sp, #8
+	str	lr, [r3, #44]
+	str	ip, [r3, #36]
+	str	r2, [r3, #40]
+	str	r1, [r3, #44]
+	add	sp, sp, #12
 	@ sp needed
+	ldr	lr, [sp], #4
 	bx	lr
-.L8:
+.L9:
 	.align	2
-.L7:
+.L8:
 	.word	.LANCHOR0
+	.word	-2130668032
 	.size	fillScreen, .-fillScreen
 	.align	2
 	.global	drawRectangle
@@ -63,38 +83,35 @@ drawRectangle:
 	@ Function supports interworking.
 	@ args = 4, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, lr}
-	subs	lr, r3, #0
-	ble	.L9
-	mov	ip, #0
-	ldr	r3, .L17
+	subs	ip, r3, #0
+	bxle	lr
+	push	{r4, r5, lr}
+	mov	lr, #0
+	ldr	r5, .L19
+	add	ip, r1, ip
+	ldr	r3, [r5, #4]
 	rsb	r1, r1, r1, lsl #4
-	ldr	r3, [r3]
-	add	r1, r2, r1, lsl #4
-	add	r0, r1, r0
-	rsb	r4, r2, r2, lsl #31
-	add	r0, r3, r0, lsl #1
-	lsl	r4, r4, #1
-.L11:
-	cmp	r2, #0
-	addgt	r1, r0, r4
-	ble	.L14
+	rsb	ip, ip, ip, lsl #4
+	add	r4, r0, r1, lsl #4
+	add	ip, r0, ip, lsl #4
+	ldr	r1, [r5]
+	orr	r0, r2, #-2130706432
+	add	r2, r3, ip, lsl #1
+	add	r3, r3, r4, lsl #1
 .L12:
-	ldrh	r3, [sp, #8]
-	strh	r3, [r1], #2	@ movhi
-	cmp	r1, r0
+	add	ip, sp, #12
+	str	lr, [r1, #44]
+	str	ip, [r1, #36]
+	str	r3, [r1, #40]
+	add	r3, r3, #480
+	cmp	r3, r2
+	str	r0, [r1, #44]
 	bne	.L12
-.L14:
-	add	ip, ip, #1
-	cmp	lr, ip
-	add	r0, r0, #480
-	bne	.L11
-.L9:
-	pop	{r4, lr}
+	pop	{r4, r5, lr}
 	bx	lr
-.L18:
+.L20:
 	.align	2
-.L17:
+.L19:
 	.word	.LANCHOR0
 	.size	drawRectangle, .-drawRectangle
 	.align	2
@@ -109,21 +126,26 @@ waitForVBlank:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r2, #67108864
-.L20:
+.L22:
 	ldrh	r3, [r2, #6]
 	cmp	r3, #159
-	bhi	.L20
+	bhi	.L22
 	mov	r2, #67108864
-.L21:
+.L23:
 	ldrh	r3, [r2, #6]
 	cmp	r3, #159
-	bls	.L21
+	bls	.L23
 	bx	lr
 	.size	waitForVBlank, .-waitForVBlank
+	.global	dma
 	.global	videoBuffer
 	.data
 	.align	2
 	.set	.LANCHOR0,. + 0
+	.type	dma, %object
+	.size	dma, 4
+dma:
+	.word	67109040
 	.type	videoBuffer, %object
 	.size	videoBuffer, 4
 videoBuffer:
