@@ -15,18 +15,21 @@ typedef signed int s32;
 typedef unsigned int u32;
 typedef signed long long s64;
 typedef unsigned long long u64;
-# 23 "gba.h"
-extern volatile unsigned short* videoBuffer;
-# 35 "gba.h"
-int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
 
 
+
+
+
+
+extern volatile unsigned short *videoBuffer;
+# 36 "gba.h"
 void waitForVBlank();
-# 55 "gba.h"
-void drawRectangle(int x, int y, int width, int height, volatile unsigned short color);
+
+
+int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
+# 56 "gba.h"
+void drawRect(int x, int y, int width, int height, volatile unsigned short color);
 void fillScreen(volatile unsigned short color);
-void drawChar(int x, int y, char ch, unsigned short color);
-void drawString(int x, int y, char *str, unsigned short color);
 # 73 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
@@ -239,20 +242,6 @@ uint8_t mgba_open(void);
 void mgba_close(void);
 # 3 "main.c" 2
 # 1 "game.h" 1
-
-
-
-
-typedef struct {
-    int x;
-    int y;
-    int oldX;
-    int width;
-    int height;
-    int hasMoved;
-    unsigned short color;
-} PLAYER;
-
 typedef struct {
     int x;
     int y;
@@ -262,98 +251,73 @@ typedef struct {
     int height;
     int xVel;
     int yVel;
-    int hasMoved;
+    unsigned short color;
     int active;
-    unsigned short color;
-} ENEMY;
-
-typedef struct {
-    int x;
-    int y;
-    int oldX;
-    int oldY;
     int hasMoved;
-    unsigned short color;
-} BULLET;
-
-PLAYER player;
-ENEMY enemies[30];
-BULLET bullet;
+} RECTANGLE;
 
 
-void start(int drawStart);
-void game(int drawGame);
-void pause();
-void win();
-void lose();
+RECTANGLE player;
 
 
-void drawPlayer(PLAYER *player);
+
+
+
+RECTANGLE bullets[10];
+# 31 "game.h"
+void drawGame();
+
 void initPlayer();
-void initEnemies();
+void updatePlayer();
+void drawPlayer(RECTANGLE*);
+
+void initBullets();
+void updateBullets();
+void newBullet(int x, int y, int xVel, int yVel);
+void drawBullets();
 # 4 "main.c" 2
+
+
+void init();
+void draw();
+void update();
 
 
 unsigned short buttons;
 unsigned short oldButtons;
-int drawStart = 1;
-int drawGame = 1;
-int drawPause = 1;
-int drawWin = 1;
-int drawLose = 1;
 
 
-enum STATE{START, PAUSE, GAME, WIN, LOSE} state;
-
-void initialize();
+unsigned short backgroundColor;
 
 int main() {
-
-    initialize();
-
+    init();
     while (1) {
         oldButtons = buttons;
-        buttons = (*(volatile unsigned short *)0x04000130);
-
-
-        switch(state) {
-            case START:
-                start(drawStart);
-                drawStart = 0;
-                if ((((~buttons & (1<<3)) && !(~oldButtons & (1<<3))))) {
-                    goToGame();
-                }
-                break;
-            case GAME:
-                game(drawGame);
-                drawGame = 0;
-                updatePlayer();
-                break;
-            case PAUSE:
-                pause();
-                break;
-            case WIN:
-                win();
-                break;
-            case LOSE:
-                lose();
-                break;
-        }
+  buttons = (*(volatile unsigned short *)0x04000130);
+        update();
         waitForVBlank();
+        draw();
     }
-
 }
 
-void initialize() {
+void init() {
+    (*(volatile unsigned short *)0x4000000) = ((3) & 7) | (1<<10);
+    backgroundColor = ((31) | (31) << 5 | (31) << 10);
+    fillScreen(backgroundColor);
 
+    oldButtons = 0;
+ buttons = (*(volatile unsigned short *)0x04000130);
     mgba_open();
-    (*(volatile unsigned short *)0x4000000) = ((3) & 7) | ((1 << (8 + ((2) % 4))));
-    state = START;
+
     initPlayer();
-    initEnemies();
-    initBullet();
+    initBullets();
 }
 
-void goToGame() {
-    state = GAME;
+void update() {
+    updatePlayer();
+    updateBullets();
+}
+
+void draw() {
+    drawGame();
 }

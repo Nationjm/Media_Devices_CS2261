@@ -34,12 +34,60 @@ extern unsigned short buttons;
 # 1 "game.h" 1
 
 
-void start();
-void game();
+
+
+typedef struct {
+    int x;
+    int y;
+    int oldX;
+    int width;
+    int height;
+    int hasMoved;
+    unsigned short color;
+} PLAYER;
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int active;
+    unsigned short color;
+} ENEMY;
+
+typedef struct {
+    int x;
+    int y;
+    int oldX;
+    int oldY;
+    int hasMoved;
+    int active;
+    int width;
+    int height;
+    unsigned short color;
+} BULLET;
+
+PLAYER player;
+ENEMY enemies[30];
+BULLET bullet;
+
+
+void start(int drawStart);
+void game(int drawGame);
 void pause();
 void win();
 void lose();
+
+
+void drawPlayer(PLAYER *player);
+void initPlayer();
+void drawPlayer();
+void updatePlayer();
+void initEnemies();
+void drawEnemy(ENEMY *enemy);
+void eraseEnemy(ENEMY *enemy);
 # 3 "game.c" 2
+
 
 void start(int drawStart) {
     if (drawStart == 1) {
@@ -48,8 +96,19 @@ void start(int drawStart) {
     }
 }
 
-void game() {
-
+void game(int drawGame) {
+    player.oldX = player.x;
+    if (drawGame == 1) {
+        fillScreen((((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        initEnemies();
+    }
+    drawPlayer(&player);
+    updateBullet();
+    for (int i = 0; i < 30; i++) {
+        if (enemies[i].active) {
+            enemyCollision(&enemies[i]);
+        }
+    }
 }
 
 void pause() {
@@ -62,4 +121,125 @@ void win() {
 
 void lose() {
 
+}
+
+void initPlayer() {
+    player.x = 130;
+    player.y = 150;
+    player.oldX = 130;
+    player.width = 7;
+    player.height = 7;
+    player.hasMoved = 0;
+    player.color = (((0) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+}
+
+void drawPlayer(PLAYER *player) {
+    if (player->hasMoved) {
+        drawRectangle(player->oldX, player->y, player->width, player->height, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        (videoBuffer[((player->y - 1) * (240) + (player->oldX + 2))] = (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        (videoBuffer[((player->y - 1) * (240) + (player->oldX + 3))] = (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        (videoBuffer[((player->y - 1) * (240) + (player->oldX + 4))] = (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        (videoBuffer[((player->y - 2) * (240) + (player->oldX + 3))] = (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+    }
+    drawRectangle(player->x, player->y, player->width, player->height, player->color);
+    (videoBuffer[((player->y - 1) * (240) + (player->x + 2))] = player->color);
+    (videoBuffer[((player->y - 1) * (240) + (player->x + 3))] = player->color);
+    (videoBuffer[((player->y - 1) * (240) + (player->x + 4))] = player->color);
+    (videoBuffer[((player->y - 2) * (240) + (player->x + 3))] = player->color);
+    (videoBuffer[((player->y) * (240) + (player->x))] = (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+    (videoBuffer[((player->y) * (240) + (player->x + 6))] = (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+    drawRectangle(player->x + 2, player->y + 5, 3, 2, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+    (videoBuffer[((player->y + 6) * (240) + (player->x + 1))] = (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+    (videoBuffer[((player->y + 6) * (240) + (player->x + 5))] = (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+}
+
+void updatePlayer() {
+    if ((~buttons & (1<<5)) && player.x > 0) {
+        player.x -= 1;
+        player.hasMoved = 1;
+    } else if ((~buttons & (1<<4) && player.x < 233)) {
+        player.x += 1;
+        player.hasMoved = 1;
+    }
+    drawPlayer(&player);
+    player.hasMoved = 0;
+}
+
+void initEnemies() {
+    for (int i = 0; i < 30; i++) {
+        enemies[i].x = 0;
+        enemies[i].y = 0;
+        enemies[i].color = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
+        enemies[i].width = 5;
+        enemies[i].height = 5;
+        enemies[i].active = 0;
+    }
+
+    for (int i = 1; i < 15; i++) {
+        enemies[i].x = i * 15;
+        enemies[i].y = 10;
+        enemies[i].active - 1;
+        drawEnemy(&enemies[i]);
+    }
+}
+
+void drawEnemy(ENEMY *enemy) {
+    drawRectangle(enemy->x, enemy->y, enemy->width, enemy->height, enemy->color);
+}
+
+void eraseEnemy(ENEMY *enemy) {
+    drawRectangle(enemy->x, enemy->y, enemy->width, enemy->height, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+    enemy->active = 0;
+    bullet.active = 0;
+}
+
+void enemyCollision(ENEMY *enemy) {
+    if (enemy->x < bullet.x + bullet.width && enemy->x + enemy->width > bullet.x && enemy->y < bullet.y + bullet.height && enemy->y + enemy->height > bullet.y) {
+        eraseEnemy(&enemy);
+        mgba_printf("collision");
+    }
+}
+
+void initBullet() {
+    bullet.x = player.x + 3;
+    bullet.y = player.y - 6;
+    bullet.color = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+    bullet.hasMoved = 0;
+    bullet.oldX = player.x + 3;
+    bullet.oldY = player.y - 2;
+    bullet.active = 0;
+    bullet.width = 3;
+    bullet.height = 4;
+}
+
+void drawBullet() {
+    if (bullet.hasMoved) {
+        drawRectangle(bullet.oldX, bullet.oldY, 1, 4, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        (videoBuffer[((bullet.oldY + 1) * (240) + (bullet.oldX + 1))] = (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        (videoBuffer[((bullet.oldY + 1) * (240) + (bullet.oldX - 1))] = (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+    }
+    drawRectangle(bullet.x, bullet.y, 1, 4, bullet.color);
+    (videoBuffer[((bullet.y + 1) * (240) + (bullet.x + 1))] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
+    (videoBuffer[((bullet.y + 1) * (240) + (bullet.x - 1))] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
+}
+
+void updateBullet() {
+    bullet.oldX = bullet.x;
+    bullet.oldY = bullet.y;
+    if ((((~buttons & (1<<0)) && !(~oldButtons & (1<<0)))) && bullet.active == 0) {
+        bullet.active = 1;
+    }
+    if (bullet.y == 0) {
+        bullet.active = 0;
+        drawRectangle(bullet.x - 1, bullet.y, 3, 4, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        bullet.y = player.y - 6;
+    }
+    if (bullet.active) {
+        bullet.y--;
+        bullet.hasMoved = 1;
+        drawBullet();
+    }
+    if (bullet.active == 0) {
+        bullet.x = player.x + 3;
+    }
 }

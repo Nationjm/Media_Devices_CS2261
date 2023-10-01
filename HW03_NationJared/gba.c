@@ -9,23 +9,22 @@ typedef struct {
     volatile unsigned int cnt;
 } DMAREC;
 
+DMAREC* dma = (DMAREC*) 0x40000B0;
+
 volatile unsigned short* videoBuffer = (unsigned short *)0x6000000;
 
 void drawRectangle(int x, int y, int width, int height, unsigned short color) {
     //use DMA version
-
+    for (int i = 0; i < height; i++) {
+        DMANow(3, &color, &videoBuffer[OFFSET(x, y + i, SCREENWIDTH)], (2 << 23) | (0 << 21) | width);
+        mgba_printf(" ");
+    }
 }
 
 void fillScreen(unsigned short color) {
     //use DMA version
     volatile unsigned int temp = color | color << 16;
-    DMA[3].cnt = 0;
-    DMA[3].src = &temp;
-    DMA[3].dst = videoBuffer;
-    DMA[3].cnt = 1 << 31 | // turn it on!
-                 1 << 26 | // set chunk size to 32 bits
-                 1 << 24 | // set src as fixed
-                 19200;
+    DMANow(3, &temp, videoBuffer, 1 << 31 | 1 << 26 | 1 << 24 | 19200);
 }
 
 void waitForVBlank() {
@@ -55,4 +54,11 @@ void drawString(int x, int y, char *str, unsigned short color) {
         drawChar(x + (i * 6), y, str[i], color);
         i++;
     }
+}
+
+void DMANow(int channel, volatile void *src, volatile void *dst, unsigned int cnt) {
+    dma[channel].cnt = 0;
+    dma[channel].src = src;
+    dma[channel].dst = dst;
+    dma[channel].cnt = (1 << 31) | cnt;
 }

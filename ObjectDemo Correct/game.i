@@ -1,7 +1,43 @@
-# 1 "main.c"
+# 1 "game.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "main.c"
+# 1 "game.c"
+# 1 "game.h" 1
+typedef struct {
+    int x;
+    int y;
+    int oldX;
+    int oldY;
+    int width;
+    int height;
+    int xVel;
+    int yVel;
+    unsigned short color;
+    int active;
+    int hasMoved;
+    int erased;
+} RECTANGLE;
+
+
+RECTANGLE player;
+
+
+
+
+
+RECTANGLE bullets[10];
+# 32 "game.h"
+void drawGame();
+
+void initPlayer();
+void updatePlayer();
+void drawPlayer(RECTANGLE*);
+
+void initBullets();
+void updateBullets();
+void newBullet(int x, int y, int xVel, int yVel);
+void drawBullets();
+# 2 "game.c" 2
 # 1 "gba.h" 1
 
 
@@ -15,22 +51,25 @@ typedef signed int s32;
 typedef unsigned int u32;
 typedef signed long long s64;
 typedef unsigned long long u64;
-# 23 "gba.h"
-extern volatile unsigned short* videoBuffer;
-# 35 "gba.h"
-int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
 
 
+
+
+
+
+extern volatile unsigned short *videoBuffer;
+# 36 "gba.h"
 void waitForVBlank();
-# 55 "gba.h"
-void drawRectangle(int x, int y, int width, int height, volatile unsigned short color);
+
+
+int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
+# 56 "gba.h"
+void drawRect(int x, int y, int width, int height, volatile unsigned short color);
 void fillScreen(volatile unsigned short color);
-void drawChar(int x, int y, char ch, unsigned short color);
-void drawString(int x, int y, char *str, unsigned short color);
 # 73 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
-# 2 "main.c" 2
+# 3 "game.c" 2
 # 1 "print.h" 1
 # 26 "print.h"
 # 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdint.h" 1 3 4
@@ -237,123 +276,134 @@ void mgba_printf(const char* string, ...);
 void mgba_break(void);
 uint8_t mgba_open(void);
 void mgba_close(void);
-# 3 "main.c" 2
-# 1 "game.h" 1
+# 4 "game.c" 2
+
+void initPlayer() {
+    player.x = 20;
+    player.y = 20;
+    player.oldX = 20;
+    player.oldY = 20;
+    player.xVel = 1;
+    player.yVel = 1;
+    player.color = ((15) | (15) << 5 | (15) << 10);
+    player.width = 10;
+    player.height = 20;
+    player.hasMoved = 1;
+}
+
+void initBullets() {
+
+    for (int i = 0; i < 10; i++) {
+        bullets[i].x = 0;
+        bullets[i].y = 0;
+        bullets[i].active = 0;
+        bullets[i].xVel = 0;
+        bullets[i].yVel = 0;
+        bullets[i].color = ((31) | (0) << 5 | (0) << 10);
+        bullets[i].oldX = 0;
+        bullets[i].oldY = 0;
+        bullets[i].hasMoved = 0;
+        bullets[i].width = 4;
+        bullets[i].height = 2;
+        bullets[i].erased = 1;
+    }
+}
+
+void updatePlayer() {
+
+    player.oldX = player.x;
+    player.oldY = player.y;
 
 
-
-
-typedef struct {
-    int x;
-    int y;
-    int oldX;
-    int width;
-    int height;
-    int hasMoved;
-    unsigned short color;
-} PLAYER;
-
-typedef struct {
-    int x;
-    int y;
-    int oldX;
-    int oldY;
-    int width;
-    int height;
-    int xVel;
-    int yVel;
-    int hasMoved;
-    int active;
-    unsigned short color;
-} ENEMY;
-
-typedef struct {
-    int x;
-    int y;
-    int oldX;
-    int oldY;
-    int hasMoved;
-    unsigned short color;
-} BULLET;
-
-PLAYER player;
-ENEMY enemies[30];
-BULLET bullet;
-
-
-void start(int drawStart);
-void game(int drawGame);
-void pause();
-void win();
-void lose();
-
-
-void drawPlayer(PLAYER *player);
-void initPlayer();
-void initEnemies();
-# 4 "main.c" 2
-
-
-unsigned short buttons;
-unsigned short oldButtons;
-int drawStart = 1;
-int drawGame = 1;
-int drawPause = 1;
-int drawWin = 1;
-int drawLose = 1;
-
-
-enum STATE{START, PAUSE, GAME, WIN, LOSE} state;
-
-void initialize();
-
-int main() {
-
-    initialize();
-
-    while (1) {
-        oldButtons = buttons;
-        buttons = (*(volatile unsigned short *)0x04000130);
-
-
-        switch(state) {
-            case START:
-                start(drawStart);
-                drawStart = 0;
-                if ((((~buttons & (1<<3)) && !(~oldButtons & (1<<3))))) {
-                    goToGame();
-                }
-                break;
-            case GAME:
-                game(drawGame);
-                drawGame = 0;
-                updatePlayer();
-                break;
-            case PAUSE:
-                pause();
-                break;
-            case WIN:
-                win();
-                break;
-            case LOSE:
-                lose();
-                break;
-        }
-        waitForVBlank();
+    if ((!(~(oldButtons) & ((1<<0))) && (~(*(volatile unsigned short *)0x04000130) & ((1<<0))))) {
+       newBullet(player.x + player.width, player.y, 1, 0);
     }
 
+
+    if ((~((*(volatile unsigned short *)0x04000130)) & ((1<<6)))) {
+        player.y -= player.yVel;
+        player.hasMoved = 1;
+ } else if ((~((*(volatile unsigned short *)0x04000130)) & ((1<<7)))) {
+        player.y += player.yVel;
+        player.hasMoved = 1;
+ }
+ if ((~((*(volatile unsigned short *)0x04000130)) & ((1<<4)))) {
+        player.x += player.xVel;
+        player.hasMoved = 1;
+ } else if ((~((*(volatile unsigned short *)0x04000130)) & ((1<<5)))) {
+        player.x -= player.xVel;
+        player.hasMoved = 1;
+ }
 }
 
-void initialize() {
+void updateBullets() {
 
-    mgba_open();
-    (*(volatile unsigned short *)0x4000000) = ((3) & 7) | ((1 << (8 + ((2) % 4))));
-    state = START;
-    initPlayer();
-    initEnemies();
-    initBullet();
+    for (int i = 0; i < 10; i++) {
+        if (bullets[i].active) {
+            bullets[i].oldX = bullets[i].x;
+            bullets[i].oldY = bullets[i].y;
+            if (bullets[i].x + bullets[i].xVel > 240) {
+                bullets[i].active = 0;
+                bullets[i].erased = 0;
+            } else if ((bullets[i].x + bullets[i].xVel) < 0) {
+                bullets[i].active = 0;
+                bullets[i].erased = 0;
+            } else {
+                bullets[i].x += bullets[i].xVel;
+            }
+            if (bullets[i].y + bullets[i].yVel > 160) {
+                bullets[i].active = 0;
+                bullets[i].erased = 0;
+            } else if (bullets[i].y + bullets[i].yVel < 0) {
+                bullets[i].active = 0;
+                bullets[i].erased = 0;
+            } else {
+                bullets[i].y += bullets[i].yVel;
+            }
+        }
+    }
 }
 
-void goToGame() {
-    state = GAME;
+void drawPlayer(RECTANGLE* current) {
+
+    if (current->hasMoved) {
+        drawRect(current->oldX, current->oldY, current->width, current->height, ((31) | (31) << 5 | (31) << 10));
+        current->hasMoved = 0;
+    }
+    drawRect(current->x, current->y, current->width, current->height, current->color);
+}
+
+void drawBullets() {
+
+    for (int i = 0; i < 10; i++) {
+        if (bullets[i].active) {
+
+            drawRect(bullets[i].oldX, bullets[i].oldY, bullets[i].width, bullets[i].height, ((31) | (31) << 5 | (31) << 10));
+            drawRect(bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height, bullets[i].color);
+        } else if (bullets[i].erased == 0) {
+            drawRect(bullets[i].oldX, bullets[i].oldY, bullets[i].width, bullets[i].height, ((31) | (31) << 5 | (31) << 10));
+        }
+
+    }
+}
+
+void newBullet(int x, int y, int xVel, int yVel) {
+
+    int notFound = 1;
+    for (int i = 0; ((i < 10) && notFound); i++) {
+        if (bullets[i].active == 0) {
+            mgba_printf("New bullet added");
+            notFound = 0;
+            bullets[i].x = x;
+            bullets[i].y = y;
+            bullets[i].xVel = xVel;
+            bullets[i].yVel = yVel;
+            bullets[i].active = 1;
+        }
+    }
+}
+
+void drawGame() {
+    drawPlayer(&player);
+    drawBullets();
 }
