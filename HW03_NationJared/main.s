@@ -49,8 +49,8 @@ initialize:
 	.word	1027
 	.word	state
 	.word	initPlayer
-	.word	initEnemies
 	.word	initBullet
+	.word	initEnemies
 	.size	initialize, .-initialize
 	.section	.text.startup,"ax",%progbits
 	.align	2
@@ -65,22 +65,22 @@ main:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r7, fp, lr}
-	ldr	r3, .L19
+	ldr	r3, .L27
 	mov	lr, pc
 	bx	r3
 	mov	r10, #0
-	ldr	r5, .L19+4
-	ldr	r4, .L19+8
-	ldr	r6, .L19+12
-	ldr	r9, .L19+16
-	ldr	fp, .L19+20
-	ldr	r7, .L19+24
-	ldr	r8, .L19+28
-.L14:
+	ldr	r6, .L27+4
+	ldr	r4, .L27+8
+	ldr	r7, .L27+12
+	ldr	r5, .L27+16
+	ldr	fp, .L27+20
+	ldr	r8, .L27+24
+	ldr	r9, .L27+28
+.L16:
 	ldrh	r3, [r4]
-	strh	r3, [r5]	@ movhi
-	ldrb	r3, [r6]	@ zero_extendqisi2
-	ldrh	r2, [r8, #48]
+	strh	r3, [r6]	@ movhi
+	ldrb	r3, [r7]	@ zero_extendqisi2
+	ldrh	r2, [r9, #48]
 	strh	r2, [r4]	@ movhi
 	cmp	r3, #4
 	ldrls	pc, [pc, r3, asl #2]
@@ -92,49 +92,67 @@ main:
 	.word	.L10
 	.word	.L8
 .L8:
-	ldr	r3, .L19+32
+	ldr	r3, .L27+32
 	mov	lr, pc
 	bx	r3
 .L7:
 	mov	lr, pc
-	bx	r7
-	b	.L14
+	bx	r8
+	b	.L16
 .L10:
-	ldr	r3, .L19+36
+	ldr	r0, [r5, #12]
+	ldr	r3, .L27+36
 	mov	lr, pc
 	bx	r3
+	str	r10, [r5, #12]
 	b	.L7
 .L11:
-	ldr	r0, [r9, #4]
-	ldr	r3, .L19+40
+	ldr	r3, .L27+40
+	ldr	r0, [r5, #4]
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L19+44
-	str	r10, [r9, #4]
-	mov	lr, pc
-	bx	r3
+	ldrh	r3, [r4]
+	tst	r3, #4
+	str	r10, [r5, #4]
+	bne	.L7
+	ldrh	r3, [r6]
+	tst	r3, #4
+	movne	r3, #1
+	strne	r3, [r5, #8]
+	strbne	r3, [r7]
 	b	.L7
 .L13:
-	ldr	r0, [r9]
+	ldr	r0, [r5]
 	mov	lr, pc
 	bx	fp
 	ldrh	r3, [r4]
 	tst	r3, #8
-	str	r10, [r9]
+	str	r10, [r5]
 	bne	.L7
-	ldrh	r3, [r5]
+	ldrh	r3, [r6]
 	tst	r3, #8
 	movne	r3, #2
-	strbne	r3, [r6]
+	strbne	r3, [r7]
 	b	.L7
 .L12:
-	ldr	r3, .L19+48
+	ldr	r3, .L27+44
+	ldr	r0, [r5, #8]
 	mov	lr, pc
 	bx	r3
+	ldrh	r3, [r4]
+	tst	r3, #4
+	str	r10, [r5, #8]
+	bne	.L7
+	ldrh	r3, [r6]
+	tst	r3, #4
+	movne	r3, #2
+	movne	r2, #1
+	strbne	r3, [r7]
+	strne	r2, [r5, #4]
 	b	.L7
-.L20:
+.L28:
 	.align	2
-.L19:
+.L27:
 	.word	initialize
 	.word	oldButtons
 	.word	buttons
@@ -146,7 +164,6 @@ main:
 	.word	lose
 	.word	win
 	.word	game
-	.word	updatePlayer
 	.word	pause
 	.size	main, .-main
 	.text
@@ -162,15 +179,56 @@ goToGame:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r2, #2
-	ldr	r3, .L22
+	ldr	r3, .L30
 	strb	r2, [r3]
 	bx	lr
-.L23:
+.L31:
 	.align	2
-.L22:
+.L30:
 	.word	state
 	.size	goToGame, .-goToGame
+	.align	2
+	.global	goToPause
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	goToPause, %function
+goToPause:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	mov	r2, #1
+	ldr	r3, .L33
+	strb	r2, [r3]
+	bx	lr
+.L34:
+	.align	2
+.L33:
+	.word	state
+	.size	goToPause, .-goToPause
+	.align	2
+	.global	goToWin
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	goToWin, %function
+goToWin:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	mov	r2, #3
+	ldr	r3, .L36
+	strb	r2, [r3]
+	bx	lr
+.L37:
+	.align	2
+.L36:
+	.word	state
+	.size	goToWin, .-goToWin
 	.comm	state,1,1
+	.global	gamePause
 	.global	drawLose
 	.global	drawWin
 	.global	drawPause
@@ -178,8 +236,8 @@ goToGame:
 	.global	drawStart
 	.comm	oldButtons,2,2
 	.comm	buttons,2,2
-	.comm	bullet,24,4
-	.comm	enemies,1320,4
+	.comm	bullet,36,4
+	.comm	enemies,720,4
 	.comm	player,28,4
 	.data
 	.align	2
@@ -192,16 +250,22 @@ drawStart:
 	.size	drawGame, 4
 drawGame:
 	.word	1
-	.type	drawLose, %object
-	.size	drawLose, 4
-drawLose:
+	.type	drawPause, %object
+	.size	drawPause, 4
+drawPause:
 	.word	1
 	.type	drawWin, %object
 	.size	drawWin, 4
 drawWin:
 	.word	1
-	.type	drawPause, %object
-	.size	drawPause, 4
-drawPause:
+	.type	drawLose, %object
+	.size	drawLose, 4
+drawLose:
 	.word	1
+	.bss
+	.align	2
+	.type	gamePause, %object
+	.size	gamePause, 4
+gamePause:
+	.space	4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

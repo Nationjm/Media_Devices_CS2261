@@ -6,9 +6,9 @@
         {
             "label": "build run",
             "type": "shell",
-            "command": "C:/Users/andre/'OneDrive - Georgia Institute of Technology'/'Georgia Tech'/Classes/'Spring 2023'/'TA - CS 2261'/mGBA.exe ./Project.gba",
-            // add the visualboyadvance-m.exe exact path to the above line, before "./Project.gba"! 
-            // Make sure there is a space between the exact path and "./Project.gba".
+            "command": "open /Applications/mGBA.app ./Project.gba",
+            // add the mGBA.app exact path to the above line,
+            // in between "open" and "./Project.gba"!
             "problemMatcher": [],
             "dependsOn": ["build"],
             "group": {
@@ -19,13 +19,19 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "docker run --rm -it -v \"${PWD}:/gba\" aaaronic/gba-compiler:1.0",
+            "command": "docker run --rm -it -v \"${PWD}:/gba\" aaaronic/gba-compiler:1.2",
             "problemMatcher": []
         },
         {
             "label": "clean",
             "type": "shell",
-            "command": "docker run --rm -it -v \"${PWD}:/gba\" aaaronic/gba-compiler:1.0 bash -c 'cd /gba && make clean'",
+            "command": "docker run --rm -it -v \"${PWD}:/gba\" aaaronic/gba-compiler:1.2 bash -c 'cd /gba && make clean'",
+            "problemMatcher": []
+        },
+        {
+            "label": "audio",
+            "type": "shell",
+            "command": "docker run --rm -it -v \"${PWD}:/gba\" aaaronic/gba-compiler:1.2 bash -c 'cd /gba && make audio'",
             "problemMatcher": []
         }
     ]

@@ -256,13 +256,8 @@ typedef struct {
 typedef struct {
     int x;
     int y;
-    int oldX;
-    int oldY;
     int width;
     int height;
-    int xVel;
-    int yVel;
-    int hasMoved;
     int active;
     unsigned short color;
 } ENEMY;
@@ -273,6 +268,9 @@ typedef struct {
     int oldX;
     int oldY;
     int hasMoved;
+    int active;
+    int width;
+    int height;
     unsigned short color;
 } BULLET;
 
@@ -283,14 +281,20 @@ BULLET bullet;
 
 void start(int drawStart);
 void game(int drawGame);
-void pause();
-void win();
+void pause(int drawPause);
+void win(int drawWin);
 void lose();
 
 
 void drawPlayer(PLAYER *player);
 void initPlayer();
+void drawPlayer();
+void updatePlayer();
 void initEnemies();
+void drawEnemy(ENEMY *enemy);
+void eraseEnemy(ENEMY *enemy);
+void enemyCollision();
+void updateEnemy();
 # 4 "main.c" 2
 
 
@@ -301,6 +305,7 @@ int drawGame = 1;
 int drawPause = 1;
 int drawWin = 1;
 int drawLose = 1;
+int gamePause = 0;
 
 
 enum STATE{START, PAUSE, GAME, WIN, LOSE} state;
@@ -327,13 +332,22 @@ int main() {
             case GAME:
                 game(drawGame);
                 drawGame = 0;
-                updatePlayer();
+                if ((((~buttons & (1<<2)) && !(~oldButtons & (1<<2))))) {
+                    drawPause = 1;
+                    goToPause();
+                }
                 break;
             case PAUSE:
-                pause();
+                pause(drawPause);
+                drawPause = 0;
+                if ((((~buttons & (1<<2)) && !(~oldButtons & (1<<2))))) {
+                    drawGame = 1;
+                    goToGame();
+                }
                 break;
             case WIN:
-                win();
+                win(drawWin);
+                drawWin = 0;
                 break;
             case LOSE:
                 lose();
@@ -350,10 +364,18 @@ void initialize() {
     (*(volatile unsigned short *)0x4000000) = ((3) & 7) | ((1 << (8 + ((2) % 4))));
     state = START;
     initPlayer();
-    initEnemies();
     initBullet();
+    initEnemies();
 }
 
 void goToGame() {
     state = GAME;
+}
+
+void goToPause() {
+    state = PAUSE;
+}
+
+void goToWin() {
+    state = WIN;
 }

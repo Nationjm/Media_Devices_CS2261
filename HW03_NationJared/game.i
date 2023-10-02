@@ -74,8 +74,8 @@ BULLET bullet;
 
 void start(int drawStart);
 void game(int drawGame);
-void pause();
-void win();
+void pause(int drawPause);
+void win(int drawWin);
 void lose();
 
 
@@ -86,8 +86,13 @@ void updatePlayer();
 void initEnemies();
 void drawEnemy(ENEMY *enemy);
 void eraseEnemy(ENEMY *enemy);
+void enemyCollision();
+void updateEnemy();
 # 3 "game.c" 2
 
+ENEMY *enemyToErase;
+int enemyErase = 0;
+int activeEnemies = 25;
 
 void start(int drawStart) {
     if (drawStart == 1) {
@@ -100,23 +105,43 @@ void game(int drawGame) {
     player.oldX = player.x;
     if (drawGame == 1) {
         fillScreen((((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
-        initEnemies();
+        for (int i = 0; i < 30; i++) {
+            if (enemies[i].active) {
+                drawEnemy(&enemies[i]);
+            }
+        }
     }
     drawPlayer(&player);
     updateBullet();
     for (int i = 0; i < 30; i++) {
         if (enemies[i].active) {
             enemyCollision(&enemies[i]);
+            if (enemyErase == 1) {
+                activeEnemies--;
+                mgba_printf("%d", activeEnemies);
+                updateEnemy();
+                enemyErase = 0;
+            }
         }
+    }
+    updatePlayer();
+    if (activeEnemies == 0) {
+        goToWin();
     }
 }
 
-void pause() {
-
+void pause(int drawPause) {
+    if (drawPause) {
+        fillScreen((((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
+    }
+    drawString(100, 70, "Pause", (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10));
 }
 
-void win() {
-
+void win(int drawWin) {
+    if (drawWin) {
+        fillScreen((((0) & 31) | ((0) & 31) << 5 | ((31) & 31) << 10));
+    }
+    drawString(100, 70, "You Win!", (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
 }
 
 void lose() {
@@ -175,11 +200,16 @@ void initEnemies() {
         enemies[i].active = 0;
     }
 
-    for (int i = 1; i < 15; i++) {
-        enemies[i].x = i * 15;
-        enemies[i].y = 10;
-        enemies[i].active - 1;
-        drawEnemy(&enemies[i]);
+    for (int i = 0; i < 30 - 5; i++) {
+            if (!enemies[i].active && (i * 15) < 220) {
+                enemies[i].x = (i + 1) * 15;
+                enemies[i].y = 10;
+                enemies[i].active = 1;
+            } else if (!enemies[i].active) {
+                enemies[i].x = (i - 15 + 1) * 20;
+                enemies[i].y = 25;
+                enemies[i].active = 1;
+            }
     }
 }
 
@@ -190,13 +220,21 @@ void drawEnemy(ENEMY *enemy) {
 void eraseEnemy(ENEMY *enemy) {
     drawRectangle(enemy->x, enemy->y, enemy->width, enemy->height, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
     enemy->active = 0;
-    bullet.active = 0;
 }
 
 void enemyCollision(ENEMY *enemy) {
-    if (enemy->x < bullet.x + bullet.width && enemy->x + enemy->width > bullet.x && enemy->y < bullet.y + bullet.height && enemy->y + enemy->height > bullet.y) {
-        eraseEnemy(&enemy);
-        mgba_printf("collision");
+    if (collision(bullet.x - 1, bullet.y, 3, 4, enemy->x, enemy->y, enemy->width, enemy->height)) {
+        enemyErase = 1;
+        enemyToErase = enemy;
+        bullet.active = 0;
+        drawRectangle(bullet.x - 1, bullet.y, 3, 4, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        bullet.y = player.y - 6;
+    }
+}
+
+void updateEnemy() {
+    if (enemyToErase) {
+        eraseEnemy(enemyToErase);
     }
 }
 

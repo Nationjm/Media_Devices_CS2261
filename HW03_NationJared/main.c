@@ -10,6 +10,7 @@ int drawGame = 1;
 int drawPause = 1;
 int drawWin = 1;
 int drawLose = 1;
+int gamePause = 0;
 
 // Enums
 enum STATE{START, PAUSE, GAME, WIN, LOSE} state;
@@ -36,13 +37,22 @@ int main() {
             case GAME:
                 game(drawGame);
                 drawGame = 0;
-                updatePlayer();
+                if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                    drawPause = 1;
+                    goToPause();
+                }
                 break;
             case PAUSE:
-                pause();
+                pause(drawPause);
+                drawPause = 0;
+                if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                    drawGame = 1;
+                    goToGame();
+                }
                 break;
             case WIN:
-                win();
+                win(drawWin);
+                drawWin = 0;
                 break;
             case LOSE:
                 lose();
@@ -59,10 +69,18 @@ void initialize() {
     REG_DISPCTL = MODE(3) | BG2_ENABLE;
     state = START;
     initPlayer();
-    initEnemies();
     initBullet();
+    initEnemies();
 }
 
 void goToGame() {
     state = GAME;
+}
+
+void goToPause() {
+    state = PAUSE;
+}
+
+void goToWin() {
+    state = WIN;
 }

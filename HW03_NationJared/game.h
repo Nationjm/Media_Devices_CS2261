@@ -40,8 +40,8 @@ BULLET bullet;
 
 void start(int drawStart);
 void game(int drawGame);
-void pause();
-void win();
+void pause(int drawPause);
+void win(int drawWin);
 void lose();
 
 
@@ -52,3 +52,5 @@ void updatePlayer();
 void initEnemies();
 void drawEnemy(ENEMY *enemy);
 void eraseEnemy(ENEMY *enemy);
+void enemyCollision();
+void updateEnemy();
