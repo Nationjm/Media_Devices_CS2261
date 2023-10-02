@@ -56,6 +56,7 @@ void drawRectangle(int x, int y, int width, int height, volatile unsigned short 
 void fillScreen(volatile unsigned short color);
 void drawChar(int x, int y, char ch, unsigned short color);
 void drawString(int x, int y, char *str, unsigned short color);
+void DMANow(int channel, volatile void *src, volatile void *dst, unsigned int cnt);
 
 // Buttons
 #define REG_BUTTONS (*(volatile unsigned short *)0x04000130) // Buttons down register

@@ -41,6 +41,7 @@ typedef struct {
     int y;
     int oldX;
     int width;
+    int xVel;
     int height;
     int hasMoved;
     unsigned short color;
@@ -67,20 +68,34 @@ typedef struct {
     unsigned short color;
 } BULLET;
 
+typedef struct {
+    int x;
+    int y;
+    int oldY;
+    int width;
+    int height;
+    int active;
+    unsigned short color;
+} POWERUP;
+
 PLAYER player;
 ENEMY enemies[30];
 BULLET bullet;
-
+POWERUP powerUP;
 
 void start(int drawStart);
 void game(int drawGame);
 void pause(int drawPause);
 void win(int drawWin);
-void lose();
 
 
 void drawPlayer(PLAYER *player);
 void initPlayer();
+void initBullet();
+void goToPause();
+void goToGame();
+void updateBullet();
+void goToWin();
 void drawPlayer();
 void updatePlayer();
 void initEnemies();
@@ -88,7 +103,112 @@ void drawEnemy(ENEMY *enemy);
 void eraseEnemy(ENEMY *enemy);
 void enemyCollision();
 void updateEnemy();
+void drawEnemies();
+void drawDangerZone();
+void drawPowerUP();
+void dropPowerUP();
+void powerUPCollision();
+void updatePowerUP();
 # 3 "game.c" 2
+# 1 "analogSound.h" 1
+
+
+
+
+
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+# 263 "analogSound.h"
+enum note {
+
+  REST = 0,
+  NOTE_C2 =44,
+  NOTE_CS2 =157,
+  NOTE_D2 =263,
+  NOTE_DS2 =363,
+  NOTE_E2 =457,
+  NOTE_F2 =547,
+  NOTE_FS2 =631,
+  NOTE_G2 =711,
+  NOTE_GS2 =786,
+  NOTE_A2 =856,
+  NOTE_AS2 =923,
+  NOTE_B2 =986,
+  NOTE_C3 =1046,
+  NOTE_CS3 =1102,
+  NOTE_D3 =1155,
+  NOTE_DS3 =1205,
+  NOTE_E3 =1253,
+  NOTE_F3 =1297,
+  NOTE_FS3 =1339,
+  NOTE_G3 =1379,
+  NOTE_GS3 =1417,
+  NOTE_A3 =1452,
+  NOTE_AS3 =1486,
+  NOTE_B3 =1517,
+  NOTE_C4 =1547,
+  NOTE_CS4 =1575,
+  NOTE_D4 =1602,
+  NOTE_DS4 =1627,
+  NOTE_E4 =1650,
+  NOTE_F4 =1673,
+  NOTE_FS4 =1694,
+  NOTE_G4 =1714,
+  NOTE_GS4 =1732,
+  NOTE_A4 =1750,
+  NOTE_AS4 =1767,
+  NOTE_B4 =1783,
+  NOTE_C5 =1798,
+  NOTE_CS5 =1812,
+  NOTE_D5 =1825,
+  NOTE_DS5 =1837,
+  NOTE_E5 =1849,
+  NOTE_F5 =1860,
+  NOTE_FS5 =1871,
+  NOTE_G5 =1881,
+  NOTE_GS5 =1890,
+  NOTE_A5 =1899,
+  NOTE_AS5 =1907,
+  NOTE_B5 =1915,
+  NOTE_C6 =1923,
+  NOTE_CS6 =1930,
+  NOTE_D6 =1936,
+  NOTE_DS6 =1943,
+  NOTE_E6 =1949,
+  NOTE_F6 =1954,
+  NOTE_FS6 =1959,
+  NOTE_G6 =1964,
+  NOTE_GS6 =1969,
+  NOTE_A6 =1974,
+  NOTE_AS6 =1978,
+  NOTE_B6 =1982,
+  NOTE_C7 =1985,
+  NOTE_CS7 =1989,
+  NOTE_D7 =1992,
+  NOTE_DS7 =1995,
+  NOTE_E7 =1998,
+  NOTE_F7 =2001,
+  NOTE_FS7 =2004,
+  NOTE_G7 =2006,
+  NOTE_GS7 =2009,
+  NOTE_A7 =2011,
+  NOTE_AS7 =2013,
+  NOTE_B7 =2015,
+  NOTE_C8 =2017
+} NOTES;
+
+typedef struct noteWithDuration {
+  enum note note;
+  unsigned char duration;
+} NoteWithDuration;
+
+void initSound();
+void playDrumSound(u8 r, u8 s, u8 b, u8 length, u8 steptime);
+void playNoteWithDuration(NoteWithDuration *n, u8 duty);
+void playChannel1(u16 note, u8 length, u8 sweepShift, u8 sweepTime, u8 sweepDir, u8 envStepTime, u8 envDir, u8 duty);
+void playAnalogSound(u16 sound);
+# 4 "game.c" 2
 
 ENEMY *enemyToErase;
 int enemyErase = 0;
@@ -113,16 +233,22 @@ void game(int drawGame) {
     }
     drawPlayer(&player);
     updateBullet();
+    updatePowerUP();
     for (int i = 0; i < 30; i++) {
         if (enemies[i].active) {
             enemyCollision(&enemies[i]);
             if (enemyErase == 1) {
                 activeEnemies--;
-                mgba_printf("%d", activeEnemies);
                 updateEnemy();
+                if (rand() % 20 == 0) {
+                    dropPowerUP(&enemies[i]);
+                }
                 enemyErase = 0;
             }
         }
+    }
+    if (activeEnemies == 10) {
+        player.color = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10);
     }
     updatePlayer();
     if (activeEnemies == 0) {
@@ -144,10 +270,6 @@ void win(int drawWin) {
     drawString(100, 70, "You Win!", (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10));
 }
 
-void lose() {
-
-}
-
 void initPlayer() {
     player.x = 130;
     player.y = 150;
@@ -155,6 +277,7 @@ void initPlayer() {
     player.width = 7;
     player.height = 7;
     player.hasMoved = 0;
+    player.xVel = 1;
     player.color = (((0) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
 }
 
@@ -180,10 +303,10 @@ void drawPlayer(PLAYER *player) {
 
 void updatePlayer() {
     if ((~buttons & (1<<5)) && player.x > 0) {
-        player.x -= 1;
+        player.x -= player.xVel;
         player.hasMoved = 1;
-    } else if ((~buttons & (1<<4) && player.x < 233)) {
-        player.x += 1;
+    } else if ((~buttons & (1<<4) && player.x < 232)) {
+        player.x += player.xVel;
         player.hasMoved = 1;
     }
     drawPlayer(&player);
@@ -195,8 +318,8 @@ void initEnemies() {
         enemies[i].x = 0;
         enemies[i].y = 0;
         enemies[i].color = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
-        enemies[i].width = 5;
-        enemies[i].height = 5;
+        enemies[i].width = 7;
+        enemies[i].height = 7;
         enemies[i].active = 0;
     }
 
@@ -224,6 +347,7 @@ void eraseEnemy(ENEMY *enemy) {
 
 void enemyCollision(ENEMY *enemy) {
     if (collision(bullet.x - 1, bullet.y, 3, 4, enemy->x, enemy->y, enemy->width, enemy->height)) {
+        playAnalogSound(2);
         enemyErase = 1;
         enemyToErase = enemy;
         bullet.active = 0;
@@ -265,6 +389,7 @@ void updateBullet() {
     bullet.oldX = bullet.x;
     bullet.oldY = bullet.y;
     if ((((~buttons & (1<<0)) && !(~oldButtons & (1<<0)))) && bullet.active == 0) {
+        playAnalogSound(4);
         bullet.active = 1;
     }
     if (bullet.y == 0) {
@@ -273,11 +398,56 @@ void updateBullet() {
         bullet.y = player.y - 6;
     }
     if (bullet.active) {
-        bullet.y--;
+        bullet.y -= 2;
         bullet.hasMoved = 1;
         drawBullet();
     }
     if (bullet.active == 0) {
         bullet.x = player.x + 3;
+    }
+}
+
+void initPowerUP() {
+    powerUP.x = 15;
+    powerUP.y = 15;
+    powerUP.oldY = 0;
+    powerUP.active = 0;
+    powerUP.width = 3;
+    powerUP.height = 3;
+    powerUP.color = (((0) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10);
+}
+
+void dropPowerUP(ENEMY *enemy) {
+    if (enemyErase) {
+        powerUP.x = bullet.x;
+        powerUP.y = enemy->y;
+        powerUP.oldY = enemy->y;
+        powerUP.active = 1;
+    }
+}
+
+void drawPowerUP() {
+    drawRectangle(powerUP.x, powerUP.y - 1, powerUP.width, powerUP.height, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+    drawRectangle(powerUP.x, powerUP.y, powerUP.width, powerUP.height, powerUP.color);
+    if (powerUP.y > 159){
+        drawRectangle(powerUP.x, powerUP.y, powerUP.width, powerUP.height, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        powerUP.active = 0;
+    }
+}
+
+void powerUPCollision() {
+    if (collision(powerUP.x, powerUP.y, powerUP.width, powerUP.height, player.x, player.y, player.width, player.height)) {
+        player.xVel = 2;
+        powerUP.active = 0;
+        drawRectangle(powerUP.x, powerUP.y, powerUP.width, powerUP.height, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+    }
+}
+
+void updatePowerUP() {
+    powerUP.oldY = powerUP.y;
+    if (powerUP.active == 1) {
+        drawPowerUP();
+        powerUPCollision();
+        powerUP.y++;
     }
 }

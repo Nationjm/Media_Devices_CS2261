@@ -1,6 +1,7 @@
 #include "gba.h"
 #include "print.h"
 #include "game.h"
+#include "analogSound.h"
 
 // Variables
 unsigned short buttons;
@@ -9,11 +10,10 @@ int drawStart = 1;
 int drawGame = 1;
 int drawPause = 1;
 int drawWin = 1;
-int drawLose = 1;
 int gamePause = 0;
 
 // Enums
-enum STATE{START, PAUSE, GAME, WIN, LOSE} state;
+enum STATE{START, PAUSE, GAME, WIN} state;
 
 void initialize();
 
@@ -54,9 +54,6 @@ int main() {
                 win(drawWin);
                 drawWin = 0;
                 break;
-            case LOSE:
-                lose();
-                break;
         }
         waitForVBlank();
     }
@@ -71,6 +68,8 @@ void initialize() {
     initPlayer();
     initBullet();
     initEnemies();
+    initSound();
+    initPowerUP();
 }
 
 void goToGame() {

@@ -1,5 +1,6 @@
 #include "gba.h"
 #include "game.h"
+#include "analogSound.h"
 
 ENEMY *enemyToErase;
 int enemyErase = 0;
@@ -24,16 +25,22 @@ void game(int drawGame) {
     }
     drawPlayer(&player);
     updateBullet();
+    updatePowerUP();
     for (int i = 0; i < ENEMYCOUNT; i++) {
         if (enemies[i].active) {
             enemyCollision(&enemies[i]);
             if (enemyErase == 1) {
                 activeEnemies--;
-                mgba_printf("%d", activeEnemies);
                 updateEnemy();
+                if (rand() % 20 == 0) {
+                    dropPowerUP(&enemies[i]);
+                }
                 enemyErase = 0;
             }
         }
+    }
+    if (activeEnemies == 10) {
+        player.color = YELLOW;
     }
     updatePlayer();
     if (activeEnemies == 0) {
@@ -55,10 +62,6 @@ void win(int drawWin) {
     drawString(100, 70, "You Win!", BLACK);
 }
 
-void lose() {
-
-}
-
 void initPlayer() {
     player.x = 130;
     player.y = 150;
@@ -66,6 +69,7 @@ void initPlayer() {
     player.width = 7;
     player.height = 7;
     player.hasMoved = 0;
+    player.xVel = 1;
     player.color = CYAN;
 }
 
@@ -91,10 +95,10 @@ void drawPlayer(PLAYER *player) {
 
 void updatePlayer() {
     if (BUTTON_HELD(BUTTON_LEFT) && player.x > 0) {
-        player.x -= 1;
+        player.x -= player.xVel;
         player.hasMoved = 1;
-    } else if (BUTTON_HELD(BUTTON_RIGHT && player.x < 233)) {
-        player.x += 1;
+    } else if (BUTTON_HELD(BUTTON_RIGHT && player.x < 232)) {
+        player.x += player.xVel;
         player.hasMoved = 1;
     } 
     drawPlayer(&player);
@@ -106,8 +110,8 @@ void initEnemies() {
         enemies[i].x = 0;
         enemies[i].y = 0;
         enemies[i].color = RED;
-        enemies[i].width = 5;
-        enemies[i].height = 5;
+        enemies[i].width = 7;
+        enemies[i].height = 7;
         enemies[i].active = 0;
     }
 
@@ -135,6 +139,7 @@ void eraseEnemy(ENEMY *enemy) {
 
 void enemyCollision(ENEMY *enemy) {
     if (collision(bullet.x - 1, bullet.y, 3, 4, enemy->x, enemy->y, enemy->width, enemy->height)) {
+        playAnalogSound(2);
         enemyErase = 1;
         enemyToErase = enemy;
         bullet.active = 0;
@@ -176,6 +181,7 @@ void updateBullet() {
     bullet.oldX = bullet.x;
     bullet.oldY = bullet.y;
     if (BUTTON_PRESSED(BUTTON_A) && bullet.active == 0) {
+        playAnalogSound(4);
         bullet.active = 1;
     }
     if (bullet.y == 0) {
@@ -184,7 +190,7 @@ void updateBullet() {
         bullet.y = player.y - 6;
     }
     if (bullet.active) {
-        bullet.y--;
+        bullet.y -= 2;
         bullet.hasMoved = 1;
         drawBullet();
     }
@@ -193,3 +199,47 @@ void updateBullet() {
     }
 }
 
+void initPowerUP() {
+    powerUP.x = 15;
+    powerUP.y = 15;
+    powerUP.oldY = 0;
+    powerUP.active = 0;
+    powerUP.width = 3;
+    powerUP.height = 3;
+    powerUP.color = GREEN;
+}
+
+void dropPowerUP(ENEMY *enemy) {
+    if (enemyErase) {
+        powerUP.x = bullet.x;
+        powerUP.y = enemy->y;
+        powerUP.oldY = enemy->y;
+        powerUP.active = 1;
+    }
+}
+
+void drawPowerUP() {
+    drawRectangle(powerUP.x, powerUP.y - 1, powerUP.width, powerUP.height, BACKGROUNDCOLOR);
+    drawRectangle(powerUP.x, powerUP.y, powerUP.width, powerUP.height, powerUP.color);
+    if (powerUP.y > 159){
+        drawRectangle(powerUP.x, powerUP.y, powerUP.width, powerUP.height, BACKGROUNDCOLOR);
+        powerUP.active = 0;
+    } 
+}
+
+void powerUPCollision() {
+    if (collision(powerUP.x, powerUP.y, powerUP.width, powerUP.height, player.x, player.y, player.width, player.height)) {
+        player.xVel = 2;
+        powerUP.active = 0;
+        drawRectangle(powerUP.x, powerUP.y, powerUP.width, powerUP.height, BACKGROUNDCOLOR);
+    }
+}
+
+void updatePowerUP() {
+    powerUP.oldY = powerUP.y;
+    if (powerUP.active == 1) {
+        drawPowerUP();
+        powerUPCollision();
+        powerUP.y++;
+    }
+}
