@@ -44,10 +44,21 @@ typedef struct {
     unsigned short color;
 } POWERUP;
 
+typedef struct {
+    int x;
+    int y;
+    int oldX;
+    int width;
+    int height;
+    int hasMoved;
+    unsigned short color;
+} DANGERZONE;
+
 PLAYER player;
 ENEMY enemies[ENEMYCOUNT];
 BULLET bullet;
 POWERUP powerUP;
+DANGERZONE dangerZone;
 
 void start(int drawStart);
 void game(int drawGame);
@@ -75,3 +86,6 @@ void drawPowerUP();
 void dropPowerUP();
 void powerUPCollision();
 void updatePowerUP();
+void initDangerZone();
+void drawDangerZone();
+void dangerZoneCollision();

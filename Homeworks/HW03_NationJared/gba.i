@@ -45,15 +45,14 @@ typedef struct {
     volatile unsigned int cnt;
 } DMAREC;
 
-DMAREC* dma = (DMAREC*) 0x40000B0;
+volatile DMAREC* dma = (volatile DMAREC*) 0x40000B0;
 
 volatile unsigned short* videoBuffer = (unsigned short *)0x6000000;
 
-void drawRectangle(int x, int y, int width, int height, unsigned short color) {
+void drawRectangle(int x, int y, int width, int height, volatile unsigned short color) {
 
     for (int i = 0; i < height; i++) {
-        DMANow(3, &color, &videoBuffer[(((y + i)) * (240) + (x))], (2 << 23) | (0 << 21) | width);
-        mgba_printf(" ");
+        DMANow(3, &color, &videoBuffer[(((y + i)) * (240) + (x))], (2 << 23) | width);
     }
 }
 

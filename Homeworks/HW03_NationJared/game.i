@@ -27,7 +27,8 @@ void drawRectangle(int x, int y, int width, int height, volatile unsigned short 
 void fillScreen(volatile unsigned short color);
 void drawChar(int x, int y, char ch, unsigned short color);
 void drawString(int x, int y, char *str, unsigned short color);
-# 73 "gba.h"
+void DMANow(int channel, volatile void *src, volatile void *dst, unsigned int cnt);
+# 74 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 # 2 "game.c" 2
@@ -78,10 +79,21 @@ typedef struct {
     unsigned short color;
 } POWERUP;
 
+typedef struct {
+    int x;
+    int y;
+    int oldX;
+    int width;
+    int height;
+    int hasMoved;
+    unsigned short color;
+} DANGERZONE;
+
 PLAYER player;
 ENEMY enemies[30];
 BULLET bullet;
 POWERUP powerUP;
+DANGERZONE dangerZone;
 
 void start(int drawStart);
 void game(int drawGame);
@@ -109,6 +121,9 @@ void drawPowerUP();
 void dropPowerUP();
 void powerUPCollision();
 void updatePowerUP();
+void initDangerZone();
+void drawDangerZone();
+void dangerZoneCollision();
 # 3 "game.c" 2
 # 1 "analogSound.h" 1
 
@@ -213,6 +228,7 @@ void playAnalogSound(u16 sound);
 ENEMY *enemyToErase;
 int enemyErase = 0;
 int activeEnemies = 25;
+int noShoot = 0;
 
 void start(int drawStart) {
     if (drawStart == 1) {
@@ -231,6 +247,7 @@ void game(int drawGame) {
             }
         }
     }
+    drawDangerZone();
     drawPlayer(&player);
     updateBullet();
     updatePowerUP();
@@ -243,13 +260,16 @@ void game(int drawGame) {
                 if (rand() % 20 == 0) {
                     dropPowerUP(&enemies[i]);
                 }
+                if (activeEnemies == 10) {
+                    dangerZone.hasMoved = 1;
+                    dangerZone.x = rand() % 230;
+                    mgba_printf("%d", dangerZone.x);
+                }
                 enemyErase = 0;
             }
         }
     }
-    if (activeEnemies == 10) {
-        player.color = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10);
-    }
+
     updatePlayer();
     if (activeEnemies == 0) {
         goToWin();
@@ -311,6 +331,7 @@ void updatePlayer() {
     }
     drawPlayer(&player);
     player.hasMoved = 0;
+    dangerZoneCollision();
 }
 
 void initEnemies() {
@@ -388,7 +409,7 @@ void drawBullet() {
 void updateBullet() {
     bullet.oldX = bullet.x;
     bullet.oldY = bullet.y;
-    if ((((~buttons & (1<<0)) && !(~oldButtons & (1<<0)))) && bullet.active == 0) {
+    if ((((~buttons & (1<<0)) && !(~oldButtons & (1<<0)))) && bullet.active == 0 && noShoot == 0) {
         playAnalogSound(4);
         bullet.active = 1;
     }
@@ -449,5 +470,34 @@ void updatePowerUP() {
         drawPowerUP();
         powerUPCollision();
         powerUP.y++;
+    }
+}
+
+void initDangerZone() {
+    dangerZone.color = (((31) & 31) | ((20) & 31) << 5 | ((0) & 31) << 10);
+    dangerZone.x = rand() % 230;
+    mgba_printf("%d", dangerZone.x);
+    dangerZone.oldX = dangerZone.x;
+    dangerZone.y = 147;
+    dangerZone.width = 12;
+    dangerZone.height = 12;
+    dangerZone.hasMoved = 0;
+}
+
+void drawDangerZone() {
+    if (dangerZone.hasMoved) {
+        drawRectangle(dangerZone.oldX, dangerZone.y, dangerZone.width, dangerZone.height, (((1) & 31) | ((1) & 31) << 5 | ((3) & 31) << 10));
+        dangerZone.hasMoved = 0;
+    }
+    drawRectangle(dangerZone.x, dangerZone.y, dangerZone.width, dangerZone.height, dangerZone.color);
+}
+
+void dangerZoneCollision() {
+    if (collision(player.x, player.y, player.width, player.height, dangerZone.x, dangerZone.y, dangerZone.width, dangerZone.height)) {
+        noShoot = 1;
+        player.color = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10);
+    } else {
+        noShoot = 0;
+        player.color = (((0) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
     }
 }

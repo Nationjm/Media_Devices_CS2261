@@ -2,6 +2,8 @@
 #include "print.h"
 #include "game.h"
 #include "analogSound.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 // Variables
 unsigned short buttons;
@@ -11,6 +13,7 @@ int drawGame = 1;
 int drawPause = 1;
 int drawWin = 1;
 int gamePause = 0;
+int rSeed = 0;
 
 // Enums
 enum STATE{START, PAUSE, GAME, WIN} state;
@@ -24,17 +27,19 @@ int main() {
     while (1) {
         oldButtons = buttons;
         buttons = REG_BUTTONS;
-        
-
         switch(state) {
             case START:
                 start(drawStart);
+                rSeed += 1;
                 drawStart = 0;
                 if (BUTTON_PRESSED(BUTTON_START)) {
                     goToGame();
                 }
                 break;
             case GAME:
+                if (drawGame) {
+                    initDangerZone();
+                }
                 game(drawGame);
                 drawGame = 0;
                 if (BUTTON_PRESSED(BUTTON_SELECT)) {
@@ -74,6 +79,7 @@ void initialize() {
 
 void goToGame() {
     state = GAME;
+    srand(rSeed);
 }
 
 void goToPause() {

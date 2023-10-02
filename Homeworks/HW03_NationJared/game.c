@@ -5,6 +5,7 @@
 ENEMY *enemyToErase;
 int enemyErase = 0;
 int activeEnemies = 25;
+int noShoot = 0;
 
 void start(int drawStart) {
     if (drawStart == 1) {
@@ -23,6 +24,7 @@ void game(int drawGame) {
             }
         }
     }
+    drawDangerZone();
     drawPlayer(&player);
     updateBullet();
     updatePowerUP();
@@ -35,13 +37,16 @@ void game(int drawGame) {
                 if (rand() % 20 == 0) {
                     dropPowerUP(&enemies[i]);
                 }
+                if (activeEnemies == 10) {
+                    dangerZone.hasMoved = 1;
+                    dangerZone.x = rand() % 230;
+                    mgba_printf("%d", dangerZone.x);
+                }
                 enemyErase = 0;
             }
         }
     }
-    if (activeEnemies == 10) {
-        player.color = YELLOW;
-    }
+
     updatePlayer();
     if (activeEnemies == 0) {
         goToWin();
@@ -103,6 +108,7 @@ void updatePlayer() {
     } 
     drawPlayer(&player);
     player.hasMoved = 0;
+    dangerZoneCollision();
 }
 
 void initEnemies() {
@@ -180,7 +186,7 @@ void drawBullet() {
 void updateBullet() {
     bullet.oldX = bullet.x;
     bullet.oldY = bullet.y;
-    if (BUTTON_PRESSED(BUTTON_A) && bullet.active == 0) {
+    if (BUTTON_PRESSED(BUTTON_A) && bullet.active == 0 && noShoot == 0) {
         playAnalogSound(4);
         bullet.active = 1;
     }
@@ -241,5 +247,34 @@ void updatePowerUP() {
         drawPowerUP();
         powerUPCollision();
         powerUP.y++;
+    }
+}
+
+void initDangerZone() {
+    dangerZone.color = ORANGE;
+    dangerZone.x = rand() % 230;
+    mgba_printf("%d", dangerZone.x);
+    dangerZone.oldX = dangerZone.x;
+    dangerZone.y = 147;
+    dangerZone.width = 12;
+    dangerZone.height = 12;
+    dangerZone.hasMoved = 0;
+}
+
+void drawDangerZone() {
+    if (dangerZone.hasMoved) {
+        drawRectangle(dangerZone.oldX, dangerZone.y, dangerZone.width, dangerZone.height, BACKGROUNDCOLOR);
+        dangerZone.hasMoved = 0;
+    } 
+    drawRectangle(dangerZone.x, dangerZone.y, dangerZone.width, dangerZone.height, dangerZone.color);
+}
+
+void dangerZoneCollision() {
+    if (collision(player.x, player.y, player.width, player.height, dangerZone.x, dangerZone.y, dangerZone.width, dangerZone.height)) {
+        noShoot = 1;
+        player.color = YELLOW;
+    } else {
+        noShoot = 0;
+        player.color = CYAN;
     }
 }

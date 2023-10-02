@@ -73,18 +73,18 @@ main:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r7, fp, lr}
-	ldr	r3, .L26
+	ldr	r3, .L31
 	mov	lr, pc
 	bx	r3
 	mov	r10, #0
-	ldr	r6, .L26+4
-	ldr	r4, .L26+8
-	ldr	r7, .L26+12
-	ldr	r5, .L26+16
-	ldr	fp, .L26+20
-	ldr	r9, .L26+24
-	ldr	r8, .L26+28
-.L15:
+	ldr	r6, .L31+4
+	ldr	r4, .L31+8
+	ldr	r7, .L31+12
+	ldr	r5, .L31+16
+	ldr	fp, .L31+20
+	ldr	r9, .L31+24
+	ldr	r8, .L31+28
+.L16:
 	ldrh	r3, [r4]
 	strh	r3, [r6]	@ movhi
 	ldrb	r3, [r7]	@ zero_extendqisi2
@@ -100,17 +100,20 @@ main:
 	.word	.L8
 .L8:
 	ldr	r0, [r5, #12]
-	ldr	r3, .L26+32
+	ldr	r3, .L31+32
 	mov	lr, pc
 	bx	r3
 	str	r10, [r5, #12]
 .L7:
 	mov	lr, pc
 	bx	r9
-	b	.L15
+	b	.L16
 .L10:
-	ldr	r3, .L26+36
 	ldr	r0, [r5, #4]
+	cmp	r0, #0
+	bne	.L30
+.L15:
+	ldr	r3, .L31+36
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
@@ -125,19 +128,27 @@ main:
 	b	.L7
 .L12:
 	ldr	r0, [r5]
+	ldr	r3, .L31+40
 	mov	lr, pc
-	bx	fp
+	bx	r3
+	ldr	r0, [fp]
 	ldrh	r3, [r4]
+	add	r0, r0, #1
 	tst	r3, #8
 	str	r10, [r5]
+	str	r0, [fp]
 	bne	.L7
 	ldrh	r3, [r6]
 	tst	r3, #8
-	movne	r3, #2
-	strbne	r3, [r7]
+	beq	.L7
+	mov	r3, #2
+	strb	r3, [r7]
+	ldr	r3, .L31+44
+	mov	lr, pc
+	bx	r3
 	b	.L7
 .L11:
-	ldr	r3, .L26+40
+	ldr	r3, .L31+48
 	ldr	r0, [r5, #8]
 	mov	lr, pc
 	bx	r3
@@ -147,25 +158,39 @@ main:
 	bne	.L7
 	ldrh	r3, [r6]
 	tst	r3, #4
-	movne	r3, #2
-	movne	r2, #1
-	strbne	r3, [r7]
-	strne	r2, [r5, #4]
+	beq	.L7
+	mov	r3, #2
+	mov	r2, #1
+	strb	r3, [r7]
+	ldr	r0, [fp]
+	ldr	r3, .L31+44
+	str	r2, [r5, #4]
+	mov	lr, pc
+	bx	r3
 	b	.L7
-.L27:
+.L30:
+	ldr	r3, .L31+52
+	mov	lr, pc
+	bx	r3
+	ldr	r0, [r5, #4]
+	b	.L15
+.L32:
 	.align	2
-.L26:
+.L31:
 	.word	initialize
 	.word	oldButtons
 	.word	buttons
 	.word	state
 	.word	.LANCHOR0
-	.word	start
+	.word	.LANCHOR1
 	.word	waitForVBlank
 	.word	67109120
 	.word	win
 	.word	game
+	.word	start
+	.word	srand
 	.word	pause
+	.word	initDangerZone
 	.size	main, .-main
 	.text
 	.align	2
@@ -178,15 +203,23 @@ goToGame:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	mov	r2, #2
-	ldr	r3, .L29
-	strb	r2, [r3]
+	mov	r1, #2
+	push	{r4, lr}
+	ldr	r3, .L35
+	ldr	r2, .L35+4
+	ldr	r0, [r3]
+	ldr	r3, .L35+8
+	strb	r1, [r2]
+	mov	lr, pc
+	bx	r3
+	pop	{r4, lr}
 	bx	lr
-.L30:
+.L36:
 	.align	2
-.L29:
+.L35:
+	.word	.LANCHOR1
 	.word	state
+	.word	srand
 	.size	goToGame, .-goToGame
 	.align	2
 	.global	goToPause
@@ -200,12 +233,12 @@ goToPause:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r2, #1
-	ldr	r3, .L32
+	ldr	r3, .L38
 	strb	r2, [r3]
 	bx	lr
-.L33:
+.L39:
 	.align	2
-.L32:
+.L38:
 	.word	state
 	.size	goToPause, .-goToPause
 	.align	2
@@ -220,15 +253,16 @@ goToWin:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r2, #3
-	ldr	r3, .L35
+	ldr	r3, .L41
 	strb	r2, [r3]
 	bx	lr
-.L36:
+.L42:
 	.align	2
-.L35:
+.L41:
 	.word	state
 	.size	goToWin, .-goToWin
 	.comm	state,1,1
+	.global	rSeed
 	.global	gamePause
 	.global	drawWin
 	.global	drawPause
@@ -237,6 +271,7 @@ goToWin:
 	.comm	oldButtons,2,2
 	.comm	buttons,2,2
 	.comm	NOTES,2,2
+	.comm	dangerZone,28,4
 	.comm	powerUP,28,4
 	.comm	bullet,36,4
 	.comm	enemies,720,4
@@ -262,6 +297,11 @@ drawWin:
 	.word	1
 	.bss
 	.align	2
+	.set	.LANCHOR1,. + 0
+	.type	rSeed, %object
+	.size	rSeed, 4
+rSeed:
+	.space	4
 	.type	gamePause, %object
 	.size	gamePause, 4
 gamePause:
