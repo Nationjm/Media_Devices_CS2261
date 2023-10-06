@@ -7,7 +7,7 @@ The enemies are the red squares at the top of the screen <br>
 There is a danger zone that if the player enters, the player turns yellow and is unable to shoot bullets while inside it
 
 ## Controls
-Press the left and right button to move the player <br>
+Press the Left and Right button to move the player <br>
 Press the A button to fire a bullet <br>
 Press the Select button to pause the game
 
