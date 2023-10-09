@@ -63,7 +63,7 @@ void fillScreen4(volatile unsigned char colorIndex) {
 // Draws an image in mode 4
 void drawImage4(int x, int y, int width, int height, const unsigned short *image) {
     // TODO 4.0: write this function using DMA
-    for (int i = 0; i < height; i++ ) {
+    for (int i = 0; i < height; i++) {
         DMANow(3, &image[OFFSET(0, i, width / 2)], &videoBuffer[OFFSET(x, y + i, SCREENWIDTH) / 2], (width / 2));
     }
 }
