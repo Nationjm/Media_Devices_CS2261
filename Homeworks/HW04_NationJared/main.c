@@ -1,6 +1,7 @@
 #include "gba.h"
 #include "mode4.h"
 #include "print.h"
+#include "game.h"
 
 // Add makefile
 
@@ -17,6 +18,15 @@ enum {
 } STATE;
 int state;
 
+void initialize();
+
+// State Prototypes
+void goToStart();
+void goToGame();
+void goToPause();
+void goToWin();
+void goToLose();
+
 
 int main() {
 
@@ -29,6 +39,7 @@ int main() {
         buttons = REG_BUTTONS;
 
         waitForVBlank();
+        flipPage();
 
         // State Machine
         switch(state) {
@@ -56,10 +67,25 @@ int main() {
 
 // Sets up the GBA and enters the Start state
 void initialize() {
+    mgba_open();
     REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
 
     buttons = REG_BUTTONS;
     oldButtons = 0;
+    
+    initGame();
 
     goToStart();
+}
+
+void goToStart() {
+    state = START;
+}
+
+void goToGame() {
+    state = GAME;
+}
+
+void goToWin() {
+    state = WIN;
 }

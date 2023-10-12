@@ -49,6 +49,7 @@ void waitForVBlank();
 #define CYAN    RGB(0, 31, 31)
 #define MAGENTA RGB(31, 0, 31)
 #define YELLOW  RGB(31, 31, 0)
+#define ORANGE  RGB(31, 20, 0)
 
 // Checks for collision between two rectangles
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);

@@ -1,177 +1,76 @@
-# 1 "game.c"
+# 1 "print.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "game.c"
-# 1 "gba.h" 1
+# 1 "print.c"
+# 22 "print.c"
+# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdarg.h" 1 3 4
+# 40 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdarg.h" 3 4
+
+# 40 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdarg.h" 3 4
+typedef __builtin_va_list __gnuc_va_list;
+# 99 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdarg.h" 3 4
+typedef __gnuc_va_list va_list;
+# 23 "print.c" 2
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 1 3
+# 29 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 1 3
+# 10 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/newlib.h" 1 3
+# 14 "/opt/devkitpro/devkitARM/arm-none-eabi/include/newlib.h" 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_newlib_version.h" 1 3
+# 15 "/opt/devkitpro/devkitARM/arm-none-eabi/include/newlib.h" 2 3
+# 11 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 2 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/config.h" 1 3
 
 
 
-
-typedef signed char s8;
-typedef unsigned char u8;
-typedef signed short s16;
-typedef unsigned short u16;
-typedef signed int s32;
-typedef unsigned int u32;
-typedef signed long long s64;
-typedef unsigned long long u64;
-
-
-
-
-
-
-extern volatile unsigned short *videoBuffer;
-# 37 "gba.h"
-void waitForVBlank();
-# 63 "gba.h"
-int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 79 "gba.h"
-extern unsigned short oldButtons;
-extern unsigned short buttons;
-
-
-
-
-typedef volatile struct {
-    volatile const void *src;
-    volatile void *dst;
-    volatile unsigned int cnt;
-} DMA;
-extern DMA *dma;
-# 111 "gba.h"
-void DMANow(int channel, volatile const void *src, volatile void *dst, unsigned int cnt);
-# 2 "game.c" 2
-# 1 "game.h" 1
-
-typedef struct {
-    int x;
-    int y;
-    int oldX;
-    int oldY;
-    int dx;
-    int height;
-    int width;
-} PLAYER;
-
-typedef struct {
-    int x;
-    int y;
-    int oldX;
-    int oldY;
-    int dx;
-    int dy;
-    int height;
-    int width;
-    unsigned short color;
-} BALL;
-
-typedef struct {
-    int x;
-    int y;
-    int oldX;
-    int oldY;
-    int height;
-    int width;
-    unsigned short color;
-    int active;
-    int erased;
-} BLOCK;
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/ieeefp.h" 1 3
+# 5 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/config.h" 2 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/features.h" 1 3
+# 6 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/config.h" 2 3
+# 12 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 2 3
+# 30 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 2 3
 
 
 
 
 
-extern PLAYER player;
-extern BALL ball;
-extern BLOCK blocks[30];
-extern int score;
-
-
-
-
-enum {BLACKID=(256-8), GREYID, MAROONID, DEEPREDID, GOLDID, BROWNID, SALMONID, PINKID};
-extern unsigned short colors[8];
-
-
-void initGame();
-void initPlayer();
-void initBall();
-void initBlocks();
-void updateGame();
-void updatePlayer();
-void updateBall();
-void updateBlocks();
-void drawGame();
-void drawPlayer();
-void drawBall();
-void drawBlocks();
-# 3 "game.c" 2
-# 1 "mode4.h" 1
-# 10 "mode4.h"
-void flipPage();
-void setPixel4(int x, int y, unsigned char colorIndex);
-void drawRect4(int x, int y, int width, int height, volatile unsigned char colorIndex);
-void fillScreen4(volatile unsigned char colorIndex);
-void drawImage4(int x, int y, int width, int height, const unsigned short *image);
-void drawFullscreenImage4(const unsigned short *image);
-void drawChar4(int x, int y, char ch, unsigned short colorIndex);
-void drawString4(int x, int y, char *str, unsigned short colorIndex);
-# 4 "game.c" 2
-# 1 "print.h" 1
-# 26 "print.h"
-# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdint.h" 1 3 4
-# 9 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdint.h" 3 4
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdint.h" 1 3 4
-# 12 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdint.h" 3 4
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 1 3 4
-
-
-
-
-
-
-
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/features.h" 1 3 4
-# 28 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/features.h" 3 4
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_newlib_version.h" 1 3 4
-# 29 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/features.h" 2 3 4
-# 9 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 2 3 4
-# 41 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3 4
-
-# 41 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3 4
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/cdefs.h" 1 3
+# 45 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/cdefs.h" 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 1 3
+# 41 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3
 typedef signed char __int8_t;
 
 typedef unsigned char __uint8_t;
-# 55 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3 4
+# 55 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3
 typedef short int __int16_t;
 
 typedef short unsigned int __uint16_t;
-# 77 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3 4
+# 77 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3
 typedef long int __int32_t;
 
 typedef long unsigned int __uint32_t;
-# 103 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3 4
+# 103 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3
 typedef long long int __int64_t;
 
 typedef long long unsigned int __uint64_t;
-# 134 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3 4
+# 134 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3
 typedef signed char __int_least8_t;
 
 typedef unsigned char __uint_least8_t;
-# 160 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3 4
+# 160 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3
 typedef short int __int_least16_t;
 
 typedef short unsigned int __uint_least16_t;
-# 182 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3 4
+# 182 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3
 typedef long int __int_least32_t;
 
 typedef long unsigned int __uint_least32_t;
-# 200 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3 4
+# 200 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3
 typedef long long int __int_least64_t;
 
 typedef long long unsigned int __uint_least64_t;
-# 214 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3 4
+# 214 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_default_types.h" 3
 typedef long long int __intmax_t;
 
 
@@ -191,7 +90,55 @@ typedef long long unsigned int __uintmax_t;
 typedef int __intptr_t;
 
 typedef unsigned int __uintptr_t;
-# 13 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdint.h" 2 3 4
+# 46 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/cdefs.h" 2 3
+
+# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 1 3 4
+# 209 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 3 4
+typedef unsigned int size_t;
+# 48 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/cdefs.h" 2 3
+# 36 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 2 3
+# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 1 3 4
+# 143 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 3 4
+typedef int ptrdiff_t;
+# 321 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 3 4
+typedef unsigned int wchar_t;
+# 37 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 2 3
+# 60 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/reent.h" 1 3
+# 13 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/reent.h" 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 1 3
+# 14 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/reent.h" 2 3
+# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 1 3 4
+# 15 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/reent.h" 2 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/_types.h" 1 3
+# 24 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/_types.h" 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_types.h" 1 3
+
+
+
+
+
+
+typedef __int64_t _off_t;
+
+
+typedef __int64_t _fpos_t;
+
+
+typedef __uint32_t __ino_t;
+
+
+typedef __uint32_t __dev_t;
+# 25 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/_types.h" 2 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/lock.h" 1 3
+
+
+
+
+# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdint.h" 1 3 4
+# 9 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdint.h" 3 4
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdint.h" 1 3 4
+# 13 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdint.h" 3 4
 # 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/_intsup.h" 1 3 4
 # 35 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/_intsup.h" 3 4
        
@@ -315,79 +262,7 @@ typedef __uint_least64_t uint_least64_t;
   typedef long long int int_fast64_t;
   typedef long long unsigned int uint_fast64_t;
 # 10 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdint.h" 2 3 4
-# 27 "print.h" 2
-# 36 "print.h"
-
-# 36 "print.h"
-void mgba_printf_level(int level, const char* ptr, ...);
-void mgba_printf(const char* string, ...);
-void mgba_break(void);
-uint8_t mgba_open(void);
-void mgba_close(void);
-# 5 "game.c" 2
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 1 3
-# 10 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/ieeefp.h" 1 3
-# 11 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 2 3
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 1 3
-# 10 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 3
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/newlib.h" 1 3
-# 11 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 2 3
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/config.h" 1 3
-
-
-
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/ieeefp.h" 1 3
-# 5 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/config.h" 2 3
-# 12 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 2 3
-# 12 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 2 3
-
-
-
-
-# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 1 3 4
-# 209 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 3 4
-
-# 209 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 3 4
-typedef unsigned int size_t;
-# 321 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 3 4
-typedef unsigned int wchar_t;
-# 17 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 2 3
-
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/reent.h" 1 3
-# 13 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/reent.h" 3
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/_ansi.h" 1 3
-# 14 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/reent.h" 2 3
-# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 1 3 4
-# 143 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 3 4
-typedef int ptrdiff_t;
-# 15 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/reent.h" 2 3
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/_types.h" 1 3
-# 24 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/_types.h" 3
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/_types.h" 1 3
-
-
-
-
-
-
-typedef __int64_t _off_t;
-
-
-typedef __int64_t _fpos_t;
-
-
-typedef __uint32_t __ino_t;
-
-
-typedef __uint32_t __dev_t;
-# 25 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/_types.h" 2 3
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/lock.h" 1 3
-
-
-
-
-
+# 6 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/lock.h" 2 3
 
 typedef int32_t _LOCK_T;
 
@@ -535,9 +410,7 @@ typedef long __suseconds_t;
 typedef unsigned long __useconds_t;
 
 
-
-
-typedef char * __va_list;
+typedef __builtin_va_list __va_list;
 # 16 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/reent.h" 2 3
 
 
@@ -772,195 +645,7 @@ void _reclaim_reent (struct _reent *);
 
 
   struct _reent * __getreent (void);
-# 19 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 2 3
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/cdefs.h" 1 3
-# 47 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/cdefs.h" 3
-# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 1 3 4
-# 48 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/cdefs.h" 2 3
-# 20 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 2 3
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/stdlib.h" 1 3
-# 21 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 2 3
-# 33 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-
-
-typedef struct
-{
-  int quot;
-  int rem;
-} div_t;
-
-typedef struct
-{
-  long quot;
-  long rem;
-} ldiv_t;
-
-
-typedef struct
-{
-  long long int quot;
-  long long int rem;
-} lldiv_t;
-
-
-
-
-typedef int (*__compar_fn_t) (const void *, const void *);
-
-
-
-
-
-
-
-int __locale_mb_cur_max (void);
-
-
-
-void abort (void) __attribute__ ((__noreturn__));
-int abs (int);
-
-
-
-
-
-int atexit (void (*__func)(void));
-double atof (const char *__nptr);
-
-
-
-int atoi (const char *__nptr);
-int _atoi_r (struct _reent *, const char *__nptr);
-long atol (const char *__nptr);
-long _atol_r (struct _reent *, const char *__nptr);
-void * bsearch (const void *__key,
-         const void *__base,
-         size_t __nmemb,
-         size_t __size,
-         __compar_fn_t _compar);
-void *calloc(size_t, size_t) __attribute__((__malloc__)) __attribute__((__warn_unused_result__))
-      __attribute__((__alloc_size__(1, 2))) ;
-div_t div (int __numer, int __denom);
-void exit (int __status) __attribute__ ((__noreturn__));
-void free (void *) ;
-char * getenv (const char *__string);
-char * _getenv_r (struct _reent *, const char *__string);
-char * _findenv (const char *, int *);
-char * _findenv_r (struct _reent *, const char *, int *);
-
-
-
-
-long labs (long);
-ldiv_t ldiv (long __numer, long __denom);
-void *malloc(size_t) __attribute__((__malloc__)) __attribute__((__warn_unused_result__)) __attribute__((__alloc_size__(1))) ;
-int mblen (const char *, size_t);
-int _mblen_r (struct _reent *, const char *, size_t, _mbstate_t *);
-int mbtowc (wchar_t *restrict, const char *restrict, size_t);
-int _mbtowc_r (struct _reent *, wchar_t *restrict, const char *restrict, size_t, _mbstate_t *);
-int wctomb (char *, wchar_t);
-int _wctomb_r (struct _reent *, char *, wchar_t, _mbstate_t *);
-size_t mbstowcs (wchar_t *restrict, const char *restrict, size_t);
-size_t _mbstowcs_r (struct _reent *, wchar_t *restrict, const char *restrict, size_t, _mbstate_t *);
-size_t wcstombs (char *restrict, const wchar_t *restrict, size_t);
-size_t _wcstombs_r (struct _reent *, char *restrict, const wchar_t *restrict, size_t, _mbstate_t *);
-# 134 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-char * _mkdtemp_r (struct _reent *, char *);
-int _mkostemp_r (struct _reent *, char *, int);
-int _mkostemps_r (struct _reent *, char *, int, int);
-int _mkstemp_r (struct _reent *, char *);
-int _mkstemps_r (struct _reent *, char *, int);
-char * _mktemp_r (struct _reent *, char *) __attribute__ ((__deprecated__("the use of `mktemp' is dangerous; use `mkstemp' instead")));
-void qsort (void *__base, size_t __nmemb, size_t __size, __compar_fn_t _compar);
-int rand (void);
-void *realloc(void *, size_t) __attribute__((__warn_unused_result__)) __attribute__((__alloc_size__(2))) ;
-# 156 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-void srand (unsigned __seed);
-double strtod (const char *restrict __n, char **restrict __end_PTR);
-double _strtod_r (struct _reent *,const char *restrict __n, char **restrict __end_PTR);
-
-float strtof (const char *restrict __n, char **restrict __end_PTR);
-
-
-
-
-
-
-
-long strtol (const char *restrict __n, char **restrict __end_PTR, int __base);
-long _strtol_r (struct _reent *,const char *restrict __n, char **restrict __end_PTR, int __base);
-unsigned long strtoul (const char *restrict __n, char **restrict __end_PTR, int __base);
-unsigned long _strtoul_r (struct _reent *,const char *restrict __n, char **restrict __end_PTR, int __base);
-# 188 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-int system (const char *__string);
-# 199 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-void _Exit (int __status) __attribute__ ((__noreturn__));
-
-
-
-
-int _putenv_r (struct _reent *, char *__string);
-void * _reallocf_r (struct _reent *, void *, size_t);
-
-
-
-int _setenv_r (struct _reent *, const char *__string, const char *__value, int __overwrite);
-# 221 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-char * __itoa (int, char *, int);
-char * __utoa (unsigned, char *, int);
-# 260 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-long long atoll (const char *__nptr);
-
-long long _atoll_r (struct _reent *, const char *__nptr);
-
-long long llabs (long long);
-lldiv_t lldiv (long long __numer, long long __denom);
-long long strtoll (const char *restrict __n, char **restrict __end_PTR, int __base);
-
-long long _strtoll_r (struct _reent *, const char *restrict __n, char **restrict __end_PTR, int __base);
-
-unsigned long long strtoull (const char *restrict __n, char **restrict __end_PTR, int __base);
-
-unsigned long long _strtoull_r (struct _reent *, const char *restrict __n, char **restrict __end_PTR, int __base);
-# 281 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-int _unsetenv_r (struct _reent *, const char *__string);
-
-
-
-
-
-
-
-char * _dtoa_r (struct _reent *, double, int, int, int *, int*, char**);
-
-void * _malloc_r (struct _reent *, size_t) ;
-void * _calloc_r (struct _reent *, size_t, size_t) ;
-void _free_r (struct _reent *, void *) ;
-void * _realloc_r (struct _reent *, void *, size_t) ;
-void _mstats_r (struct _reent *, char *);
-
-int _system_r (struct _reent *, const char *);
-
-void __eprintf (const char *, const char *, unsigned int, const char *);
-# 319 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-extern long double _strtold_r (struct _reent *, const char *restrict, char **restrict);
-
-extern long double strtold (const char *restrict, char **restrict);
-# 336 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
-
-# 6 "game.c" 2
-# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 1 3
-# 36 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 3
-# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 1 3 4
-# 37 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 2 3
-
-
-
-# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdarg.h" 1 3 4
-# 40 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdarg.h" 3 4
-typedef __builtin_va_list __gnuc_va_list;
-# 41 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 2 3
-# 61 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 3
+# 61 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 2 3
 # 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/types.h" 1 3
 # 28 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/types.h" 3
 typedef __uint8_t u_int8_t;
@@ -1359,226 +1044,145 @@ _putchar_unlocked(int _c)
 }
 # 797 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdio.h" 3
 
-# 7 "game.c" 2
-# 1 "imposter.h" 1
-# 21 "imposter.h"
-
-# 21 "imposter.h"
-extern const unsigned short imposterBitmap[512];
-
-
-extern const unsigned short imposterPal[256];
-# 8 "game.c" 2
+# 24 "print.c" 2
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/string.h" 1 3
+# 17 "/opt/devkitpro/devkitARM/arm-none-eabi/include/string.h" 3
+# 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stddef.h" 1 3 4
+# 18 "/opt/devkitpro/devkitARM/arm-none-eabi/include/string.h" 2 3
+# 27 "/opt/devkitpro/devkitARM/arm-none-eabi/include/string.h" 3
 
 
+void * memchr (const void *, int, size_t);
+int memcmp (const void *, const void *, size_t);
+void * memcpy (void *restrict, const void *restrict, size_t);
+void * memmove (void *, const void *, size_t);
+void * memset (void *, int, size_t);
+char *strcat (char *restrict, const char *restrict);
+char *strchr (const char *, int);
+int strcmp (const char *, const char *);
+int strcoll (const char *, const char *);
+char *strcpy (char *restrict, const char *restrict);
+size_t strcspn (const char *, const char *);
+char *strerror (int);
+size_t strlen (const char *);
+char *strncat (char *restrict, const char *restrict, size_t);
+int strncmp (const char *, const char *, size_t);
+char *strncpy (char *restrict, const char *restrict, size_t);
+char *strpbrk (const char *, const char *);
+char *strrchr (const char *, int);
+size_t strspn (const char *, const char *);
+char *strstr (const char *, const char *);
+
+char *strtok (char *restrict, const char *restrict);
+
+size_t strxfrm (char *restrict, const char *restrict, size_t);
+# 86 "/opt/devkitpro/devkitARM/arm-none-eabi/include/string.h" 3
+char *_strdup_r (struct _reent *, const char *);
 
 
-PLAYER player;
-BALL ball;
-BLOCK blocks[30];
+
+char *_strndup_r (struct _reent *, const char *, size_t);
+# 112 "/opt/devkitpro/devkitARM/arm-none-eabi/include/string.h" 3
+char * _strerror_r (struct _reent *, int, int, int *);
+# 134 "/opt/devkitpro/devkitARM/arm-none-eabi/include/string.h" 3
+char *strsignal (int __signo);
+# 175 "/opt/devkitpro/devkitARM/arm-none-eabi/include/string.h" 3
+# 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/sys/string.h" 1 3
+# 176 "/opt/devkitpro/devkitARM/arm-none-eabi/include/string.h" 2 3
 
 
-int score;
+# 25 "print.c" 2
 
 
-void initGame() {
-
-    score = 0;
 
 
-    initPlayer();
-    initBall();
-    initBlocks();
 
 
-    unsigned short colors[8] = {(((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10), (((5) & 31) | ((3) & 31) << 5 | ((3) & 31) << 10), (((18) & 31) | ((9) & 31) << 5 | ((9) & 31) << 10), (((23) & 31) | ((7) & 31) << 5 | ((7) & 31) << 10), (((26) & 31) | ((18) & 31) << 5 | ((1) & 31) << 10), (((10) & 31) | ((6) & 31) << 5 | ((5) & 31) << 10), (((23) & 31) | ((10) & 31) << 5 | ((10) & 31) << 10), (((27) & 31) | ((25) & 31) << 5 | ((25) & 31) << 10)};
 
 
-    DMANow(3, &imposterPal, ((unsigned short *)0x5000000), 512);
-
-
-    for (int i = 0; i < 8; i++) {
-        ((unsigned short *)0x5000000)[256-8 +i] = colors[i];
-    }
+# 32 "print.c"
+uint8_t mgba_open(void) {
+ *(volatile uint16_t*) 0x4FFF780 = 0xC0DE;
+ return *(volatile uint16_t*) 0x4FFF780 == 0x1DEA;
 }
 
 
-void initPlayer() {
-    player.y = 128;
-    player.x = 100;
-    player.oldY = player.y;
-    player.oldX = player.x;
-    player.dx = 0;
-    player.height = 32;
-    player.width = 32;
+
+
+
+void mgba_printf_level(int level, const char* ptr, ...) {
+
+ va_list args;
+ level &= 0x7;
+ 
+# 45 "print.c" 3 4
+__builtin_va_start(
+# 45 "print.c"
+args
+# 45 "print.c" 3 4
+,
+# 45 "print.c"
+ptr
+# 45 "print.c" 3 4
+)
+# 45 "print.c"
+                   ;
+ vsnprintf((char*) 0x4FFF600, 0x100, ptr, args);
+ 
+# 47 "print.c" 3 4
+__builtin_va_end(
+# 47 "print.c"
+args
+# 47 "print.c" 3 4
+)
+# 47 "print.c"
+            ;
+ *(volatile uint16_t*) 0x4FFF700 = level | 0x100;
+
 }
 
 
-void initBall() {
-    ball.y = 134;
-    ball.x = 128;
-    ball.oldY = ball.y;
-    ball.oldX = ball.x;
-    if (rand() & 1) {
-        ball.dx = 1;
-    } else {
-        ball.dx = -1;
-    }
-    ball.dy = -3;
-    ball.height = 3;
-    ball.width = 3;
-    ball.color = GOLDID;
+
+void mgba_printf(const char* ptr, ...) {
+
+
+ int level = 2;
+ va_list args;
+ level &= 0x7;
+ 
+# 60 "print.c" 3 4
+__builtin_va_start(
+# 60 "print.c"
+args
+# 60 "print.c" 3 4
+,
+# 60 "print.c"
+ptr
+# 60 "print.c" 3 4
+)
+# 60 "print.c"
+                   ;
+ vsnprintf((char*) 0x4FFF600, 0x100, ptr, args);
+ 
+# 62 "print.c" 3 4
+__builtin_va_end(
+# 62 "print.c"
+args
+# 62 "print.c" 3 4
+)
+# 62 "print.c"
+            ;
+ *(volatile uint16_t*) 0x4FFF700 = level | 0x100;
+
 }
 
 
-void initBlocks() {
-    mgba_open();
-    for (int i = 0; i < 30; i++) {
-        blocks[i].y = 10 + (i/6)*6;
-        blocks[i].height = 4;
-        blocks[i].active = 1;
-    }
-    for (int i = 0; i < 6; i++) {
-        blocks[i].width = 36;
-        blocks[i].x = 2 + (blocks[i].width * (i) + (i*4));
-        blocks[i].color = BROWNID;
-        mgba_printf("1. x: %d, width: %d", blocks[i].x, blocks[i].width);
 
-    }
-    for (int i = 6; i < 12; i++) {
-        blocks[i].width = 35;
-        blocks[i].x = 2 + ((blocks[i].width + 1) * (i-6) + ((i-6)*4));
-        blocks[i].color = GOLDID;
-        mgba_printf("2. x: %d, width: %d", blocks[i].x, blocks[i].width);
-
-    }
-    for (int i = 12; i < 18; i++) {
-        blocks[i].width = 35;
-        blocks[i].x = 1 + ((blocks[i].width + 1) * (i-12) + ((i-12)*4));
-        blocks[i].color = MAROONID;
-        mgba_printf("3. x: %d, width: %d", blocks[i].x, blocks[i].width);
-    }
-    for (int i = 18; i < 24; i++) {
-        blocks[i].width = 35;
-        blocks[i].x = 2 + ((blocks[i].width + 1) * (i-18) + ((i-18)*4));
-        blocks[i].color = PINKID;
-        mgba_printf("4. x: %d, width: %d", blocks[i].x, blocks[i].width);
-
-    }
-    for (int i = 24; i < 30; i++) {
-        blocks[i].width = 36;
-        blocks[i].x = 1 + (blocks[i].width * (i-24) + ((i-24)*4));
-        blocks[i].color = DEEPREDID;
-        mgba_printf("5. x: %d, width: %d", blocks[i].x, blocks[i].width);
-
-    }
+void mgba_break(void) {
+ mgba_printf_level(0, "Breakpoint Reached");
 }
 
 
-void updateGame() {
-
-    updatePlayer();
-    updateBall();
-    for (int i = 0; i < 30; i++) {
-        updateBlocks(&blocks[i]);
-    }
-}
-
-
-void updatePlayer() {
-
-    if ((~(buttons) & ((1<<5))) && (player.x-1 > 0)) {
-        player.dx = -3;
-    }
-    else if ((~(buttons) & ((1<<4))) && (player.x + player.width < 240 -1)) {
-        player.dx = 3;
-    } else {
-        player.dx = 0;
-    }
-
-    player.oldX = player.x;
-    player.x += player.dx;
-}
-
-
-void updateBall() {
-
-    if (ball.y <=1) {
-        ball.dy = 2;
-    }
-    if (ball.y + ball.height >= 159) {
-        ball.dy = -2;
-
-        score = -1;
-    }
-    if (ball.x <= 1) {
-        ball.dx = 1;
-    }
-    if (ball.x + ball.width >= 239) {
-        ball.dx = -1;
-    }
-
-    if (collision(ball.x, ball.y, ball.width, ball.height, player.x, player.y, player.width/2, player.height)) {
-        ball.dy *= -1;
-        ball.dx = -1;
-    } else if (collision(ball.x, ball.y, ball.width, ball.height, (player.x+player.width/2), player.y, player.width/2, player.height)) {
-        ball.dy *= -1;
-        ball.dx = 1;
-    }
-
-    ball.oldY = ball.y;
-    ball.oldX = ball.x;
-    ball.y += ball.dy;
-    ball.x += ball.dx;
-}
-
-
-void updateBlocks(BLOCK* b) {
-
-    if (b->active) {
-
-        if (collision(ball.x, ball.y, ball.width, ball.height, b->x, b->y, b->width, b->height)) {
-            if (collision(ball.x, ball.y, ball.width, ball.height, b->x, b->y, ((b->width)/2), b->height)) {
-                ball.dy *= -1;
-                ball.dx = -1;
-                b->active = 0;
-                b->erased = 0;
-            } else if (collision(ball.x, ball.y, ball.width, ball.height, (b->x+(b->width/2)), b->y, b->width/2, b->height)) {
-                ball.dy *= -1;
-                ball.dx = 1;
-                b->active = 0;
-                b->erased = 0;
-            }
-            score += 1;
-        }
-    }
-}
-
-
-void drawGame() {
-    fillScreen4(PINKID);
-    drawPlayer();
-    drawBall();
-    for (int i = 0; i < 30; i++) {
-        drawBlocks(&blocks[i]);
-    }
-}
-
-
-void drawPlayer() {
-
-    drawImage4(player.x, player.y, player.width, player.height, imposterBitmap);
-    mgba_printf("%d", player.x);
-}
-
-
-void drawBall() {
-    drawRect4(ball.x, ball.y, ball.width, ball.height, ball.color);
-}
-
-
-void drawBlocks(BLOCK* b) {
-    if (b->active) {
-        drawRect4(b->x, b->y, b->width, b->height, b->color);
-    }
+void mgba_close(void) {
+ *(volatile uint16_t*) 0x4FFF780 = 0;
 }

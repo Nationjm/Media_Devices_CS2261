@@ -583,6 +583,11 @@ updateGame:
 .L73:
 	.word	blocks
 	.size	updateGame, .-updateGame
+	.section	.rodata.str1.4
+	.align	2
+.LC6:
+	.ascii	"%d\000"
+	.text
 	.align	2
 	.global	drawPlayer
 	.syntax unified
@@ -593,27 +598,34 @@ drawPlayer:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, lr}
-	ldr	r0, .L77
-	ldr	ip, .L77+4
-	sub	sp, sp, #8
-	ldr	r3, [r0, #20]
-	ldr	r2, [r0, #24]
-	ldr	r4, .L77+8
-	ldm	r0, {r0, r1}
+	push	{r4, r5, lr}
+	ldr	ip, .L77
+	ldr	r4, .L77+4
+	sub	sp, sp, #12
+	ldm	r4, {r0, r1}
+	ldr	r3, [r4, #20]
+	ldr	r2, [r4, #24]
 	str	ip, [sp]
+	ldr	r5, .L77+8
 	mov	lr, pc
-	bx	r4
-	add	sp, sp, #8
+	bx	r5
+	ldr	r1, [r4]
+	ldr	r0, .L77+12
+	ldr	r3, .L77+16
+	mov	lr, pc
+	bx	r3
+	add	sp, sp, #12
 	@ sp needed
-	pop	{r4, lr}
+	pop	{r4, r5, lr}
 	bx	lr
 .L78:
 	.align	2
 .L77:
-	.word	player
 	.word	imposterBitmap
+	.word	player
 	.word	drawImage4
+	.word	.LC6
+	.word	mgba_printf
 	.size	drawPlayer, .-drawPlayer
 	.align	2
 	.global	drawBall

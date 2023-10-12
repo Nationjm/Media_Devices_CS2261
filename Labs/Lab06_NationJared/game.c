@@ -204,6 +204,7 @@ void drawGame() {
 void drawPlayer() {
     // UNCOMMENT 4.3
     drawImage4(player.x, player.y, player.width, player.height, imposterBitmap);
+    mgba_printf("%d", player.x);
 }
 
 // drawing the ball
