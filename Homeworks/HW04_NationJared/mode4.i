@@ -59,6 +59,7 @@ void drawRectangle4(int x, int y, int width, int height, volatile unsigned char 
 void fillScreen4(volatile unsigned char colorIndex);
 void drawImage4(int x, int y, int width, int height, const unsigned short *image);
 void drawFullscreenImage4(const unsigned short *image);
+void drawString4(int x, int y, char *str, unsigned short colorIndex);
 # 2 "mode4.c" 2
 # 1 "font.h" 1
 

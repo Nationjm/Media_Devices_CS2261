@@ -1,3 +1,4 @@
+
 #include "mode4.h"
 
 // Sets a pixel in mode 4

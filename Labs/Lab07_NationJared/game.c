@@ -43,7 +43,7 @@ void initKitty() {
     kitty.direction = RIGHT;
 
     // TODO 2.0: set kitty.oamIndex appropriately
-
+    kitty.oamIndex = 0;
     // Initialize sprite in middle of screen
     kitty.x = SCREENWIDTH / 2 - kitty.width / 2;
     kitty.y = 95;
@@ -87,14 +87,14 @@ void updateKitty() {
             kitty.x -= kitty.xVel;
         }
         // TODO 2.1: set kitty.direction appropriately
-
+        kitty.direction = LEFT;
     }
     if(BUTTON_HELD(BUTTON_RIGHT)) {
         if (kitty.x + kitty.width < SCREENWIDTH) {
             kitty.x += kitty.xVel;
         }
         // TODO 2.1: set kitty.direction appropriately
-
+        kitty.direction = RIGHT;
     }
 
     if (collision(kitty.x, kitty.y, kitty.width, kitty.height, paw.x, paw.y, paw.width, paw.height)) collided = 1;
@@ -105,7 +105,12 @@ void updateKitty() {
 // Draw the kitty
 void drawKitty() {
     // TODO 2.2: set up the kitty's sprite in the shadowOAM
-    
+    shadowOAM[0].attr0 = ATTR0_WIDE | ATTR0_Y(kitty.y) | ATTR0_REGULAR;
+    shadowOAM[0].attr1 = ATTR1_MEDIUM | ATTR1_X(kitty.x);
+    if (kitty.direction == RIGHT) {
+        shadowOAM[0].attr1 |= ATTR1_HFLIP;
+    }
+    shadowOAM[0].attr2 = ATTR2_PALROW(kittyPalette) | ATTR2_PRIORITY(1) | (512 + ATTR2_TILEID(0, 0));
     //Changes the kitty'scolor if collided
     if (collided) {
         if (kitty.framesPassed % 30 == 0) {
@@ -114,16 +119,25 @@ void drawKitty() {
     }
 
     // TODO 2.3: set up the sprite for the kitty's shadow in the shadowOAM
-    
+    shadowOAM[1].attr0 = ATTR0_WIDE | ATTR0_Y(kitty.y + kitty.height - 4) | ATTR0_REGULAR;
+    shadowOAM[1].attr1 = ATTR1_SMALL | ATTR1_X(kitty.x);
+    if (kitty.direction == RIGHT) {
+        shadowOAM[1].attr1 |= ATTR1_HFLIP;
+    }
+    shadowOAM[1].attr2 = ATTR2_PALROW(kittyPalette) | ATTR2_PRIORITY(1) | (512 + ATTR2_TILEID(0, 2));
 }
 
 // Draw the statue
 void drawStatue() {
     // TODO 3.0: set up the statue's sprite in the shadowOAM
-
+    shadowOAM[statue.oamIndex].attr0 = ATTR0_SQUARE | ATTR0_Y(statue.y);
+    shadowOAM[statue.oamIndex].attr1 = ATTR1_MEDIUM | ATTR1_X(statue.x);
+    shadowOAM[statue.oamIndex].attr2 = ATTR2_PALROW(3) | ATTR2_PRIORITY(0) | (512 + ATTR2_TILEID(4, 0));
 }
 
 void drawPaw() {
     // TODO 4.0: set up the paw's sprite in the shadowOAM
-
+    shadowOAM[paw.oamIndex].attr0 = ATTR0_SQUARE | ATTR0_Y(paw.y);
+    shadowOAM[paw.oamIndex].attr1 = ATTR1_SMALL | ATTR1_X(paw.x);
+    shadowOAM[paw.oamIndex].attr2 = ATTR2_PALROW(4) | ATTR2_PRIORITY(1) | (512 + ATTR2_TILEID(8, 0));
 }

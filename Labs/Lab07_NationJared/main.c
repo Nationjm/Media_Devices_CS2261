@@ -5,7 +5,7 @@
 #include "background.h"
 #include "print.h"
 // TODO 1.2: include .h file from usenti
-
+#include "spritesheet.h"
 
 // Prototypes
 void initialize();
@@ -45,7 +45,7 @@ void initialize() {
     // Set up the display
     
     //TODO 1.7: delete the 0 and enable sprites
-    REG_DISPCTL = MODE(4) | BG2_ENABLE | 0;
+    REG_DISPCTL = MODE(4) | BG2_ENABLE | 0 | SPRITE_ENABLE;
     REG_BG2CNT = 2;
 
     // Set up the first state
@@ -66,14 +66,15 @@ void goToGame() {
 
     // Set up the sprites
     // TODO 1.3: load tiles
-
+    DMANow(3, spritesheetTiles, &CHARBLOCK[5], spritesheetTilesLen / 2);
     // TODO 1.4: load palette
-
+    DMANow(3, spritesheetPal, SPRITE_PALETTE, spritesheetPalLen / 2);
     // Hide all sprites in shadowOAM
     hideSprites();
 
     // TODO 1.6: Copy shadowOAM into OAM during vBlank
-
+    waitForVBlank();
+    DMANow(3, shadowOAM, OAM, 128 * 4);
 
     state = GAME;
 }

@@ -2,6 +2,7 @@
 #include "mode4.h"
 #include "print.h"
 #include "game.h"
+#include <stdio.h>
 
 // Add makefile
 
@@ -13,19 +14,29 @@ enum {
     START,
     PAUSE,
     GAME,
-    WIN,
-    LOSE
+    HIGHSCORE,
+    LOSE,
+    SCOREBOARD
 } STATE;
 int state;
 
+// random variable seeding
+int rSeed = 0;
+
+// frameCount variable to initialize cones
+int frameCount = 0;
+
+int gameOver = 0; // variable to check if the game is over
+
 void initialize();
 
-// State Prototypes
+// State Motion Prototypes
 void goToStart();
 void goToGame();
 void goToPause();
-void goToWin();
+void goToHighScore();
 void goToLose();
+void goToScoreBoard();
 
 
 int main() {
@@ -45,18 +56,53 @@ int main() {
         switch(state) {
             case START:
                 start();
+                rSeed += 1;
+                if (BUTTON_PRESSED(BUTTON_START) || BUTTON_PRESSED(BUTTON_A)) {
+                    goToGame();
+                }
+                if (BUTTON_PRESSED(BUTTON_SELECT) || BUTTON_PRESSED(BUTTON_B)) {
+                    goToScoreBoard();
+                }
                 break;
             case GAME:
-                game();
+                frameCount += 1;
+                gameOver = game(frameCount);
+                if (gameOver == 3) {
+                    goToHighScore();
+                } else if (gameOver) {
+                    goToLose();
+                }
+                if (BUTTON_PRESSED(BUTTON_SELECT) || BUTTON_PRESSED(BUTTON_B)) {
+                    goToPause();
+                }
                 break;
             case PAUSE:
                 pause();
+                if (BUTTON_PRESSED(BUTTON_SELECT) || BUTTON_PRESSED(BUTTON_B)) {
+                    goToGame();
+                }
                 break;
-            case WIN:
-                win();
+            case HIGHSCORE:
+                frameCount += 1;
+                highScore(frameCount);
+                if (BUTTON_PRESSED(BUTTON_START) || BUTTON_PRESSED(BUTTON_A)) {
+                    goToScoreBoard();
+                }
+                if (frameCount > 140) {
+                    frameCount = 0;
+                }
                 break;
             case LOSE:
                 lose();
+                if (BUTTON_PRESSED(BUTTON_START) || BUTTON_PRESSED(BUTTON_A)) {
+                    goToStart();
+                }
+                break;
+            case SCOREBOARD:
+                scoreboard();
+                if (BUTTON_PRESSED(BUTTON_SELECT) || BUTTON_PRESSED(BUTTON_B)) {
+                    goToStart();
+                }
                 break;
         }
 
@@ -84,8 +130,23 @@ void goToStart() {
 
 void goToGame() {
     state = GAME;
+    srand(rSeed);
+    frameCount = 0;
 }
 
-void goToWin() {
-    state = WIN;
+void goToHighScore() {
+    state = HIGHSCORE;
+    frameCount = 0;
+}
+
+void goToLose() {
+    state = LOSE;
+}
+
+void goToPause() {
+    state = PAUSE;
+}
+
+void goToScoreBoard() {
+    state = SCOREBOARD;
 }
