@@ -1,0 +1,60 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Labs/Lab08_NationJared/Tiles/connectFourTilemap.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Labs/Lab08_NationJared/Tiles/connectFourTilemap.tmx": {
+            "scale": 3.6589843749999997,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 63.95217252055087,
+                "y": 108.09010355503362
+            }
+        },
+        "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Labs/Lab08_NationJared/Tiles/connectFourTiles.tsx": {
+            "scaleInDock": 7.5817,
+            "scaleInEditor": 1
+        },
+        "tilemap.tmx": {
+            "scale": 1.5491,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 348.5895035827255,
+                "y": 282.0992834549093
+            }
+        },
+        "tileset.tsx": {
+            "scaleInDock": 13.8141,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Labs/Lab08_NationJared",
+    "last.imagePath": "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Demos/Tiled-Demo",
+    "map.height": 32,
+    "map.lastUsedExportFilter": "GBA source files - regular (*.c *.h)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 32,
+    "openFiles": [
+        "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Labs/Lab08_NationJared/Tiles/connectFourTilemap.tmx",
+        "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Labs/Lab08_NationJared/Tiles/connectFourTiles.tsx"
+    ],
+    "project": "Tiled-Demo.tiled-project",
+    "recentFiles": [
+        "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Labs/Lab08_NationJared/Tiles/connectFourTiles.tsx",
+        "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Labs/Lab08_NationJared/Tiles/connectFourTilemap.tmx",
+        "tileset.tsx",
+        "tilemap.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "world.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "blocks.tsx": {
+            "scaleInDock": 5.9028,
+            "scaleInEditor": 4.2392
+        },
+        "world.tmx": {
+            "scale": 2.53828125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 127.25146198830409,
+                "y": 128.23638042474607
+            }
+        }
+    },
+    "last.exportedFilePath": "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Demos/Mode_0_Demo",
+    "last.imagePath": "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Demos/Mode_0_Demo/Tiles",
+    "map.height": 32,
+    "map.lastUsedExportFilter": "GBA source files - regular (*.c *.h)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 32,
+    "openFiles": [
+        "world.tmx",
+        "blocks.tsx"
+    ],
+    "project": "Minecraft.tiled-project",
+    "recentFiles": [
+        "blocks.tsx",
+        "world.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    }
+}
