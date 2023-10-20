@@ -8,17 +8,9 @@
 unsigned short oldButtons;
 unsigned short buttons;
 
-// States enum
-enum {
-    START,
-    PAUSE,
-    GAME1,
-    GAME2,
-    WIN,
-    LOSE
-} STATE;
-
 int state;
+
+void initialize();
 
 int main() {
 
@@ -29,6 +21,9 @@ int main() {
         switch(state) {
             case START:
                 start();
+                if (BUTTON_PRESSED(BUTTON_START) | BUTTON_PRESSED(BUTTON_A)) {
+                    goToGame1();
+                }
                 break;
             case GAME1:
                 game1();
@@ -56,5 +51,5 @@ void initialize() {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0);
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(8);
 
-    state = START;
+    goToStart();
 }
