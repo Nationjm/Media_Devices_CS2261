@@ -31,21 +31,10 @@ initialize:
 	strh	r3, [r2]	@ movhi
 	ldr	r4, .L4+4
 	strh	r1, [r2, #8]	@ movhi
-	mov	r0, #3
-	mov	r2, #83886080
-	ldr	r1, .L4+8
-	mov	lr, pc
-	bx	r4
-	mov	r3, #112
-	mov	r2, #100663296
-	mov	r0, #3
-	ldr	r1, .L4+12
-	mov	lr, pc
-	bx	r4
 	mov	r3, #1024
 	mov	r0, #3
-	ldr	r2, .L4+16
-	ldr	r1, .L4+20
+	ldr	r2, .L4+8
+	ldr	r1, .L4+12
 	mov	lr, pc
 	bx	r4
 	pop	{r4, lr}
@@ -55,8 +44,6 @@ initialize:
 .L4:
 	.word	mgba_open
 	.word	DMANow
-	.word	blockPal
-	.word	blockTiles
 	.word	100679680
 	.word	worldMap
 	.size	initialize, .-initialize

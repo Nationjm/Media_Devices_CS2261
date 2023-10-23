@@ -15,3 +15,11 @@ void game2();
 void pause();
 void win();
 void lose();
+
+// State Machine Traversal Function Prototypes
+void goToStart();
+void goToGame1();
+void goToGame2();
+void goToPause();
+void goToWin();
+void goToLose();

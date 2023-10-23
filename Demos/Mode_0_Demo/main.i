@@ -362,8 +362,8 @@ void initialize() {
     (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((8) << 8);
 
 
-    DMANow(3, blockPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, blockTiles, &((CB*) 0x6000000)[0], 224 / 2);
+
+
 
 
 

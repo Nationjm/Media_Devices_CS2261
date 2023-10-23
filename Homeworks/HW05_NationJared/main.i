@@ -340,6 +340,14 @@ void game2();
 void pause();
 void win();
 void lose();
+
+
+void goToStart();
+void goToGame1();
+void goToGame2();
+void goToPause();
+void goToWin();
+void goToLose();
 # 6 "main.c" 2
 
 
@@ -348,11 +356,16 @@ unsigned short buttons;
 
 int state;
 
+void initialize();
+
 int main() {
 
     initialize();
 
     while (1) {
+
+        waitForVBlank();
+
 
         switch(state) {
             case START:
@@ -387,5 +400,5 @@ void initialize() {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
     (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((8) << 8);
 
-    state = START;
+    goToStart();
 }

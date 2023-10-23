@@ -17,6 +17,9 @@ int main() {
     initialize();
 
     while (1) {
+
+        waitForVBlank();
+        
         // State Machine
         switch(state) {
             case START:
