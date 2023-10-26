@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "luffyBackground.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
         "."
     ],
@@ -30,8 +30,6 @@
     "map.tileWidth": 8,
     "map.width": 32,
     "openFiles": [
-        "luffyBackground.tsx",
-        "luffyBackground.tmx"
     ],
     "project": "luffyBackground.tiled-project",
     "recentFiles": [

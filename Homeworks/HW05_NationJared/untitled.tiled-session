@@ -1,0 +1,47 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Level1Map.tmx": {
+            "scale": 1.9333984375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 130.59905040913225,
+                "y": 175.85614708556423
+            }
+        },
+        "Level2Map.tmx": {
+            "scale": 1.9333984375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 128.01293059905043,
+                "y": 128.0129305990504
+            }
+        }
+    },
+    "last.exportedFilePath": "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Homeworks/HW05_NationJared",
+    "last.imagePath": "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Homeworks/HW05_NationJared",
+    "map.height": 32,
+    "map.lastUsedExportFilter": "GBA source files - regular (*.c *.h)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 32,
+    "openFiles": [
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+        "Level1Map.tmx",
+        "Level2Map.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    }
+}
