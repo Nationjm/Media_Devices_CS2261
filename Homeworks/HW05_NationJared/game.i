@@ -20,6 +20,14 @@ void game2();
 void pause();
 void win();
 void lose();
+
+
+void goToStart();
+void goToGame1();
+void goToGame2();
+void goToPause();
+void goToWin();
+void goToLose();
 # 2 "game.c" 2
 # 1 "gba.h" 1
 
@@ -74,6 +82,36 @@ typedef struct {
  u16 tilemap[1024];
 } SB;
 # 4 "game.c" 2
+# 1 "Level1Map.h" 1
+
+
+
+
+
+
+
+extern const unsigned short Level1MapMap[1024];
+# 5 "game.c" 2
+# 1 "Level2Map.h" 1
+
+
+
+
+
+
+
+extern const unsigned short Level2MapMap[1024];
+# 6 "game.c" 2
+# 1 "levelTiles.h" 1
+# 22 "levelTiles.h"
+extern const unsigned short LevelTilesTiles[16384];
+
+
+extern const unsigned short LevelTilesMap[1024];
+
+
+extern const unsigned short LevelTilesPal[256];
+# 7 "game.c" 2
 
 
 extern state;
@@ -84,11 +122,15 @@ void start() {
 }
 
 void game1() {
+    DMANow(3, LevelTilesTiles, &((CB*) 0x6000000)[0], 32768 / 2);
+    DMANow(3, Level1MapMap, &((SB*) 0x6000000)[28], (2048) / 2);
+    DMANow(3, LevelTilesPal, ((unsigned short *)0x5000000), 256);
+
 
 }
 
 void game2() {
-
+    DMANow(3, Level2MapMap, &((SB*) 0x6000000)[28], (2048));
 }
 
 void pause() {

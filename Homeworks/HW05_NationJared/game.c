@@ -1,21 +1,28 @@
 #include "game.h"
 #include "gba.h"
 #include "mode0.h"
+#include "Level1Map.h"
+#include "Level2Map.h"
+#include "levelTiles.h"
 
 // Include state variable from main
 extern state;
 
 // State Functions
 void start() {
-
+    
 }
 
 void game1() {
+    DMANow(3, LevelTilesTiles, &CHARBLOCK[0], LevelTilesTilesLen / 2);
+    DMANow(3, Level1MapMap, &SCREENBLOCK[28], Level1MapMapLen / 2);
+    DMANow(3, LevelTilesPal, PALETTE, 256);
 
+    
 }
 
 void game2() {
-
+    DMANow(3, Level2MapMap, &SCREENBLOCK[28], Level2MapMapLen);
 }
 
 void pause() {

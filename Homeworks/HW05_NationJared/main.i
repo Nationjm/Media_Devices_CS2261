@@ -349,14 +349,79 @@ void goToPause();
 void goToWin();
 void goToLose();
 # 6 "main.c" 2
+# 1 "BubbleBobbleSpritesheet.h" 1
+# 21 "BubbleBobbleSpritesheet.h"
+extern const unsigned short BubbleBobbleSpritesheetTiles[16384];
+
+
+extern const unsigned short BubbleBobbleSpritesheetPal[256];
+# 7 "main.c" 2
+# 1 "Level1Map.h" 1
+
+
+
+
+
+
+
+extern const unsigned short Level1MapMap[1024];
+# 8 "main.c" 2
+# 1 "Level2Map.h" 1
+
+
+
+
+
+
+
+extern const unsigned short Level2MapMap[1024];
+# 9 "main.c" 2
+# 1 "levelTiles.h" 1
+# 22 "levelTiles.h"
+extern const unsigned short LevelTilesTiles[16384];
+
+
+extern const unsigned short LevelTilesMap[1024];
+
+
+extern const unsigned short LevelTilesPal[256];
+# 10 "main.c" 2
+# 1 "Level1CollisionBitmap.h" 1
+# 21 "Level1CollisionBitmap.h"
+extern const unsigned short Level1CollisionBitmapBitmap[16384];
+
+
+extern const unsigned short Level1CollisionBitmapPal[256];
+# 11 "main.c" 2
+# 1 "Level2CollisionBitmap.h" 1
+# 21 "Level2CollisionBitmap.h"
+extern const unsigned short Level2CollisionBitmapTiles[32768];
+
+
+extern const unsigned short Level2CollisionBitmapPal[256];
+# 12 "main.c" 2
 
 
 unsigned short oldButtons;
 unsigned short buttons;
 
+
+
+
 int state;
 
+typedef enum {LEFT, RIGHT} DIRECTION;
+
 void initialize();
+int main();
+inline unsigned char colorAt(int, int, const unsigned short);
+
+OBJ_ATTR shadowOAM[128];
+
+SPRITE player;
+
+int vOff = 2;
+int hOff = 2;
 
 int main() {
 
@@ -364,18 +429,25 @@ int main() {
 
     while (1) {
 
+        oldButtons = buttons;
+        buttons = (*(volatile unsigned short *)0x04000130);
         waitForVBlank();
-
+        update();
+        draw();
+        mgba_printf("%d", state);
 
         switch(state) {
             case START:
                 start();
-                if ((!(~(oldButtons) & ((1<<3))) && (~(*(volatile unsigned short *)0x04000130) & ((1<<3)))) | (!(~(oldButtons) & ((1<<0))) && (~(*(volatile unsigned short *)0x04000130) & ((1<<0))))) {
+                if ((!(~(oldButtons) & ((1<<3))) && (~(*(volatile unsigned short *)0x04000130) & ((1<<3)))) || (!(~(oldButtons) & ((1<<0))) && (~(*(volatile unsigned short *)0x04000130) & ((1<<0))))) {
                     goToGame1();
                 }
                 break;
             case GAME1:
                 game1();
+                if ((!(~(oldButtons) & ((1<<2))) && (~(*(volatile unsigned short *)0x04000130) & ((1<<2))))) {
+                    goToGame2();
+                }
                 break;
             case GAME2:
                 game2();
@@ -395,10 +467,78 @@ int main() {
     return 0;
 }
 
-void initialize() {
+inline unsigned char colorAt(int x, int y, const unsigned short collisionMap) {
+    return ((unsigned char *)collisionMap)[((y) * (256) + (x))];
+}
 
-    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((8) << 8);
+void initialize() {
+    mgba_open();
+    hideSprites();
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
+    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((28) << 8) | (0 << 14) | (0 << 7);
+
+
+
+
+    DMANow(3, BubbleBobbleSpritesheetTiles, &((CB*) 0x6000000)[4], 32768 / 2);
+    DMANow(3, BubbleBobbleSpritesheetPal, ((u16 *)0x5000200), 256);
+
+
+    player.width = 16;
+    player.height = 16;
+    player.x = 100;
+    player.y = 0;
+    player.numFrames = 2;
+    player.direction = LEFT;
+    player.timeUntilNextFrame = 10;
+    player.xVel = 1;
+    player.yVel = 1;
+    player.oamIndex = 0;
 
     goToStart();
+}
+
+void update() {
+    player.isAnimating = 0;
+
+    int leftX = player.x;
+    int rightX = player.x + player.width - 1;
+    int topY = player.y;
+    int bottomY = player.y + player.height - 1;
+
+    if ((~((*(volatile unsigned short *)0x04000130)) & ((1<<5))) && colorAt(leftX, topY, Level1CollisionBitmapBitmap) && colorAt(leftX, bottomY, Level1CollisionBitmapBitmap)) {
+        if (player.x > 0) {
+            player.x -= player.xVel;
+        }
+        player.direction = LEFT;
+        player.isAnimating = 1;
+    }
+    if ((~((*(volatile unsigned short *)0x04000130)) & ((1<<4))) && colorAt(rightX, topY, Level1CollisionBitmapBitmap) && colorAt(rightX, bottomY, Level1CollisionBitmapBitmap)) {
+        if (player.x < 240 - player.width) {
+            player.x += player.xVel;
+        }
+        player.direction = RIGHT;
+        player.isAnimating = 1;
+    }
+
+
+
+
+
+
+    player.y += player.yVel;
+
+    shadowOAM[player.oamIndex].attr0 = (0<<14) | (((player.y)) & 0xFF);
+    shadowOAM[player.oamIndex].attr1 = (1<<14) | ((player.x) & 0x1FF);
+    if (player.direction == RIGHT) {
+        shadowOAM[player.oamIndex].attr2 = ((((18) * (32) + (2))) & 0x3FF);
+    } else {
+        shadowOAM[player.oamIndex].attr2 = ((((18) * (32) + (0))) & 0x3FF);
+    }
+
+}
+
+void draw() {
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 }
