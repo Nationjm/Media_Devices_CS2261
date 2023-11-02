@@ -10,8 +10,8 @@ enum {
 
 // State function prototypes
 void start();
-void game1();
-void game2();
+void game1(int);
+void game2(int);
 void pause();
 void win();
 void lose();
