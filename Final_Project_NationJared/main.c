@@ -25,7 +25,7 @@ void initialize();
 
 int main() {
 
-    initalize();
+    initialize();
 
     while (1) {
         // Update Buttons
@@ -38,24 +38,42 @@ int main() {
         switch(state) {
             case START:
                 start();
+                if (BUTTON_PRESSED(BUTTON_START)) {
+                    goToInstructions();
+                }
                 break;
             case INSTRUCTIONS:
                 instructions();
+                if (BUTTON_PRESSED(BUTTON_START)) {
+                    goToGame();
+                }
                 break;
             case PAUSE:
                 pause();
+                if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                    goToGame();
+                }
                 break;
             case GAME:
                 game();
+                if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                    goToPause();
+                }
                 break;
             case WIN:
                 win();
+                if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                    goToStart();
+                }
                 break;
             case LOSE:
                 lose();
+                if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                    goToStart();
+                }
                 break;
         }
-
+        mgba_printf("%d", state);
     }
 
     return 1;

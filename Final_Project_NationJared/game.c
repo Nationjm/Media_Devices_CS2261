@@ -3,6 +3,9 @@
 #include "sprites.h"
 #include "print.h"
 #include "game.h"
+#include "mode4.h"
+#include "luffyStartScreen.h"
+#include "LuffyWinScreen.h"
 
 // State Variable from main and enum
 extern unsigned short state;
@@ -18,10 +21,13 @@ enum {
 
 // State Prototypes
 void start() {
-    flipPages();
+    DMANow(3, luffyStartScreenPal, BG_PALETTE, luffyStartScreenPalLen / 2);
+    drawFullscreenImage4(luffyStartScreenBitmap);
+    flipPage();
 }
 
 void instructions() {
+    flipPage();
 
 }
 
@@ -30,15 +36,17 @@ void game() {
 }
 
 void pause() {
-
+    flipPage();
 }
 
 void win() {
-
+    DMANow(3, LuffyWinScreenPal, BG_PALETTE, LuffyWinScreenPalLen / 2);
+    drawFullscreenImage4(LuffyWinScreenBitmap);
+    flipPage();
 }
 
 void lose() {
-
+    flipPage();
 }
 
 
@@ -59,7 +67,7 @@ void goToGame() {
 
 void goToPause() {
     state = PAUSE;
-    
+
 }
 
 void goToWin() {
