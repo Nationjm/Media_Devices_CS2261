@@ -6,6 +6,7 @@
 #include "mode4.h"
 #include "luffyStartScreen.h"
 #include "LuffyWinScreen.h"
+#include "wanoInstructions.h"
 
 // State Variable from main and enum
 extern unsigned short state;
@@ -27,8 +28,9 @@ void start() {
 }
 
 void instructions() {
+    DMANow(3, wanoInstructionsPal, BG_PALETTE, wanoInstructionsPalLen / 2);
+    drawFullscreenImage4(wanoInstructionsBitmap);
     flipPage();
-
 }
 
 void game() {

@@ -13,3 +13,21 @@ void goToGame();
 void goToPause();
 void goToWin();
 void goToLose();
+
+// Object Structs
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int isMoving;
+    int xVel;
+    int yVel;
+    int numFrames;
+    int frame;
+    int timeUntilNextFrame;
+    int direction;
+    unsigned char oamIndex;
+} LUFFY;
+  
+LUFFY luffy;

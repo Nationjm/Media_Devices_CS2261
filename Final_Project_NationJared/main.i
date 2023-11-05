@@ -30,6 +30,7 @@ int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width
 void waitForVBlank();
 # 67 "gba.h"
 extern unsigned short oldButtons;
+extern unsigned short buttons;
 
 
 
@@ -40,7 +41,7 @@ typedef volatile struct {
     volatile unsigned int cnt;
 } DMA;
 extern DMA *dma;
-# 98 "gba.h"
+# 99 "gba.h"
 void DMANow(int channel, volatile const void *src, volatile void *dst, unsigned int cnt);
 # 2 "main.c" 2
 # 1 "mode0.h" 1
@@ -345,42 +346,42 @@ int main() {
         switch(state) {
             case START:
                 start();
-                if ((!(~(oldButtons) & ((1 << 3))) && (~(*(volatile unsigned short*) 0x04000130) & ((1 << 3))))) {
+                if ((!(~(oldButtons) & ((1 << 3))) && (~(buttons) & ((1 << 3))))) {
                     goToInstructions();
                 }
                 break;
             case INSTRUCTIONS:
                 instructions();
-                if ((!(~(oldButtons) & ((1 << 3))) && (~(*(volatile unsigned short*) 0x04000130) & ((1 << 3))))) {
+                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
                     goToGame();
                 }
                 break;
             case PAUSE:
                 pause();
-                if ((!(~(oldButtons) & ((1 << 2))) && (~(*(volatile unsigned short*) 0x04000130) & ((1 << 2))))) {
+                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
                     goToGame();
                 }
                 break;
             case GAME:
                 game();
-                if ((!(~(oldButtons) & ((1 << 2))) && (~(*(volatile unsigned short*) 0x04000130) & ((1 << 2))))) {
+                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
                     goToPause();
                 }
                 break;
             case WIN:
                 win();
-                if ((!(~(oldButtons) & ((1 << 2))) && (~(*(volatile unsigned short*) 0x04000130) & ((1 << 2))))) {
+                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
                     goToStart();
                 }
                 break;
             case LOSE:
                 lose();
-                if ((!(~(oldButtons) & ((1 << 2))) && (~(*(volatile unsigned short*) 0x04000130) & ((1 << 2))))) {
+                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
                     goToStart();
                 }
                 break;
         }
-        mgba_printf("%d", state);
+
     }
 
     return 1;
@@ -393,5 +394,6 @@ void initialize() {
     buttons = (*(volatile unsigned short*) 0x04000130);
     oldButtons = 0;
 
+    state = START;
     goToStart();
 }

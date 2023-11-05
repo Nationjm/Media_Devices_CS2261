@@ -30,6 +30,7 @@ int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width
 void waitForVBlank();
 # 67 "gba.h"
 extern unsigned short oldButtons;
+extern unsigned short buttons;
 
 
 
@@ -40,7 +41,7 @@ typedef volatile struct {
     volatile unsigned int cnt;
 } DMA;
 extern DMA *dma;
-# 98 "gba.h"
+# 99 "gba.h"
 void DMANow(int channel, volatile const void *src, volatile void *dst, unsigned int cnt);
 # 2 "game.c" 2
 # 1 "mode0.h" 1
@@ -333,6 +334,13 @@ extern const unsigned short LuffyWinScreenBitmap[19200];
 
 extern const unsigned short LuffyWinScreenPal[256];
 # 9 "game.c" 2
+# 1 "wanoInstructions.h" 1
+# 21 "wanoInstructions.h"
+extern const unsigned short wanoInstructionsBitmap[19200];
+
+
+extern const unsigned short wanoInstructionsPal[256];
+# 10 "game.c" 2
 
 
 extern unsigned short state;
@@ -354,8 +362,9 @@ void start() {
 }
 
 void instructions() {
+    DMANow(3, wanoInstructionsPal, ((unsigned short*) 0x05000000), 512 / 2);
+    drawFullscreenImage4(wanoInstructionsBitmap);
     flipPage();
-
 }
 
 void game() {

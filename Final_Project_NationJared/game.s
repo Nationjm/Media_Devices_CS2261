@@ -58,7 +58,18 @@ instructions:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r3, .L8
+	mov	r2, #83886080
+	ldr	r1, .L8
+	mov	r3, #256
+	mov	r0, #3
+	ldr	r4, .L8+4
+	mov	lr, pc
+	bx	r4
+	ldr	r0, .L8+8
+	ldr	r3, .L8+12
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L8+16
 	mov	lr, pc
 	bx	r3
 	pop	{r4, lr}
@@ -66,6 +77,10 @@ instructions:
 .L9:
 	.align	2
 .L8:
+	.word	wanoInstructionsPal
+	.word	DMANow
+	.word	wanoInstructionsBitmap
+	.word	drawFullscreenImage4
 	.word	flipPage
 	.size	instructions, .-instructions
 	.align	2

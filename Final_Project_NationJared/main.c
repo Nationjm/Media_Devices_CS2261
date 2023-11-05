@@ -44,7 +44,7 @@ int main() {
                 break;
             case INSTRUCTIONS:
                 instructions();
-                if (BUTTON_PRESSED(BUTTON_START)) {
+                if (BUTTON_PRESSED(BUTTON_SELECT)) {
                     goToGame();
                 }
                 break;
@@ -73,7 +73,7 @@ int main() {
                 }
                 break;
         }
-        mgba_printf("%d", state);
+
     }
 
     return 1;
@@ -86,5 +86,6 @@ void initialize() {
     buttons = REG_BUTTONS;
     oldButtons = 0;
 
+    state = START;
     goToStart();
 }
