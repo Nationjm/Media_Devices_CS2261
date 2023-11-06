@@ -1,7 +1,7 @@
 // Game State Prototypes
 void start();
 void instructions();
-void game();
+void kaido1();
 void pause();
 void win();
 void lose();
@@ -9,7 +9,7 @@ void lose();
 // Game State Change Prototypes
 void goToStart();
 void goToInstructions();
-void goToGame();
+void goToKaido1();
 void goToPause();
 void goToWin();
 void goToLose();

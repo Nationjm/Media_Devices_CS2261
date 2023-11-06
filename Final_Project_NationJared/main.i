@@ -310,6 +310,24 @@ void goToGame();
 void goToPause();
 void goToWin();
 void goToLose();
+
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int isMoving;
+    int xVel;
+    int yVel;
+    int numFrames;
+    int frame;
+    int timeUntilNextFrame;
+    int direction;
+    unsigned char oamIndex;
+} LUFFY;
+
+LUFFY luffy;
 # 6 "main.c" 2
 
 
@@ -320,7 +338,10 @@ unsigned short buttons;
 enum {
     START,
     INSTRUCTIONS,
-    GAME,
+    KAIDO1,
+    KAIDO2,
+    BIGMOM1,
+    BIGMOM2,
     PAUSE,
     WIN,
     LOSE
@@ -347,12 +368,12 @@ int main() {
             case START:
                 start();
                 if ((!(~(oldButtons) & ((1 << 3))) && (~(buttons) & ((1 << 3))))) {
-                    goToInstructions();
+                    goToWin();
                 }
                 break;
             case INSTRUCTIONS:
                 instructions();
-                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
+                if ((!(~(oldButtons) & ((1 << 3))) && (~(buttons) & ((1 << 3))))) {
                     goToGame();
                 }
                 break;

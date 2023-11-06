@@ -310,6 +310,24 @@ void goToGame();
 void goToPause();
 void goToWin();
 void goToLose();
+
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int isMoving;
+    int xVel;
+    int yVel;
+    int numFrames;
+    int frame;
+    int timeUntilNextFrame;
+    int direction;
+    unsigned char oamIndex;
+} LUFFY;
+
+LUFFY luffy;
 # 6 "game.c" 2
 # 1 "mode4.h" 1
 # 13 "mode4.h"
@@ -343,6 +361,7 @@ extern const unsigned short wanoInstructionsPal[256];
 # 10 "game.c" 2
 
 
+
 extern unsigned short state;
 enum {
     START,
@@ -353,6 +372,16 @@ enum {
     LOSE
 } STATE;
 
+
+enum {
+    LEFT,
+    RIGHT,
+    JUMP,
+    PUNCH
+} DIRECTION;
+
+
+OBJ_ATTR shadowOAM[128];
 
 
 void start() {
@@ -369,6 +398,7 @@ void instructions() {
 
 void game() {
 
+    DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
 }
 
 void pause() {
@@ -399,17 +429,51 @@ void goToGame() {
     state = GAME;
     (*(volatile unsigned short*) 0x04000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x04000008) = ((0) << 2) | ((28) << 8);
+    DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
 }
 
 void goToPause() {
     state = PAUSE;
-
+    (*(volatile unsigned short*) 0x04000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
 }
 
 void goToWin() {
     state = WIN;
+    (*(volatile unsigned short*) 0x04000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
 }
 
 void goToLose() {
     state = LOSE;
+    (*(volatile unsigned short*) 0x04000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
+}
+
+
+
+
+void initLuffy() {
+    luffy.x = 200;
+    luffy.y = 130;
+    luffy.xVel = 2;
+    luffy.direction = LEFT;
+    luffy.frame = 0;
+    luffy.height = 0;
+    luffy.width = 0;
+    luffy.isMoving = 0;
+    luffy.yVel = 2;
+    luffy.timeUntilNextFrame = 10;
+    luffy.oamIndex = 0;
+    luffy.numFrames = 0;
+}
+
+void luffyUpdate() {
+    if ((~(buttons) & ((1 << 5)))) {
+        luffy.x -= luffy.xVel;
+    } else if ((~(buttons) & ((1 << 4)))) {
+        luffy.x += luffy.xVel;
+    }
+
+    if ((!(~(oldButtons) & ((1 << 6))) && (~(buttons) & ((1 << 6))))) {
+
+    }
+
 }

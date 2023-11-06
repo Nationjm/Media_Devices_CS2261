@@ -12,7 +12,10 @@ unsigned short buttons;
 enum {
     START,
     INSTRUCTIONS,
-    GAME,
+    KAIDO1,
+    KAIDO2,
+    BIGMOM1,
+    BIGMOM2,
     PAUSE,
     WIN,
     LOSE
@@ -39,23 +42,23 @@ int main() {
             case START:
                 start();
                 if (BUTTON_PRESSED(BUTTON_START)) {
-                    goToInstructions();
+                    goToWin();
                 }
                 break;
             case INSTRUCTIONS:
                 instructions();
-                if (BUTTON_PRESSED(BUTTON_SELECT)) {
-                    goToGame();
+                if (BUTTON_PRESSED(BUTTON_START)) {
+                    goToKaido1();
                 }
                 break;
             case PAUSE:
                 pause();
                 if (BUTTON_PRESSED(BUTTON_SELECT)) {
-                    goToGame();
+                    goToKaido1();
                 }
                 break;
-            case GAME:
-                game();
+            case KAIDO1:
+                kaido1();
                 if (BUTTON_PRESSED(BUTTON_SELECT)) {
                     goToPause();
                 }

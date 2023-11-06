@@ -1,0 +1,38 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "RooftopGroundTiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Rooftop_Ground_TilesetBitmap.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Final_Project_NationJared",
+    "last.imagePath": "/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/LuffyGameInfo",
+    "map.height": 32,
+    "map.lastUsedExportFilter": "GBA source files - regular (*.c *.h)",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 32,
+    "openFiles": [
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+        "Rooftop_Ground_TilesetBitmap.tsx",
+        "RooftopGroundTiles.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    }
+}
