@@ -231,7 +231,7 @@ goToKaido1:
 	mov	lr, #200
 	mov	ip, #110
 	mov	r0, #10
-	mov	r1, #7
+	mov	r1, #4
 	ldr	r3, .L30+12
 	strb	r2, [r3, #44]
 	str	r4, [r3, #20]
@@ -343,7 +343,7 @@ initLuffy:
 	mov	r4, #200
 	mov	lr, #110
 	mov	ip, #10
-	mov	r0, #7
+	mov	r0, #4
 	ldr	r3, .L43
 	strb	r2, [r3, #44]
 	stm	r3, {r4, lr}
@@ -374,23 +374,25 @@ luffyUpdate:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	mov	r2, #0
-	ldr	r3, .L60
-	ldrh	r1, [r3]
+	mov	r3, #0
+	ldr	r2, .L64
+	ldrh	r2, [r2]
 	push	{r4, r5, r6, lr}
-	ldr	r4, .L60+4
-	ands	ip, r1, #32
-	str	r2, [r4, #16]
-	ldr	r0, [r4]
+	ldr	r4, .L64+4
+	ands	ip, r2, #32
+	str	r3, [r4, #16]
+	ldr	r3, [r4]
 	bne	.L46
+	cmp	r3, #0
+	ble	.L46
 	ldrb	r1, [r4, #4]	@ zero_extendqisi2
 	mvn	r1, r1, lsl #17
 	mov	r2, #1
 	mvn	r1, r1, lsr #17
 	ldrb	r5, [r4, #44]	@ zero_extendqisi2
-	ldr	r3, [r4, #20]
-	ldr	r6, .L60+8
-	sub	r3, r0, r3
+	ldr	r0, [r4, #20]
+	ldr	r6, .L64+8
+	sub	r3, r3, r0
 	lsl	r5, r5, #3
 	str	r3, [r4]
 	str	ip, [r4, #40]
@@ -405,10 +407,10 @@ luffyUpdate:
 	strh	r3, [r1, #2]	@ movhi
 	ldr	r3, [r4, #36]
 	orrs	r1, r3, r2
-	bne	.L51
-.L59:
+	bne	.L53
+.L62:
 	ldr	r0, [r4, #32]
-	ldr	r3, .L60+12
+	ldr	r3, .L64+12
 	ldr	r1, [r4, #28]
 	add	r0, r0, #1
 	mov	lr, pc
@@ -418,75 +420,84 @@ luffyUpdate:
 	strh	r3, [r5, #4]	@ movhi
 	mov	r3, #9
 	str	r1, [r4, #32]
-.L52:
+.L54:
 	str	r3, [r4, #36]
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L46:
-	tst	r1, #16
+	tst	r2, #16
+	bne	.L60
+	cmp	r3, #239
+	bgt	.L60
 	ldrb	r1, [r4, #4]	@ zero_extendqisi2
 	mvn	r1, r1, lsl #17
 	mvn	r1, r1, lsr #17
-	bne	.L58
 	mov	r2, #1
-	ldr	r3, [r4, #20]
+	ldr	r0, [r4, #20]
 	ldrb	r5, [r4, #44]	@ zero_extendqisi2
-	ldr	r6, .L60+8
-	add	r0, r0, r3
-	lsl	r5, r5, #3
+	add	r0, r3, r0
+	ldr	r6, .L64+8
 	lsl	r3, r0, #23
+	lsl	r5, r5, #3
+	lsr	r3, r3, #23
 	strh	r1, [r6, r5]	@ movhi
+	orr	r3, r3, #53248
+	add	r1, r6, r5
 	str	r0, [r4]
 	str	r2, [r4, #40]
 	str	r2, [r4, #16]
-	lsr	r3, r3, #23
-.L49:
-	orr	r3, r3, #53248
-	add	r1, r6, r5
 	strh	r3, [r1, #2]	@ movhi
+.L63:
 	ldr	r3, [r4, #36]
 	orrs	r1, r3, r2
-	beq	.L59
-.L51:
+	beq	.L62
+.L53:
 	cmp	r3, #0
-	bne	.L53
+	bne	.L55
 	cmp	r2, #1
 	mvnne	r3, #0
-	bne	.L52
+	bne	.L54
 	ldr	r2, [r4, #32]
-	ldr	r3, .L60+16
+	ldr	r3, .L64+16
 	add	r2, r2, #1
 	smull	r1, r3, r2, r3
 	sub	r3, r3, r2, asr #31
 	add	r3, r3, r3, lsl #1
 	sub	r3, r2, r3
-	add	r2, r3, #64
+	add	r2, r3, #4
 	add	r5, r6, r5
 	lsl	r2, r2, #2
 	str	r3, [r4, #32]
 	strh	r2, [r5, #4]	@ movhi
 	mov	r3, #9
-	b	.L52
-.L53:
+	b	.L54
+.L60:
+	ldrb	r2, [r4, #4]	@ zero_extendqisi2
+	mvn	r2, r2, lsl #17
+	mvn	r2, r2, lsr #17
+	ldr	r1, [r4, #40]
+	ldrb	r5, [r4, #44]	@ zero_extendqisi2
+	ldr	r6, .L64+8
+	lsl	r3, r3, #23
+	lsl	r5, r5, #3
+	cmp	r1, #1
+	strh	r2, [r6, r5]	@ movhi
+	lsr	r3, r3, #23
+	mov	r2, #0
+	bne	.L47
+	orr	r3, r3, #53248
+	add	r1, r6, r5
+	strh	r3, [r1, #2]	@ movhi
+	b	.L63
+.L55:
 	movlt	r3, #9
 	subge	r3, r3, #1
 	str	r3, [r4, #36]
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L58:
-	ldrb	r5, [r4, #44]	@ zero_extendqisi2
-	ldr	ip, [r4, #40]
-	ldr	r6, .L60+8
-	lsl	r3, r0, #23
-	lsl	r5, r5, #3
-	cmp	ip, #1
-	strh	r1, [r6, r5]	@ movhi
-	lsr	r3, r3, #23
-	bne	.L47
-	b	.L49
-.L61:
+.L65:
 	.align	2
-.L60:
+.L64:
 	.word	buttons
 	.word	luffy
 	.word	shadowOAM
@@ -504,52 +515,52 @@ kaido1:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r3, .L64
-	ldr	r4, .L64+4
+	ldr	r3, .L68
+	ldr	r4, .L68+4
 	mov	lr, pc
 	bx	r3
 	bl	luffyUpdate
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L64+8
+	ldr	r1, .L68+8
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L64+12
+	ldr	r1, .L68+12
 	mov	lr, pc
 	bx	r4
 	mov	r3, #256
 	mov	r2, #83886080
 	mov	r0, #3
-	ldr	r1, .L64+16
+	ldr	r1, .L68+16
 	mov	lr, pc
 	bx	r4
 	mov	r3, #1024
 	mov	r0, #3
-	ldr	r2, .L64+20
-	ldr	r1, .L64+24
+	ldr	r2, .L68+20
+	ldr	r1, .L68+24
 	mov	lr, pc
 	bx	r4
 	mov	r3, #256
 	mov	r0, #3
-	ldr	r2, .L64+28
-	ldr	r1, .L64+32
+	ldr	r2, .L68+28
+	ldr	r1, .L68+32
 	mov	lr, pc
 	bx	r4
 	mov	r3, #16384
 	mov	r0, #3
-	ldr	r2, .L64+36
-	ldr	r1, .L64+40
+	ldr	r2, .L68+36
+	ldr	r1, .L68+40
 	mov	lr, pc
 	bx	r4
 	pop	{r4, lr}
 	bx	lr
-.L65:
+.L69:
 	.align	2
-.L64:
+.L68:
 	.word	hideSprites
 	.word	DMANow
 	.word	shadowOAM

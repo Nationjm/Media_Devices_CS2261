@@ -498,16 +498,16 @@ void initLuffy() {
     luffy.yVel = 2;
     luffy.timeUntilNextFrame = 10;
     luffy.oamIndex = 0;
-    luffy.numFrames = 7;
+    luffy.numFrames = 4;
 }
 
 void luffyUpdate() {
     luffy.isMoving = 0;
-    if ((~(buttons) & ((1 << 5)))) {
+    if ((~(buttons) & ((1 << 5))) && luffy.x > 0) {
         luffy.direction = LEFT;
         luffy.x -= luffy.xVel;
         luffy.isMoving = 1;
-    } else if ((~(buttons) & ((1 << 4)))) {
+    } else if ((~(buttons) & ((1 << 4))) && luffy.x < 240) {
         luffy.direction = RIGHT;
         luffy.x += luffy.xVel;
         luffy.isMoving = 1;
@@ -529,7 +529,7 @@ void luffyUpdate() {
     } else if (luffy.timeUntilNextFrame == 0 && luffy.isMoving == 1) {
         luffy.timeUntilNextFrame = 10;
         luffy.frame = (luffy.frame + 1) % 3;
-        shadowOAM[luffy.oamIndex].attr2 = (((8) * (32) + (luffy.frame * 4)) & 0x3FF);
+        shadowOAM[luffy.oamIndex].attr2 = (((0) * (32) + ((luffy.frame * 4) + 16)) & 0x3FF);
     } else if (luffy.timeUntilNextFrame < 0) {
         luffy.timeUntilNextFrame = 10;
     }
