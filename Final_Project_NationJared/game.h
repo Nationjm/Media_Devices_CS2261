@@ -14,6 +14,10 @@ void goToPause();
 void goToWin();
 void goToLose();
 
+// Luffy Functions
+void luffyUpdate();
+void initLuffy();
+
 // Object Structs
 typedef struct {
     int x;

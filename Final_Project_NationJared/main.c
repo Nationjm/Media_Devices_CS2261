@@ -42,7 +42,7 @@ int main() {
             case START:
                 start();
                 if (BUTTON_PRESSED(BUTTON_START)) {
-                    goToWin();
+                    goToInstructions();
                 }
                 break;
             case INSTRUCTIONS:

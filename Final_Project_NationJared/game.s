@@ -84,32 +84,6 @@ instructions:
 	.word	flipPage
 	.size	instructions, .-instructions
 	.align	2
-	.global	game
-	.syntax unified
-	.arm
-	.fpu softvfp
-	.type	game, %function
-game:
-	@ Function supports interworking.
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, lr}
-	mov	r3, #512
-	ldr	r4, .L12
-	mov	r2, #117440512
-	mov	r0, #3
-	ldr	r1, .L12+4
-	mov	lr, pc
-	bx	r4
-	pop	{r4, lr}
-	bx	lr
-.L13:
-	.align	2
-.L12:
-	.word	DMANow
-	.word	shadowOAM
-	.size	game, .-game
-	.align	2
 	.global	pause
 	.syntax unified
 	.arm
@@ -120,14 +94,14 @@ pause:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r3, .L16
+	ldr	r3, .L12
 	mov	lr, pc
 	bx	r3
 	pop	{r4, lr}
 	bx	lr
-.L17:
+.L13:
 	.align	2
-.L16:
+.L12:
 	.word	flipPage
 	.size	pause, .-pause
 	.align	2
@@ -142,24 +116,24 @@ win:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
 	mov	r2, #83886080
-	ldr	r1, .L20
+	ldr	r1, .L16
 	mov	r3, #256
 	mov	r0, #3
-	ldr	r4, .L20+4
+	ldr	r4, .L16+4
 	mov	lr, pc
 	bx	r4
-	ldr	r0, .L20+8
-	ldr	r3, .L20+12
+	ldr	r0, .L16+8
+	ldr	r3, .L16+12
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L20+16
+	ldr	r3, .L16+16
 	mov	lr, pc
 	bx	r3
 	pop	{r4, lr}
 	bx	lr
-.L21:
+.L17:
 	.align	2
-.L20:
+.L16:
 	.word	LuffyWinScreenPal
 	.word	DMANow
 	.word	LuffyWinScreenBitmap
@@ -177,14 +151,14 @@ lose:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r3, .L24
+	ldr	r3, .L20
 	mov	lr, pc
 	bx	r3
 	pop	{r4, lr}
 	bx	lr
-.L25:
+.L21:
 	.align	2
-.L24:
+.L20:
 	.word	flipPage
 	.size	lose, .-lose
 	.align	2
@@ -199,12 +173,12 @@ goToStart:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r2, #0
-	ldr	r3, .L27
+	ldr	r3, .L23
 	strh	r2, [r3]	@ movhi
 	bx	lr
-.L28:
+.L24:
 	.align	2
-.L27:
+.L23:
 	.word	state
 	.size	goToStart, .-goToStart
 	.align	2
@@ -219,49 +193,68 @@ goToInstructions:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r2, #1
-	ldr	r3, .L30
+	ldr	r3, .L26
 	strh	r2, [r3]	@ movhi
+	bx	lr
+.L27:
+	.align	2
+.L26:
+	.word	state
+	.size	goToInstructions, .-goToInstructions
+	.align	2
+	.global	goToKaido1
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	goToKaido1, %function
+goToKaido1:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, lr}
+	mov	r0, #67108864
+	mov	r4, #2
+	mov	ip, #7168
+	mov	r1, #4352
+	ldr	r2, .L30
+	mov	r3, #512
+	strh	r4, [r2]	@ movhi
+	ldr	r5, .L30+4
+	strh	r1, [r0]	@ movhi
+	mov	r2, #117440512
+	strh	ip, [r0, #8]	@ movhi
+	ldr	r1, .L30+8
+	mov	r0, #3
+	mov	lr, pc
+	bx	r5
+	mov	r2, #0
+	mov	lr, #200
+	mov	ip, #110
+	mov	r0, #10
+	mov	r1, #7
+	ldr	r3, .L30+12
+	strb	r2, [r3, #44]
+	str	r4, [r3, #20]
+	str	r4, [r3, #24]
+	str	lr, [r3]
+	str	ip, [r3, #4]
+	str	r0, [r3, #36]
+	str	r1, [r3, #28]
+	str	r2, [r3, #40]
+	str	r2, [r3, #32]
+	str	r2, [r3, #12]
+	str	r2, [r3, #8]
+	str	r2, [r3, #16]
+	pop	{r4, r5, r6, lr}
 	bx	lr
 .L31:
 	.align	2
 .L30:
 	.word	state
-	.size	goToInstructions, .-goToInstructions
-	.align	2
-	.global	goToGame
-	.syntax unified
-	.arm
-	.fpu softvfp
-	.type	goToGame, %function
-goToGame:
-	@ Function supports interworking.
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
-	mov	r1, #67108864
-	mov	ip, #2
-	mov	r2, #4352
-	mov	r0, #7168
-	push	{r4, lr}
-	ldr	r3, .L34
-	ldr	r4, .L34+4
-	strh	ip, [r3]	@ movhi
-	strh	r2, [r1]	@ movhi
-	mov	r3, #512
-	strh	r0, [r1, #8]	@ movhi
-	mov	r2, #117440512
-	mov	r0, #3
-	ldr	r1, .L34+8
-	mov	lr, pc
-	bx	r4
-	pop	{r4, lr}
-	bx	lr
-.L35:
-	.align	2
-.L34:
-	.word	state
 	.word	DMANow
 	.word	shadowOAM
-	.size	goToGame, .-goToGame
+	.word	luffy
+	.size	goToKaido1, .-goToKaido1
 	.align	2
 	.global	goToPause
 	.syntax unified
@@ -275,14 +268,14 @@ goToPause:
 	@ link register save eliminated.
 	mov	r0, #3
 	mov	r3, #67108864
-	ldr	r1, .L37
-	ldr	r2, .L37+4
+	ldr	r1, .L33
+	ldr	r2, .L33+4
 	strh	r0, [r1]	@ movhi
 	strh	r2, [r3]	@ movhi
 	bx	lr
-.L38:
+.L34:
 	.align	2
-.L37:
+.L33:
 	.word	state
 	.word	1044
 	.size	goToPause, .-goToPause
@@ -299,14 +292,14 @@ goToWin:
 	@ link register save eliminated.
 	mov	r0, #4
 	mov	r3, #67108864
-	ldr	r1, .L40
-	ldr	r2, .L40+4
+	ldr	r1, .L36
+	ldr	r2, .L36+4
 	strh	r0, [r1]	@ movhi
 	strh	r2, [r3]	@ movhi
 	bx	lr
-.L41:
+.L37:
 	.align	2
-.L40:
+.L36:
 	.word	state
 	.word	1044
 	.size	goToWin, .-goToWin
@@ -323,14 +316,14 @@ goToLose:
 	@ link register save eliminated.
 	mov	r0, #5
 	mov	r3, #67108864
-	ldr	r1, .L43
-	ldr	r2, .L43+4
+	ldr	r1, .L39
+	ldr	r2, .L39+4
 	strh	r0, [r1]	@ movhi
 	strh	r2, [r3]	@ movhi
 	bx	lr
-.L44:
+.L40:
 	.align	2
-.L43:
+.L39:
 	.word	state
 	.word	1044
 	.size	goToLose, .-goToLose
@@ -345,16 +338,17 @@ initLuffy:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	mov	r2, #0
-	str	lr, [sp, #-4]!
+	push	{r4, lr}
 	mov	r1, #2
-	mov	lr, #200
-	mov	ip, #130
-	mov	r0, #10
-	ldr	r3, .L47
+	mov	r4, #200
+	mov	lr, #110
+	mov	ip, #10
+	mov	r0, #7
+	ldr	r3, .L43
 	strb	r2, [r3, #44]
-	str	lr, [r3]
-	str	ip, [r3, #4]
-	str	r0, [r3, #36]
+	stm	r3, {r4, lr}
+	str	ip, [r3, #36]
+	str	r0, [r3, #28]
 	str	r1, [r3, #20]
 	str	r1, [r3, #24]
 	str	r2, [r3, #40]
@@ -362,14 +356,14 @@ initLuffy:
 	str	r2, [r3, #12]
 	str	r2, [r3, #8]
 	str	r2, [r3, #16]
-	str	r2, [r3, #28]
-	ldr	lr, [sp], #4
+	pop	{r4, lr}
 	bx	lr
-.L48:
+.L44:
 	.align	2
-.L47:
+.L43:
 	.word	luffy
 	.size	initLuffy, .-initLuffy
+	.global	__aeabi_idivmod
 	.align	2
 	.global	luffyUpdate
 	.syntax unified
@@ -380,31 +374,194 @@ luffyUpdate:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	ldr	r3, .L52
-	ldrh	r3, [r3]
-	tst	r3, #32
-	bne	.L50
-	ldr	r3, .L52+4
-	ldr	r2, [r3]
-	ldr	r1, [r3, #20]
-	sub	r2, r2, r1
-	str	r2, [r3]
-	bx	lr
-.L50:
-	tst	r3, #16
-	ldreq	r3, .L52+4
-	ldreq	r2, [r3]
-	ldreq	r1, [r3, #20]
-	addeq	r2, r2, r1
-	streq	r2, [r3]
-	bx	lr
-.L53:
-	.align	2
+	mov	r2, #0
+	ldr	r3, .L60
+	ldrh	r1, [r3]
+	push	{r4, r5, r6, lr}
+	ldr	r4, .L60+4
+	ands	ip, r1, #32
+	str	r2, [r4, #16]
+	ldr	r0, [r4]
+	bne	.L46
+	ldrb	r1, [r4, #4]	@ zero_extendqisi2
+	mvn	r1, r1, lsl #17
+	mov	r2, #1
+	mvn	r1, r1, lsr #17
+	ldrb	r5, [r4, #44]	@ zero_extendqisi2
+	ldr	r3, [r4, #20]
+	ldr	r6, .L60+8
+	sub	r3, r0, r3
+	lsl	r5, r5, #3
+	str	r3, [r4]
+	str	ip, [r4, #40]
+	lsl	r3, r3, #23
+	strh	r1, [r6, r5]	@ movhi
+	str	r2, [r4, #16]
+	lsr	r3, r3, #23
+.L47:
+	mvn	r3, r3, lsl #18
+	mvn	r3, r3, lsr #18
+	add	r1, r6, r5
+	strh	r3, [r1, #2]	@ movhi
+	ldr	r3, [r4, #36]
+	orrs	r1, r3, r2
+	bne	.L51
+.L59:
+	ldr	r0, [r4, #32]
+	ldr	r3, .L60+12
+	ldr	r1, [r4, #28]
+	add	r0, r0, #1
+	mov	lr, pc
+	bx	r3
+	add	r5, r6, r5
+	lsl	r3, r1, #2
+	strh	r3, [r5, #4]	@ movhi
+	mov	r3, #9
+	str	r1, [r4, #32]
 .L52:
+	str	r3, [r4, #36]
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L46:
+	tst	r1, #16
+	ldrb	r1, [r4, #4]	@ zero_extendqisi2
+	mvn	r1, r1, lsl #17
+	mvn	r1, r1, lsr #17
+	bne	.L58
+	mov	r2, #1
+	ldr	r3, [r4, #20]
+	ldrb	r5, [r4, #44]	@ zero_extendqisi2
+	ldr	r6, .L60+8
+	add	r0, r0, r3
+	lsl	r5, r5, #3
+	lsl	r3, r0, #23
+	strh	r1, [r6, r5]	@ movhi
+	str	r0, [r4]
+	str	r2, [r4, #40]
+	str	r2, [r4, #16]
+	lsr	r3, r3, #23
+.L49:
+	orr	r3, r3, #53248
+	add	r1, r6, r5
+	strh	r3, [r1, #2]	@ movhi
+	ldr	r3, [r4, #36]
+	orrs	r1, r3, r2
+	beq	.L59
+.L51:
+	cmp	r3, #0
+	bne	.L53
+	cmp	r2, #1
+	mvnne	r3, #0
+	bne	.L52
+	ldr	r2, [r4, #32]
+	ldr	r3, .L60+16
+	add	r2, r2, #1
+	smull	r1, r3, r2, r3
+	sub	r3, r3, r2, asr #31
+	add	r3, r3, r3, lsl #1
+	sub	r3, r2, r3
+	add	r2, r3, #64
+	add	r5, r6, r5
+	lsl	r2, r2, #2
+	str	r3, [r4, #32]
+	strh	r2, [r5, #4]	@ movhi
+	mov	r3, #9
+	b	.L52
+.L53:
+	movlt	r3, #9
+	subge	r3, r3, #1
+	str	r3, [r4, #36]
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L58:
+	ldrb	r5, [r4, #44]	@ zero_extendqisi2
+	ldr	ip, [r4, #40]
+	ldr	r6, .L60+8
+	lsl	r3, r0, #23
+	lsl	r5, r5, #3
+	cmp	ip, #1
+	strh	r1, [r6, r5]	@ movhi
+	lsr	r3, r3, #23
+	bne	.L47
+	b	.L49
+.L61:
+	.align	2
+.L60:
 	.word	buttons
 	.word	luffy
+	.word	shadowOAM
+	.word	__aeabi_idivmod
+	.word	1431655766
 	.size	luffyUpdate, .-luffyUpdate
+	.align	2
+	.global	kaido1
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	kaido1, %function
+kaido1:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, lr}
+	ldr	r3, .L64
+	ldr	r4, .L64+4
+	mov	lr, pc
+	bx	r3
+	bl	luffyUpdate
+	mov	r3, #512
+	mov	r2, #117440512
+	mov	r0, #3
+	ldr	r1, .L64+8
+	mov	lr, pc
+	bx	r4
+	mov	r3, #9600
+	mov	r2, #100663296
+	mov	r0, #3
+	ldr	r1, .L64+12
+	mov	lr, pc
+	bx	r4
+	mov	r3, #256
+	mov	r2, #83886080
+	mov	r0, #3
+	ldr	r1, .L64+16
+	mov	lr, pc
+	bx	r4
+	mov	r3, #1024
+	mov	r0, #3
+	ldr	r2, .L64+20
+	ldr	r1, .L64+24
+	mov	lr, pc
+	bx	r4
+	mov	r3, #256
+	mov	r0, #3
+	ldr	r2, .L64+28
+	ldr	r1, .L64+32
+	mov	lr, pc
+	bx	r4
+	mov	r3, #16384
+	mov	r0, #3
+	ldr	r2, .L64+36
+	ldr	r1, .L64+40
+	mov	lr, pc
+	bx	r4
+	pop	{r4, lr}
+	bx	lr
+.L65:
+	.align	2
+.L64:
+	.word	hideSprites
+	.word	DMANow
+	.word	shadowOAM
+	.word	Rooftop_Ground_TilesetBitmapTiles
+	.word	Rooftop_Ground_TilesetBitmapPal
+	.word	100720640
+	.word	RooftopGroundBackgroundMap
+	.word	83886592
+	.word	LuffyandKaidoSpritesPal
+	.word	100728832
+	.word	LuffyandKaidoSpritesTiles
+	.size	kaido1, .-kaido1
 	.comm	shadowOAM,1024,4
 	.comm	DIRECTION,1,1
 	.comm	STATE,1,1

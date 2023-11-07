@@ -298,7 +298,7 @@ void mgba_close(void);
 
 void start();
 void instructions();
-void game();
+void kaido1();
 void pause();
 void win();
 void lose();
@@ -306,7 +306,7 @@ void lose();
 
 void goToStart();
 void goToInstructions();
-void goToGame();
+void goToKaido1();
 void goToPause();
 void goToWin();
 void goToLose();
@@ -368,23 +368,23 @@ int main() {
             case START:
                 start();
                 if ((!(~(oldButtons) & ((1 << 3))) && (~(buttons) & ((1 << 3))))) {
-                    goToWin();
+                    goToInstructions();
                 }
                 break;
             case INSTRUCTIONS:
                 instructions();
                 if ((!(~(oldButtons) & ((1 << 3))) && (~(buttons) & ((1 << 3))))) {
-                    goToGame();
+                    goToKaido1();
                 }
                 break;
             case PAUSE:
                 pause();
                 if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
-                    goToGame();
+                    goToKaido1();
                 }
                 break;
-            case GAME:
-                game();
+            case KAIDO1:
+                kaido1();
                 if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
                     goToPause();
                 }

@@ -298,7 +298,7 @@ void mgba_close(void);
 
 void start();
 void instructions();
-void game();
+void kaido1();
 void pause();
 void win();
 void lose();
@@ -306,10 +306,14 @@ void lose();
 
 void goToStart();
 void goToInstructions();
-void goToGame();
+void goToKaido1();
 void goToPause();
 void goToWin();
 void goToLose();
+
+
+void luffyUpdate();
+void initLuffy();
 
 
 typedef struct {
@@ -360,6 +364,30 @@ extern const unsigned short wanoInstructionsBitmap[19200];
 extern const unsigned short wanoInstructionsPal[256];
 # 10 "game.c" 2
 
+# 1 "RooftopGroundBackground.h" 1
+
+
+
+
+
+
+
+extern const unsigned short RooftopGroundBackgroundMap[1024];
+# 12 "game.c" 2
+# 1 "Rooftop_Ground_TilesetBitmap.h" 1
+# 21 "Rooftop_Ground_TilesetBitmap.h"
+extern const unsigned short Rooftop_Ground_TilesetBitmapTiles[9600];
+
+
+extern const unsigned short Rooftop_Ground_TilesetBitmapPal[256];
+# 13 "game.c" 2
+# 1 "LuffyandKaidoSprites.h" 1
+# 21 "LuffyandKaidoSprites.h"
+extern const unsigned short LuffyandKaidoSpritesTiles[16384];
+
+
+extern const unsigned short LuffyandKaidoSpritesPal[256];
+# 14 "game.c" 2
 
 
 extern unsigned short state;
@@ -396,9 +424,16 @@ void instructions() {
     flipPage();
 }
 
-void game() {
-
+void kaido1() {
+    hideSprites();
+    luffyUpdate();
     DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
+    DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &((CB*) 0x06000000)[0], 19200 / 2);
+    DMANow(3, Rooftop_Ground_TilesetBitmapPal, ((unsigned short*) 0x05000000), 256);
+    DMANow(3, RooftopGroundBackgroundMap, &((SB*) 0x06000000)[28], (2048) / 2);
+    DMANow(3, LuffyandKaidoSpritesPal, ((u16*) 0x5000200), 256);
+    DMANow(3, LuffyandKaidoSpritesTiles, &((CB*) 0x06000000)[4], 32768 / 2);
+
 }
 
 void pause() {
@@ -425,11 +460,12 @@ void goToInstructions() {
     state = INSTRUCTIONS;
 }
 
-void goToGame() {
+void goToKaido1() {
     state = GAME;
     (*(volatile unsigned short*) 0x04000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x04000008) = ((0) << 2) | ((28) << 8);
     DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
+    initLuffy();
 }
 
 void goToPause() {
@@ -452,7 +488,7 @@ void goToLose() {
 
 void initLuffy() {
     luffy.x = 200;
-    luffy.y = 130;
+    luffy.y = 110;
     luffy.xVel = 2;
     luffy.direction = LEFT;
     luffy.frame = 0;
@@ -462,18 +498,41 @@ void initLuffy() {
     luffy.yVel = 2;
     luffy.timeUntilNextFrame = 10;
     luffy.oamIndex = 0;
-    luffy.numFrames = 0;
+    luffy.numFrames = 7;
 }
 
 void luffyUpdate() {
+    luffy.isMoving = 0;
     if ((~(buttons) & ((1 << 5)))) {
+        luffy.direction = LEFT;
         luffy.x -= luffy.xVel;
+        luffy.isMoving = 1;
     } else if ((~(buttons) & ((1 << 4)))) {
+        luffy.direction = RIGHT;
         luffy.x += luffy.xVel;
+        luffy.isMoving = 1;
     }
 
     if ((!(~(oldButtons) & ((1 << 6))) && (~(buttons) & ((1 << 6))))) {
 
     }
 
+    shadowOAM[luffy.oamIndex].attr0 = (2 << 14) | ((luffy.y) & 0xFF);
+    shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF);
+    if (luffy.direction == RIGHT) {
+        shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF) | (1 << 12);
+    }
+    if (luffy.timeUntilNextFrame == 0 & luffy.isMoving == 0) {
+        luffy.timeUntilNextFrame = 10;
+        luffy.frame = (luffy.frame + 1) % luffy.numFrames;
+        shadowOAM[luffy.oamIndex].attr2 = luffy.frame * 4;
+    } else if (luffy.timeUntilNextFrame == 0 && luffy.isMoving == 1) {
+        luffy.timeUntilNextFrame = 10;
+        luffy.frame = (luffy.frame + 1) % 3;
+        shadowOAM[luffy.oamIndex].attr2 = (((8) * (32) + (luffy.frame * 4)) & 0x3FF);
+    } else if (luffy.timeUntilNextFrame < 0) {
+        luffy.timeUntilNextFrame = 10;
+    }
+
+    luffy.timeUntilNextFrame--;
 }

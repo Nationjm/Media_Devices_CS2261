@@ -8,6 +8,9 @@
 #include "LuffyWinScreen.h"
 #include "wanoInstructions.h"
 #include "sprites.h"
+#include "RooftopGroundBackground.h"
+#include "Rooftop_Ground_TilesetBitmap.h"
+#include "LuffyandKaidoSprites.h"
 
 // State Variable from main and enum
 extern unsigned short state;
@@ -45,8 +48,15 @@ void instructions() {
 }
 
 void kaido1() {
-    // hideSprites();
+    hideSprites();
+    luffyUpdate();
     DMANow(3, shadowOAM, OAM, 512);
+    DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &CHARBLOCK[0], Rooftop_Ground_TilesetBitmapTilesLen / 2);
+    DMANow(3, Rooftop_Ground_TilesetBitmapPal, BG_PALETTE, 256);
+    DMANow(3, RooftopGroundBackgroundMap, &SCREENBLOCK[28], RooftopGroundBackgroundMapLen / 2);
+    DMANow(3, LuffyandKaidoSpritesPal, SPRITE_PALETTE, 256);
+    DMANow(3, LuffyandKaidoSpritesTiles, &CHARBLOCK[4], LuffyandKaidoSpritesTilesLen / 2);
+    
 }
 
 void pause() {
@@ -78,6 +88,7 @@ void goToKaido1() {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(28);
     DMANow(3, shadowOAM, OAM, 512);
+    initLuffy();
 }
 
 void goToPause() {
@@ -100,7 +111,7 @@ void goToLose() {
 
 void initLuffy() {
     luffy.x = 200;
-    luffy.y = 130;
+    luffy.y = 110;
     luffy.xVel = 2;
     luffy.direction = LEFT;
     luffy.frame = 0;
@@ -110,18 +121,41 @@ void initLuffy() {
     luffy.yVel = 2;
     luffy.timeUntilNextFrame = 10;
     luffy.oamIndex = 0;
-    luffy.numFrames = 0;
+    luffy.numFrames = 7;
 }
 
 void luffyUpdate() {
+    luffy.isMoving = 0;
     if (BUTTON_HELD(BUTTON_LEFT)) {
+        luffy.direction = LEFT;
         luffy.x -= luffy.xVel;
+        luffy.isMoving = 1;
     } else if (BUTTON_HELD(BUTTON_RIGHT)) {
+        luffy.direction = RIGHT;
         luffy.x += luffy.xVel;
+        luffy.isMoving = 1;
     }
 
     if (BUTTON_PRESSED(BUTTON_UP)) {
 
     }
 
+    shadowOAM[luffy.oamIndex].attr0 = ATTR0_TALL | ATTR0_Y(luffy.y);
+    shadowOAM[luffy.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(luffy.x);
+    if (luffy.direction == RIGHT) {
+        shadowOAM[luffy.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(luffy.x) | ATTR1_HFLIP;
+    }
+    if (luffy.timeUntilNextFrame == 0 & luffy.isMoving == 0) {
+        luffy.timeUntilNextFrame = 10;
+        luffy.frame = (luffy.frame + 1) % luffy.numFrames;
+        shadowOAM[luffy.oamIndex].attr2 = luffy.frame * 4;
+    } else if (luffy.timeUntilNextFrame == 0 && luffy.isMoving == 1) { 
+        luffy.timeUntilNextFrame = 10;
+        luffy.frame = (luffy.frame + 1) % 3;
+        shadowOAM[luffy.oamIndex].attr2 = ATTR2_TILEID(luffy.frame * 4, 8);
+    } else if (luffy.timeUntilNextFrame < 0) {
+        luffy.timeUntilNextFrame = 10;
+    }
+
+    luffy.timeUntilNextFrame--;
 }
