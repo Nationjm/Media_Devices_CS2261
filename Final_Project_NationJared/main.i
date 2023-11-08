@@ -312,6 +312,10 @@ void goToWin();
 void goToLose();
 
 
+void luffyUpdate();
+void initLuffy();
+
+
 typedef struct {
     int x;
     int y;

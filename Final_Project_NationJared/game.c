@@ -115,47 +115,133 @@ void initLuffy() {
     luffy.xVel = 2;
     luffy.direction = LEFT;
     luffy.frame = 0;
-    luffy.height = 0;
-    luffy.width = 0;
+    luffy.height = 44;
+    luffy.width = 32;
     luffy.isMoving = 0;
     luffy.yVel = 2;
     luffy.timeUntilNextFrame = 10;
     luffy.oamIndex = 0;
     luffy.numFrames = 4;
+    luffy.punching = 0;
+    luffy.punchingTime = 40;
 }
 
 void luffyUpdate() {
     luffy.isMoving = 0;
-    if (BUTTON_HELD(BUTTON_LEFT) && luffy.x > 0) {
+    if (BUTTON_HELD(BUTTON_LEFT) && luffy.punching == 0) { // Handle Luffy running left
         luffy.direction = LEFT;
-        luffy.x -= luffy.xVel;
+        if (luffy.x > 0) {
+            luffy.x -= luffy.xVel;
+        }
         luffy.isMoving = 1;
-    } else if (BUTTON_HELD(BUTTON_RIGHT) && luffy.x < 240) {
+    } else if (BUTTON_HELD(BUTTON_RIGHT) && luffy.punching == 0) { // Handle Luffy running right
         luffy.direction = RIGHT;
-        luffy.x += luffy.xVel;
+        if (luffy.x < 240 - luffy.width) {
+            luffy.x += luffy.xVel;
+        }
         luffy.isMoving = 1;
     }
 
-    if (BUTTON_PRESSED(BUTTON_UP)) {
+    if (BUTTON_PRESSED(BUTTON_UP)) { // Handle Luffy jumping
 
     }
+    
+    if (luffy.punching == 0) { // Handle all animation if punching animation is not happening
+        // Set up luffy sprite
+        shadowOAM[luffy.oamIndex].attr0 = ATTR0_TALL | ATTR0_Y(luffy.y);
+        shadowOAM[luffy.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(luffy.x);
 
-    shadowOAM[luffy.oamIndex].attr0 = ATTR0_TALL | ATTR0_Y(luffy.y);
-    shadowOAM[luffy.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(luffy.x);
-    if (luffy.direction == RIGHT) {
-        shadowOAM[luffy.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(luffy.x) | ATTR1_HFLIP;
+        if (luffy.direction == RIGHT) { // Handle flipping the sprite if going right
+            shadowOAM[luffy.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(luffy.x) | ATTR1_HFLIP;
+        }
+
+        if ((luffy.timeUntilNextFrame == 0) & (luffy.isMoving == 0)) { // animate still frames
+            luffy.timeUntilNextFrame = 10;
+            luffy.frame = (luffy.frame + 1) % luffy.numFrames;
+            shadowOAM[luffy.oamIndex].attr2 = luffy.frame * 4;
+        } else if ((luffy.timeUntilNextFrame == 0) && (luffy.isMoving == 1)) { // animate motion frames
+            luffy.timeUntilNextFrame = 10;
+            luffy.frame = (luffy.frame + 1) % 3;
+            shadowOAM[luffy.oamIndex].attr2 = ATTR2_TILEID((luffy.frame * 4) + 16, 0);
+        } else if (luffy.timeUntilNextFrame < 0) { // turn timeUntilNextFrame back to 10 if it goes below 0
+            luffy.timeUntilNextFrame = 10;
+        }
     }
-    if (luffy.timeUntilNextFrame == 0 & luffy.isMoving == 0) {
-        luffy.timeUntilNextFrame = 10;
-        luffy.frame = (luffy.frame + 1) % luffy.numFrames;
-        shadowOAM[luffy.oamIndex].attr2 = luffy.frame * 4;
-    } else if (luffy.timeUntilNextFrame == 0 && luffy.isMoving == 1) { 
-        luffy.timeUntilNextFrame = 10;
-        luffy.frame = (luffy.frame + 1) % 3;
-        shadowOAM[luffy.oamIndex].attr2 = ATTR2_TILEID((luffy.frame * 4) + 16, 0);
-    } else if (luffy.timeUntilNextFrame < 0) {
-        luffy.timeUntilNextFrame = 10;
+
+    if (BUTTON_PRESSED(BUTTON_A)) { // Handle Luffy Punching
+        luffy.punching = 1;
     }
+
+    if (luffy.punching) {
+        shadowOAM[luffy.oamIndex].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y);
+        shadowOAM[luffy.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(luffy.x);
+        shadowOAM[luffy.oamIndex].attr2 = ATTR2_TILEID(3, 7);
+        if (luffy.direction == RIGHT) {
+            shadowOAM[luffy.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(luffy.x) | ATTR1_HFLIP;
+            if (luffy.punchingTime < 40) {
+            shadowOAM[luffy.oamIndex + 1].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y + 16);
+            shadowOAM[luffy.oamIndex + 1].attr1 = ATTR1_TINY | ATTR1_X(luffy.x + 32 + luffy.width);
+            shadowOAM[luffy.oamIndex + 1].attr2 = ATTR2_TILEID(2, 9);
+            }
+            if (luffy.punchingTime < 37) {
+                shadowOAM[luffy.oamIndex + 2].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y + 16);
+                shadowOAM[luffy.oamIndex + 2].attr1 = ATTR1_TINY | ATTR1_X(luffy.x + 36 + luffy.width);
+                shadowOAM[luffy.oamIndex + 2].attr2 = ATTR2_TILEID(2, 9);
+            }
+            if (luffy.punchingTime < 34) {
+                shadowOAM[luffy.oamIndex + 3].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y + 16);
+                shadowOAM[luffy.oamIndex + 3].attr1 = ATTR1_TINY | ATTR1_X(luffy.x + 40 + luffy.width);
+                shadowOAM[luffy.oamIndex + 3].attr2 = ATTR2_TILEID(2, 9);
+            }
+            if (luffy.punchingTime < 31) {
+                shadowOAM[luffy.oamIndex + 4].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y + 16);
+                shadowOAM[luffy.oamIndex + 4].attr1 = ATTR1_TINY | ATTR1_X(luffy.x + 44 + luffy.width);
+                shadowOAM[luffy.oamIndex + 4].attr2 = ATTR2_TILEID(2, 9);
+            }
+            if (luffy.punchingTime < 28) {
+                shadowOAM[luffy.oamIndex + 5].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y + 16);
+                shadowOAM[luffy.oamIndex + 5].attr1 = ATTR1_TINY | ATTR1_X(luffy.x + 48 + luffy.width);
+                shadowOAM[luffy.oamIndex + 5].attr2 = ATTR2_TILEID(2, 9);
+            }
+            if (luffy.punchingTime < 25) {
+                shadowOAM[luffy.oamIndex + 6].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y + 16);
+                shadowOAM[luffy.oamIndex + 6].attr1 = ATTR1_SMALL | ATTR1_X(luffy.x + 52 + luffy.width) | ATTR1_HFLIP;
+                shadowOAM[luffy.oamIndex + 6].attr2 = ATTR2_TILEID(0, 9);
+            }
+            if (luffy.punchingTime < 0) {
+                luffy.punchingTime = 40;
+                luffy.punching = 0;
+            }
+        } else {
+            if (luffy.punchingTime < 40) {
+            shadowOAM[luffy.oamIndex + 1].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y + 16);
+            shadowOAM[luffy.oamIndex + 1].attr1 = ATTR1_TINY | ATTR1_X(luffy.x - 8);
+            shadowOAM[luffy.oamIndex + 1].attr2 = ATTR2_TILEID(2, 9);
+            }
+            if (luffy.punchingTime < 37) {
+                shadowOAM[luffy.oamIndex + 2].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y + 16);
+                shadowOAM[luffy.oamIndex + 2].attr1 = ATTR1_TINY | ATTR1_X(luffy.x - 12);
+                shadowOAM[luffy.oamIndex + 2].attr2 = ATTR2_TILEID(2, 9);
+            }
+            if (luffy.punchingTime < 34) {
+                shadowOAM[luffy.oamIndex + 3].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y + 16);
+                shadowOAM[luffy.oamIndex + 3].attr1 = ATTR1_TINY | ATTR1_X(luffy.x - 16);
+                shadowOAM[luffy.oamIndex + 3].attr2 = ATTR2_TILEID(2, 9);
+            }
+            if (luffy.punchingTime < 31) {
+                shadowOAM[luffy.oamIndex + 4].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y + 16);
+                shadowOAM[luffy.oamIndex + 4].attr1 = ATTR1_SMALL | ATTR1_X(luffy.x - 28);
+                shadowOAM[luffy.oamIndex + 4].attr2 = ATTR2_TILEID(0, 9);
+            }
+            if (luffy.punchingTime < 0) {
+                luffy.punchingTime = 40;
+                luffy.punching = 0;
+            }  
+        }
+        
+        luffy.punchingTime--;
+    }
+    
 
     luffy.timeUntilNextFrame--;
 }

@@ -31,6 +31,8 @@ typedef struct {
     int frame;
     int timeUntilNextFrame;
     int direction;
+    int punching;
+    int punchingTime;
     unsigned char oamIndex;
 } LUFFY;
   

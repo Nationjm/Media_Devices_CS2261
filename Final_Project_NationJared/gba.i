@@ -30,6 +30,7 @@ int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width
 void waitForVBlank();
 # 67 "gba.h"
 extern unsigned short oldButtons;
+extern unsigned short buttons;
 
 
 
@@ -40,7 +41,7 @@ typedef volatile struct {
     volatile unsigned int cnt;
 } DMA;
 extern DMA *dma;
-# 98 "gba.h"
+# 99 "gba.h"
 void DMANow(int channel, volatile const void *src, volatile void *dst, unsigned int cnt);
 # 2 "gba.c" 2
 
