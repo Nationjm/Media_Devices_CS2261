@@ -314,6 +314,11 @@ void goToLose();
 
 void luffyUpdate();
 void initLuffy();
+void luffyPunching();
+
+
+void initKaido();
+void kaidoUpdate();
 
 
 typedef struct {
@@ -330,10 +335,28 @@ typedef struct {
     int direction;
     int punching;
     int punchingTime;
+    int jumping;
+    int jumpingTime;
     unsigned char oamIndex;
 } LUFFY;
-
 LUFFY luffy;
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int isMoving;
+    int xVel;
+    int numFrames;
+    int frame;
+    int timeUntilNextFrame;
+    int direction;
+    int attacking;
+    int attackingTime;
+    unsigned char oamIndex;
+} KAIDO;
+KAIDO kaido;
 # 6 "game.c" 2
 # 1 "mode4.h" 1
 # 13 "mode4.h"
@@ -502,7 +525,9 @@ void initLuffy() {
     luffy.oamIndex = 0;
     luffy.numFrames = 4;
     luffy.punching = 0;
-    luffy.punchingTime = 40;
+    luffy.punchingTime = 22;
+    luffy.jumping = 0;
+    luffy.jumpingTime = 20;
 }
 
 void luffyUpdate() {
@@ -521,11 +546,7 @@ void luffyUpdate() {
         luffy.isMoving = 1;
     }
 
-    if ((!(~(oldButtons) & ((1 << 6))) && (~(buttons) & ((1 << 6))))) {
-
-    }
-
-    if (luffy.punching == 0) {
+    if (luffy.punching == 0 && luffy.jumping == 0) {
 
         shadowOAM[luffy.oamIndex].attr0 = (2 << 14) | ((luffy.y) & 0xFF);
         shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF);
@@ -552,75 +573,128 @@ void luffyUpdate() {
     }
 
     if (luffy.punching) {
-        shadowOAM[luffy.oamIndex].attr0 = (0 << 14) | ((luffy.y) & 0xFF);
-        shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF);
-        shadowOAM[luffy.oamIndex].attr2 = (((7) * (32) + (3)) & 0x3FF);
-        if (luffy.direction == RIGHT) {
-            shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF) | (1 << 12);
-            if (luffy.punchingTime < 40) {
-            shadowOAM[luffy.oamIndex + 1].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
-            shadowOAM[luffy.oamIndex + 1].attr1 = (0 << 14) | ((luffy.x + 36 + luffy.width) & 0x1FF);
-            shadowOAM[luffy.oamIndex + 1].attr2 = (((9) * (32) + (2)) & 0x3FF);
-            }
-            if (luffy.punchingTime < 37) {
-                shadowOAM[luffy.oamIndex + 2].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
-                shadowOAM[luffy.oamIndex + 2].attr1 = (0 << 14) | ((luffy.x + 36 + luffy.width) & 0x1FF);
-                shadowOAM[luffy.oamIndex + 2].attr2 = (((9) * (32) + (2)) & 0x3FF);
-            }
-            if (luffy.punchingTime < 34) {
-                shadowOAM[luffy.oamIndex + 3].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
-                shadowOAM[luffy.oamIndex + 3].attr1 = (0 << 14) | ((luffy.x + 40 + luffy.width) & 0x1FF);
-                shadowOAM[luffy.oamIndex + 3].attr2 = (((9) * (32) + (2)) & 0x3FF);
-            }
-            if (luffy.punchingTime < 31) {
-                shadowOAM[luffy.oamIndex + 4].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
-                shadowOAM[luffy.oamIndex + 4].attr1 = (0 << 14) | ((luffy.x + 44 + luffy.width) & 0x1FF);
-                shadowOAM[luffy.oamIndex + 4].attr2 = (((9) * (32) + (2)) & 0x3FF);
-            }
-            if (luffy.punchingTime < 28) {
-                shadowOAM[luffy.oamIndex + 5].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
-                shadowOAM[luffy.oamIndex + 5].attr1 = (0 << 14) | ((luffy.x + 48 + luffy.width) & 0x1FF);
-                shadowOAM[luffy.oamIndex + 5].attr2 = (((9) * (32) + (2)) & 0x3FF);
-            }
-            if (luffy.punchingTime < 25) {
-                shadowOAM[luffy.oamIndex + 6].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
-                shadowOAM[luffy.oamIndex + 6].attr1 = (1 << 14) | ((luffy.x + 52 + luffy.width) & 0x1FF) | (1 << 12);
-                shadowOAM[luffy.oamIndex + 6].attr2 = (((9) * (32) + (0)) & 0x3FF);
-            }
-            if (luffy.punchingTime < 0) {
-                luffy.punchingTime = 40;
-                luffy.punching = 0;
-            }
-        } else {
-            if (luffy.punchingTime < 40) {
-            shadowOAM[luffy.oamIndex + 1].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
-            shadowOAM[luffy.oamIndex + 1].attr1 = (0 << 14) | ((luffy.x - 8) & 0x1FF);
-            shadowOAM[luffy.oamIndex + 1].attr2 = (((9) * (32) + (2)) & 0x3FF);
-            }
-            if (luffy.punchingTime < 37) {
-                shadowOAM[luffy.oamIndex + 2].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
-                shadowOAM[luffy.oamIndex + 2].attr1 = (0 << 14) | ((luffy.x - 12) & 0x1FF);
-                shadowOAM[luffy.oamIndex + 2].attr2 = (((9) * (32) + (2)) & 0x3FF);
-            }
-            if (luffy.punchingTime < 34) {
-                shadowOAM[luffy.oamIndex + 3].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
-                shadowOAM[luffy.oamIndex + 3].attr1 = (0 << 14) | ((luffy.x - 16) & 0x1FF);
-                shadowOAM[luffy.oamIndex + 3].attr2 = (((9) * (32) + (2)) & 0x3FF);
-            }
-            if (luffy.punchingTime < 31) {
-                shadowOAM[luffy.oamIndex + 4].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
-                shadowOAM[luffy.oamIndex + 4].attr1 = (1 << 14) | ((luffy.x - 28) & 0x1FF);
-                shadowOAM[luffy.oamIndex + 4].attr2 = (((9) * (32) + (0)) & 0x3FF);
-            }
-            if (luffy.punchingTime < 0) {
-                luffy.punchingTime = 40;
-                luffy.punching = 0;
-            }
-        }
-
-        luffy.punchingTime--;
+        luffyPunching();
     }
 
+    if ((!(~(oldButtons) & ((1 << 6))) && (~(buttons) & ((1 << 6))))) {
+        luffy.jumping = 1;
+    }
+
+    if (luffy.jumping) {
+        luffyJumping();
+    }
 
     luffy.timeUntilNextFrame--;
+}
+
+void luffyPunching() {
+    shadowOAM[luffy.oamIndex].attr0 = (0 << 14) | ((luffy.y) & 0xFF);
+    shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF);
+    shadowOAM[luffy.oamIndex].attr2 = (((7) * (32) + (3)) & 0x3FF);
+    if (luffy.direction == RIGHT) {
+        shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF) | (1 << 12);
+        if (luffy.punchingTime < 20) {
+            shadowOAM[luffy.oamIndex + 1].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 1].attr1 = (0 << 14) | ((luffy.x + 32 + luffy.width) & 0x1FF);
+            shadowOAM[luffy.oamIndex + 1].attr2 = (((9) * (32) + (2)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 18) {
+            shadowOAM[luffy.oamIndex + 2].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 2].attr1 = (0 << 14) | ((luffy.x + 36 + luffy.width) & 0x1FF);
+            shadowOAM[luffy.oamIndex + 2].attr2 = (((9) * (32) + (2)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 16) {
+            shadowOAM[luffy.oamIndex + 3].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 3].attr1 = (0 << 14) | ((luffy.x + 40 + luffy.width) & 0x1FF);
+            shadowOAM[luffy.oamIndex + 3].attr2 = (((9) * (32) + (2)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 14) {
+            shadowOAM[luffy.oamIndex + 4].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 4].attr1 = (0 << 14) | ((luffy.x + 44 + luffy.width) & 0x1FF);
+            shadowOAM[luffy.oamIndex + 4].attr2 = (((9) * (32) + (2)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 12) {
+            shadowOAM[luffy.oamIndex + 5].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 5].attr1 = (0 << 14) | ((luffy.x + 48 + luffy.width) & 0x1FF);
+            shadowOAM[luffy.oamIndex + 5].attr2 = (((9) * (32) + (2)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 10) {
+            shadowOAM[luffy.oamIndex + 6].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 6].attr1 = (1 << 14) | ((luffy.x + 52 + luffy.width) & 0x1FF) | (1 << 12);
+            shadowOAM[luffy.oamIndex + 6].attr2 = (((9) * (32) + (0)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 0) {
+            luffy.punchingTime = 22;
+            luffy.punching = 0;
+        }
+    } else {
+        if (luffy.punchingTime < 20) {
+        shadowOAM[luffy.oamIndex + 1].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+        shadowOAM[luffy.oamIndex + 1].attr1 = (0 << 14) | ((luffy.x - 8) & 0x1FF);
+        shadowOAM[luffy.oamIndex + 1].attr2 = (((9) * (32) + (2)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 18) {
+            shadowOAM[luffy.oamIndex + 2].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 2].attr1 = (0 << 14) | ((luffy.x - 12) & 0x1FF);
+            shadowOAM[luffy.oamIndex + 2].attr2 = (((9) * (32) + (2)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 16) {
+            shadowOAM[luffy.oamIndex + 3].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 3].attr1 = (0 << 14) | ((luffy.x - 16) & 0x1FF);
+            shadowOAM[luffy.oamIndex + 3].attr2 = (((9) * (32) + (2)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 14) {
+            shadowOAM[luffy.oamIndex + 4].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 4].attr1 = (0 << 14) | ((luffy.x - 20) & 0x1FF);
+            shadowOAM[luffy.oamIndex + 4].attr2 = (((9) * (32) + (2)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 12) {
+            shadowOAM[luffy.oamIndex + 5].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 5].attr1 = (0 << 14) | ((luffy.x - 24) & 0x1FF);
+            shadowOAM[luffy.oamIndex + 5].attr2 = (((9) * (32) + (2)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 10) {
+            shadowOAM[luffy.oamIndex + 6].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
+            shadowOAM[luffy.oamIndex + 6].attr1 = (1 << 14) | ((luffy.x - 36) & 0x1FF);
+            shadowOAM[luffy.oamIndex + 6].attr2 = (((9) * (32) + (0)) & 0x3FF);
+        }
+        if (luffy.punchingTime < 0) {
+            luffy.punchingTime = 22;
+            luffy.punching = 0;
+        }
+    }
+
+    luffy.punchingTime--;
+}
+
+void luffyJumping() {
+
+
+    if (luffy.jumpingTime < 0) {
+        luffy.jumpingTime = 20;
+        luffy.jumping = 0;
+    }
+
+    luffy.jumpingTime--;
+}
+
+
+void initKaido() {
+    kaido.x = 0;
+    kaido.y = 0;
+    kaido.direction = RIGHT;
+    kaido.frame = 0;
+    kaido.height = 0;
+    kaido.width = 0;
+    kaido.isMoving = 0;
+    kaido.oamIndex = 7;
+    kaido.numFrames = 0;
+    kaido.xVel = 1;
+    kaido.attacking = 0;
+    kaido.attackingTime = 20;
+    kaido.timeUntilNextFrame = 10;
+}
+
+void kaidoUpdate() {
+
 }

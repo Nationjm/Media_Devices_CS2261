@@ -17,6 +17,11 @@ void goToLose();
 // Luffy Functions
 void luffyUpdate();
 void initLuffy();
+void luffyPunching();
+void luffyJumping();
+// Kaido Functions
+void initKaido();
+void kaidoUpdate();
 
 // Object Structs
 typedef struct {
@@ -33,7 +38,25 @@ typedef struct {
     int direction;
     int punching;
     int punchingTime;
+    int jumping;
+    int jumpingTime;
     unsigned char oamIndex;
 } LUFFY;
-  
 LUFFY luffy;
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int isMoving;
+    int xVel;
+    int numFrames;
+    int frame;
+    int timeUntilNextFrame;
+    int direction;
+    int attacking;
+    int attackingTime;
+    unsigned char oamIndex;
+} KAIDO;
+KAIDO kaido;
