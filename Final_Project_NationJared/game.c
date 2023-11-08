@@ -17,7 +17,10 @@ extern unsigned short state;
 enum {
     START,
     INSTRUCTIONS,
-    GAME,
+    KAIDO1,
+    KAIDO2,
+    BIGMOM1,
+    BIGMOM2,
     PAUSE,
     WIN,
     LOSE
@@ -59,6 +62,25 @@ void kaido1() {
     
 }
 
+void kaido2() {
+    hideSprites();
+    luffyUpdate();
+    DMANow(3, shadowOAM, OAM, 512);
+    DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &CHARBLOCK[0], Rooftop_Ground_TilesetBitmapTilesLen / 2);
+    DMANow(3, Rooftop_Ground_TilesetBitmapPal, BG_PALETTE, 256);
+    DMANow(3, RooftopGroundBackgroundMap, &SCREENBLOCK[28], RooftopGroundBackgroundMapLen / 2);
+    DMANow(3, LuffyandKaidoSpritesPal, SPRITE_PALETTE, 256);
+    DMANow(3, LuffyandKaidoSpritesTiles, &CHARBLOCK[4], LuffyandKaidoSpritesTilesLen / 2);
+}
+
+void bigMom1() {
+    hideSprites();
+}
+
+void bigMom2() {
+    hideSprites();
+}
+
 void pause() {
     flipPage();
 }
@@ -84,12 +106,24 @@ void goToInstructions() {
 }
 
 void goToKaido1() {
-    state = GAME;
+    state = KAIDO1;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(28);
     DMANow(3, shadowOAM, OAM, 512);
     initLuffy();
     initKaido();
+}
+
+void goToKaido2() {
+    state = KAIDO2;
+}
+
+void goToBigMom1() {
+    state = BIGMOM1;
+}
+
+void goToBigMom2() {
+    state = BIGMOM2;
 }
 
 void goToPause() {
@@ -260,9 +294,10 @@ void luffyPunching() { // Handle animating Luffy while his punching variable is 
         if (luffy.punchingTime < 0) {
             luffy.punchingTime = 22;
             luffy.punching = 0;
+            luffy.timeUntilNextFrame = 1;
         }  
     }
-
+  
     luffy.punchingTime--;
 }
 
@@ -278,7 +313,7 @@ void luffyJumping() {
         luffy.jumpingTime = 30;
         luffy.jumping = 0;
     }
-    
+
     luffy.jumpingTime--;
 }
 

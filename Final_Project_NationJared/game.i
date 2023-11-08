@@ -315,7 +315,7 @@ void goToLose();
 void luffyUpdate();
 void initLuffy();
 void luffyPunching();
-
+void luffyJumping();
 
 void initKaido();
 void kaidoUpdate();
@@ -419,7 +419,10 @@ extern unsigned short state;
 enum {
     START,
     INSTRUCTIONS,
-    GAME,
+    KAIDO1,
+    KAIDO2,
+    BIGMOM1,
+    BIGMOM2,
     PAUSE,
     WIN,
     LOSE
@@ -461,6 +464,25 @@ void kaido1() {
 
 }
 
+void kaido2() {
+    hideSprites();
+    luffyUpdate();
+    DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
+    DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &((CB*) 0x06000000)[0], 19200 / 2);
+    DMANow(3, Rooftop_Ground_TilesetBitmapPal, ((unsigned short*) 0x05000000), 256);
+    DMANow(3, RooftopGroundBackgroundMap, &((SB*) 0x06000000)[28], (2048) / 2);
+    DMANow(3, LuffyandKaidoSpritesPal, ((u16*) 0x5000200), 256);
+    DMANow(3, LuffyandKaidoSpritesTiles, &((CB*) 0x06000000)[4], 32768 / 2);
+}
+
+void bigMom1() {
+    hideSprites();
+}
+
+void bigMom2() {
+    hideSprites();
+}
+
 void pause() {
     flipPage();
 }
@@ -486,11 +508,24 @@ void goToInstructions() {
 }
 
 void goToKaido1() {
-    state = GAME;
+    state = KAIDO1;
     (*(volatile unsigned short*) 0x04000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x04000008) = ((0) << 2) | ((28) << 8);
     DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
     initLuffy();
+    initKaido();
+}
+
+void goToKaido2() {
+    state = KAIDO2;
+}
+
+void goToBigMom1() {
+    state = BIGMOM1;
+}
+
+void goToBigMom2() {
+    state = BIGMOM2;
 }
 
 void goToPause() {
@@ -527,7 +562,7 @@ void initLuffy() {
     luffy.punching = 0;
     luffy.punchingTime = 22;
     luffy.jumping = 0;
-    luffy.jumpingTime = 20;
+    luffy.jumpingTime = 30;
 }
 
 void luffyUpdate() {
@@ -661,6 +696,7 @@ void luffyPunching() {
         if (luffy.punchingTime < 0) {
             luffy.punchingTime = 22;
             luffy.punching = 0;
+            luffy.timeUntilNextFrame = 1;
         }
     }
 
@@ -668,10 +704,15 @@ void luffyPunching() {
 }
 
 void luffyJumping() {
-
+    shadowOAM[luffy.oamIndex].attr0 = (0 << 14) | ((luffy.y) & 0xFF);
+    shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF);
+    shadowOAM[luffy.oamIndex].attr2 = (((7) * (32) + (3)) & 0x3FF);
+    if (luffy.direction == RIGHT) {
+        shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF) | (1 << 12);
+    }
 
     if (luffy.jumpingTime < 0) {
-        luffy.jumpingTime = 20;
+        luffy.jumpingTime = 30;
         luffy.jumping = 0;
     }
 
