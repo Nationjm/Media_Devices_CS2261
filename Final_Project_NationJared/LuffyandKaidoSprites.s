@@ -33,15 +33,15 @@ LuffyandKaidoSpritesPal:
 	.short	20083
 	.short	3319
 	.short	9599
+	.short	22975
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	1023
+	.short	25952
+	.short	1454
+	.short	14369
+	.short	32640
+	.short	32767
+	.short	9
 	.short	0
 	.short	0
 	.short	0
@@ -1151,10 +1151,10 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	8738
 	.short	8706
-	.short	-19115
-	.short	21794
-	.short	23477
-	.short	-19115
+	.short	-18296
+	.short	-30686
+	.short	23752
+	.short	-14200
 	.short	-19934
 	.short	0
 	.short	0
@@ -1215,11 +1215,11 @@ LuffyandKaidoSpritesTiles:
 	.short	8466
 	.short	8192
 	.short	4386
-	.short	20994
+	.short	-32254
 	.short	8485
-	.short	21794
-	.short	21029
-	.short	-17579
+	.short	-30686
+	.short	-32219
+	.short	-13176
 	.short	0
 	.short	0
 	.short	0
@@ -1230,9 +1230,9 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	546
 	.short	0
-	.short	11093
+	.short	11144
 	.short	0
-	.short	21941
+	.short	21944
 	.short	2
 	.short	21794
 	.short	43
@@ -1601,9 +1601,9 @@ LuffyandKaidoSpritesTiles:
 	.short	-32120
 	.short	648
 	.short	-15736
-	.short	11096
+	.short	11400
 	.short	10370
-	.short	9563
+	.short	10380
 	.short	0
 	.short	0
 	.short	0
@@ -1637,26 +1637,26 @@ LuffyandKaidoSpritesTiles:
 	.short	8192
 	.short	-21830
 	.short	21845
-	.short	23595
+	.short	-29653
 	.short	21842
-	.short	23746
+	.short	-29502
 	.short	-23211
 	.short	-13109
 	.short	8738
 	.short	-30517
 	.short	-15840
-	.short	-30590
+	.short	-30585
 	.short	10939
 	.short	-30580
 	.short	10923
 	.short	-30606
 	.short	554
 	.short	-30526
-	.short	11189
+	.short	11464
 	.short	8192
-	.short	699
+	.short	716
 	.short	0
-	.short	43
+	.short	44
 	.short	0
 	.short	44
 	.short	0
@@ -1707,19 +1707,19 @@ LuffyandKaidoSpritesTiles:
 	.short	8704
 	.short	-19934
 	.short	8192
-	.short	11435
-	.short	-19968
-	.short	31787
-	.short	-17632
+	.short	11432
+	.short	-32256
+	.short	31784
+	.short	-30688
 	.short	-13270
-	.short	-21582
+	.short	-22398
 	.short	-15870
 	.short	10923
 	.short	8192
-	.short	21794
-	.short	8885
-	.short	23692
-	.short	43
+	.short	-30686
+	.short	8904
+	.short	-29556
+	.short	44
 	.short	-14196
 	.short	2
 	.short	-30584
@@ -2025,11 +2025,11 @@ LuffyandKaidoSpritesTiles:
 	.short	-15668
 	.short	10380
 	.short	8748
-	.short	-30516
+	.short	-30596
 	.short	8194
 	.short	-29492
 	.short	8192
-	.short	-30580
+	.short	-30596
 	.short	-15840
 	.short	-29652
 	.short	8738
@@ -2101,13 +2101,13 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	8704
 	.short	8738
-	.short	11195
+	.short	11468
 	.short	21845
-	.short	-17494
+	.short	-13142
 	.short	21947
-	.short	-19115
+	.short	-15019
 	.short	8738
-	.short	-19109
+	.short	-15013
 	.short	-30676
 	.short	8738
 	.short	8738
@@ -2149,7 +2149,7 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	2
-	.short	-30526
+	.short	-30782
 	.short	0
 	.short	-30526
 	.short	0
@@ -4585,13 +4585,33 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	8704
 	.short	0
+	.short	8818
 	.short	0
+	.short	8823
+	.short	8192
+	.short	8737
+	.short	8192
+	.short	8738
+	.short	4608
+	.short	11058
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	546
 	.short	0
+	.short	29303
+	.short	39
+	.short	4642
+	.short	631
+	.short	8738
+	.short	10001
+	.short	8747
+	.short	8466
+	.short	9147
+	.short	4386
 	.short	0
 	.short	0
 	.short	0
@@ -4606,27 +4626,88 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	2
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	8192
+	.short	34
+	.short	-19968
+	.short	699
+	.short	-17632
+	.short	11195
+	.short	19232
+	.short	-21580
+	.short	-21728
+	.short	-21580
+	.short	8704
+	.short	10939
 	.short	0
+	.short	8192
 	.short	0
+	.short	29184
 	.short	0
+	.short	30496
 	.short	0
+	.short	30496
+	.short	2
+	.short	30578
+	.short	8746
+	.short	30578
+	.short	-21846
+	.short	30578
+	.short	-21982
+	.short	30578
+	.short	8738
+	.short	2
+	.short	6007
+	.short	8737
+	.short	30583
+	.short	4625
+	.short	30583
+	.short	8471
+	.short	30583
+	.short	8471
+	.short	30583
+	.short	-16105
+	.short	30583
+	.short	-16111
+	.short	30583
+	.short	7185
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	2
 	.short	0
+	.short	33
 	.short	0
+	.short	529
 	.short	0
+	.short	529
+	.short	8704
+	.short	529
+	.short	21794
+	.short	8721
+	.short	-18296
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	8704
 	.short	0
+	.short	21760
+	.short	34
+	.short	21794
+	.short	8789
+	.short	21941
+	.short	9557
+	.short	21547
+	.short	21588
+	.short	-19413
+	.short	21684
 	.short	0
 	.short	0
 	.short	0
@@ -4637,8 +4718,11 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	2
 	.short	0
+	.short	2
 	.short	0
+	.short	2
 	.short	0
 	.short	0
 	.short	0
@@ -4675,18 +4759,51 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	8192
 	.short	0
+	.short	29184
 	.short	0
+	.short	4384
 	.short	0
+	.short	8738
+	.short	8192
+	.short	8491
+	.short	8704
+	.short	8747
+	.short	-19968
+	.short	8738
+	.short	8736
+	.short	34
+	.short	30578
+	.short	8823
+	.short	29303
+	.short	30583
+	.short	8721
+	.short	30481
+	.short	8738
+	.short	4626
+	.short	8738
+	.short	4626
+	.short	8738
+	.short	8738
+	.short	-17478
+	.short	8747
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	2
 	.short	0
+	.short	39
 	.short	0
+	.short	625
 	.short	0
+	.short	10001
 	.short	0
+	.short	8466
 	.short	0
+	.short	4370
+	.short	2
 	.short	0
 	.short	0
 	.short	0
@@ -4699,127 +4816,10 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	8192
+	.short	34
+	.short	21024
+	.short	597
 	.short	0
 	.short	0
 	.short	0
@@ -4943,9 +4943,9 @@ LuffyandKaidoSpritesTiles:
 	.short	21845
 	.short	9506
 	.short	21845
-	.short	21845
+	.short	-31403
 	.short	-17477
-	.short	-17477
+	.short	-13381
 	.short	8738
 	.short	8738
 	.short	6007
@@ -4956,12 +4956,12 @@ LuffyandKaidoSpritesTiles:
 	.short	-24027
 	.short	9509
 	.short	8738
-	.short	21074
-	.short	23381
-	.short	21845
-	.short	-17579
-	.short	-17477
-	.short	-17477
+	.short	-32126
+	.short	-29560
+	.short	-30584
+	.short	-13176
+	.short	-13108
+	.short	-13108
 	.short	8738
 	.short	8738
 	.short	8737
@@ -4972,11 +4972,11 @@ LuffyandKaidoSpritesTiles:
 	.short	34
 	.short	-13278
 	.short	8908
-	.short	-31403
 	.short	-30584
-	.short	21851
+	.short	-30584
 	.short	-30580
-	.short	-17477
+	.short	-30580
+	.short	-13108
 	.short	-29492
 	.short	-13278
 	.short	-30516
@@ -5077,10 +5077,73 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	8704
 	.short	0
+	.short	-17632
 	.short	0
+	.short	19122
+	.short	0
+	.short	-17486
+	.short	0
+	.short	19122
+	.short	0
+	.short	-21582
+	.short	0
+	.short	19122
+	.short	0
+	.short	-21726
+	.short	4610
+	.short	-19677
+	.short	4642
+	.short	19773
+	.short	4786
+	.short	21845
+	.short	8882
+	.short	8885
+	.short	8738
+	.short	21797
+	.short	554
+	.short	21842
+	.short	8868
+	.short	-17582
+	.short	-13526
+	.short	-17630
+	.short	12859
+	.short	4386
+	.short	-11307
+	.short	4642
+	.short	21845
+	.short	4690
+	.short	21794
+	.short	8789
+	.short	21077
+	.short	8885
+	.short	21845
+	.short	8747
+	.short	-19109
+	.short	-32213
+	.short	11195
+	.short	-14302
+	.short	2
 	.short	0
+	.short	8738
 	.short	0
+	.short	21842
+	.short	2
+	.short	-21851
+	.short	43
+	.short	21829
+	.short	43
+	.short	-21982
+	.short	43
+	.short	21794
+	.short	43
+	.short	-21838
+	.short	43
+	.short	-19968
+	.short	683
+	.short	8192
+	.short	34
 	.short	0
 	.short	0
 	.short	0
@@ -5093,19 +5156,71 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	8736
+	.short	30578
+	.short	8192
+	.short	30599
+	.short	8192
+	.short	-30601
 	.short	0
+	.short	-30857
 	.short	0
+	.short	30578
 	.short	0
+	.short	4642
 	.short	0
+	.short	8704
 	.short	0
+	.short	8192
+	.short	6007
+	.short	7361
+	.short	4375
+	.short	4556
+	.short	-13108
+	.short	4380
+	.short	4552
+	.short	8465
+	.short	6007
+	.short	-19951
+	.short	8465
+	.short	11042
+	.short	8738
+	.short	4642
+	.short	8754
+	.short	-13118
+	.short	-15839
+	.short	11468
+	.short	-13279
+	.short	556
+	.short	11298
+	.short	2
+	.short	-29653
+	.short	40
+	.short	-30526
+	.short	40
+	.short	-30580
+	.short	556
+	.short	-13108
+	.short	9772
+	.short	-13108
+	.short	26210
+	.short	17442
+	.short	23371
+	.short	21760
+	.short	8738
+	.short	8704
+	.short	2
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	2
 	.short	0
+	.short	38
 	.short	0
+	.short	2
 	.short	0
 	.short	0
 	.short	0
@@ -5153,181 +5268,66 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-17632
+	.short	-24046
+	.short	-17632
+	.short	8738
+	.short	-21728
+	.short	-11734
+	.short	-21728
+	.short	8746
+	.short	-24064
+	.short	-24022
+	.short	8192
+	.short	10922
 	.short	0
+	.short	10914
 	.short	0
+	.short	-17632
+	.short	21851
+	.short	8875
+	.short	21851
+	.short	10795
+	.short	21842
+	.short	-21198
+	.short	11091
+	.short	-19677
+	.short	21851
+	.short	-17483
+	.short	13109
+	.short	11059
+	.short	13227
+	.short	-13517
+	.short	21938
+	.short	-32075
+	.short	4370
+	.short	8706
+	.short	4386
+	.short	23330
+	.short	8491
+	.short	21842
+	.short	8747
+	.short	-19108
+	.short	-29662
+	.short	8744
+	.short	-30584
+	.short	12
+	.short	-13176
+	.short	2
+	.short	8908
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	21938
+	.short	597
+	.short	21845
+	.short	11189
+	.short	-19115
+	.short	11178
+	.short	-17630
+	.short	11186
+	.short	-19968
+	.short	555
+	.short	8192
+	.short	2
 	.short	0
 	.short	0
 	.short	0
@@ -5589,6 +5589,7 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	8704
 	.short	0
 	.short	0
 	.short	0
@@ -5603,11 +5604,41 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-13790
+	.short	8908
+	.short	8704
+	.short	-13108
 	.short	0
+	.short	-30516
 	.short	0
+	.short	-13118
 	.short	0
+	.short	-30686
 	.short	0
+	.short	-30590
 	.short	0
+	.short	11468
+	.short	8192
+	.short	-26218
+	.short	-15838
+	.short	-13172
+	.short	-30516
+	.short	11468
+	.short	-30585
+	.short	11468
+	.short	-30580
+	.short	11400
+	.short	-30585
+	.short	11468
+	.short	-30580
+	.short	11464
+	.short	-13278
+	.short	-13108
+	.short	-26215
+	.short	26217
+	.short	-17630
+	.short	2
+	.short	8736
 	.short	0
 	.short	0
 	.short	0
@@ -5617,21 +5648,51 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	2
 	.short	0
+	.short	2
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	8192
 	.short	0
+	.short	8192
 	.short	0
+	.short	8704
 	.short	0
+	.short	-19968
 	.short	0
+	.short	8192
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	34
+	.short	8704
+	.short	43
+	.short	10784
+	.short	683
+	.short	11186
+	.short	8738
+	.short	8891
+	.short	-17622
+	.short	42
+	.short	-21982
+	.short	2
+	.short	-24032
+	.short	2
+	.short	8192
 	.short	0
+	.short	26221
+	.short	9830
+	.short	26221
+	.short	9830
+	.short	26221
+	.short	546
+	.short	8925
 	.short	0
+	.short	34
 	.short	0
 	.short	0
 	.short	0
@@ -5639,7 +5700,12 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	25122
+	.short	-27034
+	.short	8738
+	.short	26210
 	.short	0
+	.short	8736
 	.short	0
 	.short	0
 	.short	0
@@ -5650,7 +5716,18 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	153
+	.short	2
+	.short	16537
+	.short	34
+	.short	21606
+	.short	8789
+	.short	-19870
+	.short	21851
+	.short	8736
+	.short	21938
 	.short	0
+	.short	8736
 	.short	0
 	.short	0
 	.short	0
@@ -5660,6 +5737,17 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	32
+	.short	8738
+	.short	690
+	.short	21845
+	.short	690
+	.short	21851
+	.short	546
+	.short	21938
+	.short	546
+	.short	11040
+	.short	530
 	.short	0
 	.short	0
 	.short	0
@@ -5693,7 +5781,9 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-19968
 	.short	0
+	.short	8192
 	.short	0
 	.short	0
 	.short	0
@@ -5706,127 +5796,37 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-24020
+	.short	-30518
+	.short	10380
+	.short	-30580
+	.short	-30590
+	.short	-30585
+	.short	-30688
+	.short	-30580
+	.short	-29664
+	.short	-30580
+	.short	-13280
+	.short	-14201
+	.short	-13280
+	.short	-30516
+	.short	-30526
+	.short	-30584
+	.short	44
 	.short	0
+	.short	44
 	.short	0
+	.short	44
 	.short	0
+	.short	44
 	.short	0
+	.short	44
 	.short	0
+	.short	34
 	.short	0
+	.short	716
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	10376
 	.short	0
 	.short	0
 	.short	0
@@ -6116,15 +6116,51 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	8192
+	.short	26214
+	.short	25088
+	.short	26214
+	.short	-11776
+	.short	28125
+	.short	-8928
+	.short	-8926
+	.short	8736
+	.short	8738
+	.short	8704
+	.short	8738
+	.short	8192
+	.short	554
 	.short	0
+	.short	10
+	.short	26214
+	.short	-26215
+	.short	8742
+	.short	-26215
+	.short	25122
+	.short	13107
+	.short	-11774
+	.short	8739
+	.short	8706
+	.short	8738
+	.short	8192
+	.short	11042
 	.short	0
+	.short	11040
 	.short	0
+	.short	-17664
+	.short	38
 	.short	0
+	.short	550
 	.short	0
+	.short	611
 	.short	0
+	.short	723
 	.short	0
+	.short	34
 	.short	0
+	.short	34
 	.short	0
+	.short	2
 	.short	0
 	.short	0
 	.short	0
@@ -6208,6 +6244,14 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	21024
+	.short	533
+	.short	20992
+	.short	533
+	.short	20992
+	.short	43
+	.short	8192
+	.short	2
 	.short	0
 	.short	0
 	.short	0
@@ -6249,96 +6293,52 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	8192
 	.short	0
+	.short	-15872
 	.short	0
+	.short	8704
 	.short	0
+	.short	8192
 	.short	0
+	.short	25088
 	.short	0
+	.short	25088
 	.short	0
+	.short	26144
 	.short	0
+	.short	26144
+	.short	30856
+	.short	-13108
+	.short	8748
+	.short	8738
+	.short	26146
+	.short	26214
+	.short	-27034
+	.short	-26215
+	.short	26214
+	.short	-26218
+	.short	26214
+	.short	-26222
+	.short	26214
+	.short	-26222
+	.short	9830
+	.short	-26222
+	.short	-30580
+	.short	2
+	.short	-13278
+	.short	2
+	.short	11302
 	.short	0
+	.short	550
 	.short	0
+	.short	41
 	.short	0
+	.short	41
 	.short	0
+	.short	617
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	617
 	.short	0
 	.short	0
 	.short	0
@@ -6629,24 +6629,52 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	10
 	.short	0
+	.short	10
 	.short	0
+	.short	10
+	.short	-20480
+	.short	10
+	.short	-20480
+	.short	10
+	.short	-20480
+	.short	10
+	.short	-17664
+	.short	2826
+	.short	-17664
+	.short	2816
 	.short	0
+	.short	-17664
 	.short	0
+	.short	-17664
 	.short	0
+	.short	23296
 	.short	0
+	.short	23296
 	.short	0
+	.short	23296
 	.short	0
+	.short	23296
 	.short	0
+	.short	23296
 	.short	0
+	.short	23296
 	.short	0
 	.short	0
+	.short	5
 	.short	0
+	.short	5
 	.short	0
+	.short	5
 	.short	0
+	.short	5
 	.short	0
+	.short	5
 	.short	0
+	.short	5
 	.short	0
+	.short	5
 	.short	0
 	.short	0
 	.short	0
@@ -6777,18 +6805,52 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	26210
+	.short	8192
+	.short	26333
+	.short	8192
+	.short	-8750
+	.short	8192
+	.short	-11733
+	.short	8192
+	.short	10939
+	.short	8192
+	.short	-21846
 	.short	0
+	.short	8738
 	.short	0
 	.short	0
+	.short	9830
+	.short	-26222
+	.short	-23962
+	.short	13266
+	.short	-21978
+	.short	17618
+	.short	8866
+	.short	23370
+	.short	8234
+	.short	23362
+	.short	8194
+	.short	-17622
 	.short	0
+	.short	-19806
 	.short	0
+	.short	-19968
+	.short	617
 	.short	0
+	.short	723
 	.short	0
+	.short	724
 	.short	0
+	.short	581
 	.short	0
+	.short	581
 	.short	0
+	.short	43
 	.short	0
+	.short	37
 	.short	0
+	.short	37
 	.short	0
 	.short	0
 	.short	0
@@ -7078,24 +7140,53 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-17664
+	.short	2816
+	.short	-17664
+	.short	2816
+	.short	-17664
+	.short	2816
+	.short	-17664
+	.short	2816
+	.short	-17664
+	.short	2816
+	.short	-20480
 	.short	0
+	.short	-20480
 	.short	0
+	.short	-20480
 	.short	0
 	.short	0
+	.short	23296
 	.short	0
+	.short	23296
 	.short	0
+	.short	20480
 	.short	0
+	.short	20480
 	.short	0
+	.short	20480
 	.short	0
+	.short	20480
 	.short	0
+	.short	20480
 	.short	0
+	.short	20480
+	.short	5
 	.short	0
+	.short	5
 	.short	0
+	.short	5
 	.short	0
+	.short	5
 	.short	0
+	.short	5
 	.short	0
+	.short	1285
 	.short	0
+	.short	1280
 	.short	0
+	.short	1280
 	.short	0
 	.short	0
 	.short	0
@@ -7242,15 +7333,36 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-19968
 	.short	0
+	.short	23328
 	.short	0
+	.short	11040
 	.short	0
+	.short	21170
 	.short	0
+	.short	8738
 	.short	0
+	.short	8482
 	.short	0
+	.short	4370
 	.short	0
+	.short	8736
+	.short	597
 	.short	0
+	.short	8738
+	.short	2
+	.short	9557
+	.short	5
+	.short	11195
+	.short	43
+	.short	8738
+	.short	34
+	.short	8738
+	.short	2
+	.short	8465
 	.short	0
+	.short	546
 	.short	0
 	.short	0
 	.short	0
@@ -7540,16 +7652,28 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-20480
 	.short	0
+	.short	-20480
 	.short	0
+	.short	-20480
+	.short	176
 	.short	0
+	.short	176
 	.short	0
+	.short	176
 	.short	0
+	.short	2992
 	.short	0
+	.short	2992
 	.short	0
+	.short	2992
 	.short	0
+	.short	20480
 	.short	0
+	.short	20480
 	.short	0
+	.short	20480
 	.short	0
 	.short	0
 	.short	0
@@ -7560,12 +7684,19 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	1280
 	.short	0
+	.short	1280
 	.short	0
+	.short	1360
 	.short	0
+	.short	1360
 	.short	0
+	.short	2896
 	.short	0
+	.short	176
 	.short	0
+	.short	176
 	.short	0
 	.short	0
 	.short	0
@@ -7828,16 +7959,35 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	256
+	.short	4113
+	.short	4097
+	.short	256
+	.short	16
+	.short	4097
+	.short	4369
+	.short	20752
+	.short	21333
+	.short	21809
+	.short	21813
+	.short	21843
+	.short	21813
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	1
 	.short	0
+	.short	257
 	.short	0
+	.short	4097
 	.short	0
+	.short	4117
 	.short	0
+	.short	341
+	.short	4097
 	.short	0
 	.short	0
 	.short	0
@@ -7845,16 +7995,63 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	272
+	.short	4352
+	.short	4096
+	.short	1
+	.short	4353
+	.short	272
+	.short	12560
+	.short	4096
+	.short	21329
 	.short	0
 	.short	0
 	.short	0
+	.short	17
+	.short	17
+	.short	256
+	.short	256
+	.short	256
+	.short	4369
+	.short	17
+	.short	21845
+	.short	275
+	.short	13653
+	.short	4437
+	.short	13653
+	.short	5461
 	.short	0
+	.short	16
+	.short	256
+	.short	321
+	.short	5136
+	.short	5136
+	.short	5136
+	.short	16641
+	.short	16641
+	.short	4116
+	.short	4112
+	.short	16705
+	.short	17
+	.short	17424
+	.short	4352
+	.short	5185
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	16
 	.short	0
+	.short	321
 	.short	0
+	.short	4420
+	.short	256
+	.short	17428
+	.short	4113
+	.short	4369
+	.short	4372
+	.short	5185
+	.short	5702
 	.short	0
 	.short	0
 	.short	0
@@ -7862,15 +8059,26 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	4352
 	.short	0
+	.short	17424
+	.short	16
+	.short	5185
+	.short	256
+	.short	321
+	.short	273
+	.short	321
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	1
 	.short	0
+	.short	20
 	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -7957,8 +8165,11 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	2992
 	.short	0
+	.short	176
 	.short	0
+	.short	176
 	.short	0
 	.short	0
 	.short	0
@@ -8257,7 +8468,118 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	21843
+	.short	21813
+	.short	21843
+	.short	21333
+	.short	17717
+	.short	16708
+	.short	16709
+	.short	17428
+	.short	17428
+	.short	16708
+	.short	4420
+	.short	16657
+	.short	276
+	.short	4096
+	.short	1
 	.short	0
+	.short	4949
+	.short	16
+	.short	21813
+	.short	17
+	.short	21813
+	.short	4437
+	.short	21332
+	.short	21333
+	.short	21524
+	.short	21813
+	.short	17473
+	.short	21329
+	.short	5137
+	.short	17476
+	.short	16640
+	.short	5185
+	.short	4113
+	.short	21333
+	.short	12560
+	.short	13653
+	.short	21329
+	.short	17749
+	.short	13653
+	.short	16709
+	.short	5205
+	.short	17428
+	.short	16709
+	.short	16708
+	.short	16705
+	.short	4420
+	.short	5188
+	.short	4369
+	.short	13653
+	.short	13653
+	.short	13653
+	.short	4949
+	.short	17428
+	.short	21331
+	.short	17473
+	.short	4948
+	.short	17428
+	.short	4884
+	.short	17425
+	.short	13377
+	.short	16640
+	.short	17473
+	.short	5429
+	.short	5185
+	.short	4113
+	.short	4417
+	.short	4357
+	.short	4417
+	.short	4369
+	.short	5185
+	.short	5461
+	.short	17425
+	.short	4433
+	.short	4369
+	.short	5397
+	.short	4369
+	.short	20817
+	.short	4369
+	.short	4417
+	.short	4369
+	.short	17937
+	.short	21862
+	.short	25429
+	.short	25939
+	.short	12561
+	.short	25941
+	.short	21572
+	.short	21845
+	.short	20753
+	.short	21845
+	.short	21777
+	.short	21845
+	.short	21841
+	.short	29525
+	.short	21777
+	.short	-30923
+	.short	4373
+	.short	321
+	.short	17717
+	.short	324
+	.short	21350
+	.short	17
+	.short	13858
+	.short	4437
+	.short	21778
+	.short	21845
+	.short	21845
+	.short	21845
+	.short	30583
+	.short	30583
+	.short	-30841
+	.short	-30841
 	.short	0
 	.short	0
 	.short	0
@@ -8266,9 +8588,13 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	17
 	.short	0
+	.short	85
 	.short	0
+	.short	83
 	.short	0
+	.short	7
 	.short	0
 	.short	0
 	.short	0
@@ -8670,32 +8996,115 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	4096
+	.short	17473
 	.short	0
+	.short	4368
 	.short	0
+	.short	13136
 	.short	0
+	.short	21840
 	.short	0
+	.short	4096
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	273
+	.short	20736
+	.short	1
+	.short	20480
 	.short	0
+	.short	20480
+	.short	21329
+	.short	83
+	.short	13621
+	.short	1333
+	.short	53
+	.short	1285
+	.short	85
+	.short	1285
+	.short	1360
 	.short	0
+	.short	21331
+	.short	17427
+	.short	20483
+	.short	17424
+	.short	20485
+	.short	4432
+	.short	85
 	.short	0
 	.short	0
+	.short	4096
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	4372
+	.short	4369
+	.short	4353
+	.short	4368
+	.short	256
+	.short	4369
+	.short	273
+	.short	4097
+	.short	4097
+	.short	272
+	.short	256
+	.short	1
+	.short	4352
+	.short	4096
+	.short	16
+	.short	4352
+	.short	20753
+	.short	30773
+	.short	20753
+	.short	29525
+	.short	4369
+	.short	13649
+	.short	4368
+	.short	4369
+	.short	272
+	.short	4369
+	.short	4113
+	.short	4352
+	.short	257
+	.short	272
+	.short	256
+	.short	1
+	.short	30840
+	.short	30840
+	.short	30583
+	.short	30583
+	.short	13107
+	.short	13107
+	.short	21777
+	.short	21845
+	.short	4369
+	.short	4369
+	.short	4112
+	.short	272
+	.short	272
+	.short	16
+	.short	17
+	.short	4113
+	.short	8
 	.short	0
+	.short	83
 	.short	0
+	.short	85
 	.short	0
+	.short	21
 	.short	0
+	.short	17
 	.short	0
+	.short	17
 	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -9163,6 +9572,8 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	16
+	.short	4096
 	.short	0
 	.short	0
 	.short	0
@@ -9177,419 +9588,8 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	4097
+	.short	1
 	.short	0
 	.short	0
 	.short	0

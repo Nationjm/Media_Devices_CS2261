@@ -37,6 +37,20 @@ enum {
 
 OBJ_ATTR shadowOAM[128]; // Set up the shadowOAM
 
+typedef struct {
+    unsigned short fill0[3];
+    short a;
+    unsigned short fill1[3];
+    short b;
+    unsigned short fill2[3];
+    short c;
+    unsigned short fill3[3];
+    short d;
+} ALIGN(4) OBJ_AFFINE;
+
+OBJ_AFFINE *SHADOW_OAM_AFF = (OBJ_AFFINE*)shadowOAM;
+
+
 // State Prototypes
 void start() {
     DMANow(3, luffyStartScreenPal, BG_PALETTE, luffyStartScreenPalLen / 2);
@@ -53,6 +67,7 @@ void instructions() {
 void kaido1() {
     hideSprites();
     luffyUpdate();
+    kaidoUpdate();
     DMANow(3, shadowOAM, OAM, 512);
     DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &CHARBLOCK[0], Rooftop_Ground_TilesetBitmapTilesLen / 2);
     DMANow(3, Rooftop_Ground_TilesetBitmapPal, BG_PALETTE, 256);
@@ -259,6 +274,7 @@ void luffyPunching() { // Handle animating Luffy while his punching variable is 
         if (luffy.punchingTime < 0) {
             luffy.punchingTime = 22;
             luffy.punching = 0;
+            luffy.timeUntilNextFrame = 1;
         }
     } else {
         if (luffy.punchingTime < 20) {
@@ -302,9 +318,9 @@ void luffyPunching() { // Handle animating Luffy while his punching variable is 
 }
 
 void luffyJumping() {
-    shadowOAM[luffy.oamIndex].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y);
+    shadowOAM[luffy.oamIndex].attr0 = ATTR0_TALL | ATTR0_Y(luffy.y);
     shadowOAM[luffy.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(luffy.x);
-    shadowOAM[luffy.oamIndex].attr2 = ATTR2_TILEID(3, 7);
+    shadowOAM[luffy.oamIndex].attr2 = ATTR2_TILEID(12, 8);
     if (luffy.direction == RIGHT) {
         shadowOAM[luffy.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(luffy.x) | ATTR1_HFLIP;
     }
@@ -320,7 +336,7 @@ void luffyJumping() {
 // Kaido Functions
 void initKaido() {
     kaido.x = 0;
-    kaido.y = 0;
+    kaido.y = 110;
     kaido.direction = RIGHT;
     kaido.frame = 0;
     kaido.height = 0;
@@ -332,8 +348,11 @@ void initKaido() {
     kaido.attacking = 0;
     kaido.attackingTime = 20;
     kaido.timeUntilNextFrame = 10;
+    
 }
 
 void kaidoUpdate() {
-
+    shadowOAM[kaido.oamIndex].attr0 = ATTR0_SQUARE | ATTR0_Y(kaido.y);
+    shadowOAM[kaido.oamIndex].attr1 = ATTR1_LARGE | ATTR1_X(kaido.x) | (0 << 9);
+    shadowOAM[kaido.oamIndex].attr2 = ATTR2_TILEID(0, 15) | ATTR2_PALROW(1);
 }

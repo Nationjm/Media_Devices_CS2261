@@ -1,3 +1,5 @@
+#define ALIGN(x) __attribute__((aligned(x)))
+
 // Game State Prototypes
 void start();
 void instructions();

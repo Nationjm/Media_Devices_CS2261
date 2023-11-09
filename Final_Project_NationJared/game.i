@@ -296,6 +296,8 @@ void mgba_close(void);
 # 5 "game.c" 2
 # 1 "game.h" 1
 
+
+
 void start();
 void instructions();
 void kaido1();
@@ -438,8 +440,7 @@ enum {
 
 
 OBJ_ATTR shadowOAM[128];
-
-
+# 55 "game.c"
 void start() {
     DMANow(3, luffyStartScreenPal, ((unsigned short*) 0x05000000), 512 / 2);
     drawFullscreenImage4(luffyStartScreenBitmap);
@@ -455,6 +456,7 @@ void instructions() {
 void kaido1() {
     hideSprites();
     luffyUpdate();
+    kaidoUpdate();
     DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
     DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &((CB*) 0x06000000)[0], 19200 / 2);
     DMANow(3, Rooftop_Ground_TilesetBitmapPal, ((unsigned short*) 0x05000000), 256);
@@ -661,6 +663,7 @@ void luffyPunching() {
         if (luffy.punchingTime < 0) {
             luffy.punchingTime = 22;
             luffy.punching = 0;
+            luffy.timeUntilNextFrame = 1;
         }
     } else {
         if (luffy.punchingTime < 20) {
@@ -704,9 +707,9 @@ void luffyPunching() {
 }
 
 void luffyJumping() {
-    shadowOAM[luffy.oamIndex].attr0 = (0 << 14) | ((luffy.y) & 0xFF);
+    shadowOAM[luffy.oamIndex].attr0 = (2 << 14) | ((luffy.y) & 0xFF);
     shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF);
-    shadowOAM[luffy.oamIndex].attr2 = (((7) * (32) + (3)) & 0x3FF);
+    shadowOAM[luffy.oamIndex].attr2 = (((8) * (32) + (12)) & 0x3FF);
     if (luffy.direction == RIGHT) {
         shadowOAM[luffy.oamIndex].attr1 = (3 << 14) | ((luffy.x) & 0x1FF) | (1 << 12);
     }
@@ -722,7 +725,7 @@ void luffyJumping() {
 
 void initKaido() {
     kaido.x = 0;
-    kaido.y = 0;
+    kaido.y = 110;
     kaido.direction = RIGHT;
     kaido.frame = 0;
     kaido.height = 0;
@@ -734,8 +737,11 @@ void initKaido() {
     kaido.attacking = 0;
     kaido.attackingTime = 20;
     kaido.timeUntilNextFrame = 10;
+
 }
 
 void kaidoUpdate() {
-
+    shadowOAM[kaido.oamIndex].attr0 = (0 << 14) | ((kaido.y) & 0xFF);
+    shadowOAM[kaido.oamIndex].attr1 = (3 << 14) | ((kaido.x) & 0x1FF) | (0 << 9);
+    shadowOAM[kaido.oamIndex].attr2 = (((15) * (32) + (0)) & 0x3FF) | (((1) & 0xF) << 12);
 }

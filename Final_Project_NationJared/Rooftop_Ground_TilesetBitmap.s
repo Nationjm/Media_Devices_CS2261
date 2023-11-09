@@ -18,9 +18,9 @@
 	.size	Rooftop_Ground_TilesetBitmapPal, 512
 Rooftop_Ground_TilesetBitmapPal:
 	.short	20482
-	.short	0
+	.short	169
 	.short	4228
-	.short	5285
+	.short	10570
 	.short	0
 	.short	0
 	.short	0
@@ -276,7 +276,7 @@ Rooftop_Ground_TilesetBitmapPal:
 	.type	Rooftop_Ground_TilesetBitmapTiles, %object
 	.size	Rooftop_Ground_TilesetBitmapTiles, 19200
 Rooftop_Ground_TilesetBitmapTiles:
-	.short	12562
+	.short	12561
 	.short	13075
 	.short	12593
 	.short	4371
@@ -288,9 +288,9 @@ Rooftop_Ground_TilesetBitmapTiles:
 	.short	12563
 	.short	12561
 	.short	4371
-	.short	4370
+	.short	4369
 	.short	13075
-	.short	4626
+	.short	4369
 	.short	13105
 	.short	4096
 	.short	1
