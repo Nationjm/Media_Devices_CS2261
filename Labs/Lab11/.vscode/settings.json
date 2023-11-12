@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "leveltiles.h": "c",
-        "level2collisionbitmap.h": "c",
-        "level1collisionbitmap.h": "c"
-    }
-}

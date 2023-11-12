@@ -296,6 +296,8 @@ void mgba_close(void);
 # 5 "main.c" 2
 # 1 "game.h" 1
 
+
+
 void start();
 void instructions();
 void kaido1();
@@ -314,6 +316,16 @@ void goToLose();
 
 void luffyUpdate();
 void initLuffy();
+void luffyPunching();
+void luffyJumping();
+
+void initKaido();
+void kaidoUpdate();
+
+void setupSounds();
+void setupInterrupts();
+void interruptHandler();
+
 
 
 typedef struct {
@@ -328,11 +340,68 @@ typedef struct {
     int frame;
     int timeUntilNextFrame;
     int direction;
+    int punching;
+    int punchingTime;
+    int jumping;
+    int jumpingTime;
     unsigned char oamIndex;
 } LUFFY;
-
 LUFFY luffy;
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int isMoving;
+    int xVel;
+    int numFrames;
+    int frame;
+    int timeUntilNextFrame;
+    int direction;
+    int attacking;
+    int attackingTime;
+    unsigned char oamIndex;
+} KAIDO;
+KAIDO kaido;
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int xVel;
+    unsigned char oamIndex;
+} FIREBALL;
+FIREBALL fireball;
 # 6 "main.c" 2
+# 1 "digitalSound.h" 1
+
+void setupSounds();
+void playSong(const signed char* songData, int length);
+void playSoundEffect(const signed char* soundData, int length);
+
+void stopSounds();
+# 45 "digitalSound.h"
+typedef struct {
+    const signed char* data;
+    int dataLength;
+    int isPlaying;
+    int looping;
+    int durationInVBlanks;
+    int vBlankCount;
+} SOUND;
+
+SOUND song;
+SOUND soundEffect;
+# 7 "main.c" 2
+# 1 "BinksBrew.h" 1
+
+
+extern const unsigned int BinksBrew_sampleRate;
+extern const unsigned int BinksBrew_length;
+extern const signed char BinksBrew_data[];
+# 8 "main.c" 2
 
 
 unsigned short oldButtons;
@@ -355,6 +424,8 @@ int state;
 
 
 void initialize();
+void interruptHandler();
+void setupInterrupts();
 
 int main() {
 
@@ -366,6 +437,7 @@ int main() {
         buttons = (*(volatile unsigned short*) 0x04000130);
 
         waitForVBlank();
+        playSong(BinksBrew_data, BinksBrew_length);
 
 
         switch(state) {
@@ -419,6 +491,42 @@ void initialize() {
     buttons = (*(volatile unsigned short*) 0x04000130);
     oldButtons = 0;
 
+    setupSounds();
+    setupInterrupts();
+
     state = START;
     goToStart();
+}
+
+void setupInterrupts() {
+    (*(unsigned short*) 0x04000208) = 0;
+
+    (*(unsigned short*) 0x04000200) = (1 << 0);
+    (*(unsigned short*) 0x04000004) = (1 << 3);
+    (*(ihp*) 0x03007FFC) = interruptHandler;
+
+    (*(unsigned short*) 0x04000208) = 1;
+}
+
+void interruptHandler() {
+
+    (*(unsigned short*) 0x04000208) = 0;
+
+    if ((*(volatile unsigned short*) 0x04000202) & (1 << 0)) {
+        if (song.isPlaying) {
+            song.vBlankCount++;
+            if (song.vBlankCount >= song.durationInVBlanks) {
+                if (song.looping) {
+                    playSong(song.data, song.dataLength);
+                } else {
+                    song.isPlaying = 0;
+                    dma[1].cnt = 0;
+                    (*(volatile unsigned short*) 0x04000102) = (0 << 7);
+                }
+            }
+        }
+    }
+
+    (*(volatile unsigned short*) 0x04000202) = (*(volatile unsigned short*) 0x04000202);
+    (*(unsigned short*) 0x04000208) = 1;
 }

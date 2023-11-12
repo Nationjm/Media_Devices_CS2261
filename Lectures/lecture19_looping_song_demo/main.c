@@ -27,15 +27,15 @@ unsigned int songLength;
 void playsong() {
   songLength = 0; //VBLANK_FREQ * song_length / song_sampleRate;
 
-  // REG_TM0D = (1 << 16) - PROCESSOR_CYCLES_PER_SECOND / song_sampleRate;
-  // REG_TM0CNT = TIMER_ON;
+  REG_TM0D = (1 << 16) - PROCESSOR_CYCLES_PER_SECOND / song_sampleRate;
+  REG_TM0CNT = TIMER_ON;
 
-  // DMANow(1, song_data, REG_FIFO_A,
-  //   START_ON_FIFO_EMPTY |
-  //   DMA_DESTINATION_FIXED |
-  //   DMA_32 |
-  //   DMA_REPEAT
-  // );
+  DMANow(1, song_data, REG_FIFO_A,
+    START_ON_FIFO_EMPTY |
+    DMA_DESTINATION_FIXED |
+    DMA_32 |
+    DMA_REPEAT
+  );
   start = vBlankCount;
 }
 

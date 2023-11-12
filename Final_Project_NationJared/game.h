@@ -21,9 +21,22 @@ void luffyUpdate();
 void initLuffy();
 void luffyPunching();
 void luffyJumping();
+
 // Kaido Functions
 void initKaido();
 void kaidoUpdate();
+// Fireball Functions
+void fireballUpdate();
+
+// Collision Functions
+int fireballCollision();
+int punchCollision();
+
+// Sound Functions
+void setupSounds();
+void setupInterrupts();
+void interruptHandler();
+
 
 // Object Structs
 typedef struct {
@@ -51,6 +64,15 @@ typedef struct {
     int y;
     int width;
     int height;
+    unsigned char oamIndex;
+} LUFFYFIST;
+LUFFYFIST luffyFist;
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
     int isMoving;
     int xVel;
     int numFrames;
@@ -62,3 +84,16 @@ typedef struct {
     unsigned char oamIndex;
 } KAIDO;
 KAIDO kaido;
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int xVel;
+    int timeUntilNextFrame;
+    int numFrames;
+    int frame;
+    unsigned char oamIndex;
+} FIREBALL;
+FIREBALL fireball;

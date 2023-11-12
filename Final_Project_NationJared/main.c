@@ -3,6 +3,8 @@
 #include "sprites.h"
 #include "print.h"
 #include "game.h"
+#include "digitalSound.h"
+#include "BinksBrew.h"
 
 // button variables
 unsigned short oldButtons;
@@ -25,6 +27,8 @@ int state;
 
 // function prototypes
 void initialize();
+void interruptHandler();
+void setupInterrupts();
 
 int main() {
 
@@ -36,6 +40,7 @@ int main() {
         buttons = REG_BUTTONS;
 
         waitForVBlank();
+        playSong(BinksBrew_data, BinksBrew_length);
 
         // State Machine
         switch(state) {
@@ -89,6 +94,42 @@ void initialize() {
     buttons = REG_BUTTONS;
     oldButtons = 0;
 
+    setupSounds();
+    setupInterrupts();
+
     state = START;
     goToStart();
+}
+
+void setupInterrupts() {
+    REG_IME = 0;
+    
+    REG_IE = IRQ_VBLANK;
+    REG_DISPSTAT = DISPSTAT_VBLANK_IRQ;
+    REG_INTERRUPT = interruptHandler;
+
+    REG_IME = 1;
+}
+
+void interruptHandler() {
+
+    REG_IME = 0;
+
+    if (REG_IF & IRQ_VBLANK) {
+        if (song.isPlaying) {
+            song.vBlankCount++;
+            if (song.vBlankCount >= song.durationInVBlanks) {
+                if (song.looping) {
+                    playSong(song.data, song.dataLength);
+                } else {
+                    song.isPlaying = 0;
+                    dma[1].cnt = 0;
+                    REG_TM0CNT = TIMER_OFF;
+                }
+            }
+        }
+    }
+
+    REG_IF = REG_IF;
+    REG_IME = 1;
 }

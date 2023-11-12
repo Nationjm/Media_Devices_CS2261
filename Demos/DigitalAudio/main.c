@@ -3,6 +3,8 @@
 #include "sprites.h"
 
 // Import sound files
+#include "vine_boom.h"
+#include "funkytown.h"
 
 void initialize();
 void setupInterrupts();
@@ -30,26 +32,29 @@ int main() {
 
         // Play looping song when A button is pressed
         if (BUTTON_PRESSED(BUTTON_A)) {
-            
+            playSoundA(funkytown_data, funkytown_length, 1);
 
         } // if
 
         // Play sound effect when B button is pressed
         if (BUTTON_PRESSED(BUTTON_B)) {
-            
+            playSoundB(vine_boom_data, vine_boom_length, 0);
 
         } // if
 
         // Stop sounds completely when SELECT button is pressed
         if (BUTTON_PRESSED(BUTTON_SELECT)) {
-            
+            stopSounds();
 
         } // if
 
         // Pause/unpause sounds when START button is pressed
         if (BUTTON_PRESSED(BUTTON_START)) {
-            
-
+            if (soundA.isPlaying) {
+                pauseSounds();
+            } else {
+                unpauseSounds();
+            }
 
         } // if
 
@@ -84,7 +89,8 @@ void setupInterrupts() {
 	REG_IME = 0;
 
     // Enable VBlank interrupts
-
+    REG_IE = IRQ_VBLANK;
+    REG_DISPSTAT = DISPSTAT_VBLANK;
     REG_INTERRUPT = interruptHandler;
 	REG_IME = 1;
 
@@ -95,6 +101,32 @@ void interruptHandler() {
 	REG_IME = 0;
 
     // Handle VBlank interrupts
+    if (REG_IF & IRQ_VBLANK) {
+        if (soundA.isPlaying) {
+            soundA.vBlankCount++;
+            if (soundA.vBlankCount >= soundA.durationInVBlanks) {
+                if (soundA.looping) {
+                    playSoundA(soundA.data, soundA.dataLength, soundA.looping);
+                } else {
+                    soundA.isPlaying = 0;
+                    dma[1].cnt = 0;
+                    REG_TM0CNT = TIMER_OFF;
+                }
+            }
+        }
+        if (soundB.isPlaying) {
+            soundB.vBlankCount++;
+            if (soundB.vBlankCount >= soundB.durationInVBlanks) {
+                if (soundB.looping) {
+                    playSoundB(soundB.data, soundB.dataLength, soundB.looping);
+                } else {
+                    soundB.isPlaying = 0;
+                    dma[2].cnt = 0;
+                    REG_TM1CNT = TIMER_OFF;
+                }
+            }
+        }
+    }
 
     REG_IF = REG_IF;
 	REG_IME = 1;
