@@ -522,8 +522,8 @@ wanoInstructionsBitmap:
 	.short	-9767
 	.short	13529
 	.short	13529
-	.short	20303
-	.short	13391
+	.short	13364
+	.short	13529
 	.short	-9767
 	.short	-9767
 	.short	13364
@@ -544,7 +544,7 @@ wanoInstructionsBitmap:
 	.short	-9767
 	.short	-9767
 	.short	28784
-	.short	20276
+	.short	28724
 	.short	13364
 	.short	13364
 	.short	13364
@@ -639,10 +639,10 @@ wanoInstructionsBitmap:
 	.short	3341
 	.short	-9971
 	.short	-9767
-	.short	-9767
-	.short	-9767
+	.short	20441
+	.short	20303
 	.short	-9932
-	.short	20276
+	.short	13364
 	.short	-9767
 	.short	13529
 	.short	13529
@@ -651,18 +651,18 @@ wanoInstructionsBitmap:
 	.short	13364
 	.short	-9932
 	.short	13364
-	.short	13391
+	.short	13364
 	.short	13364
 	.short	13555
 	.short	13364
 	.short	13364
 	.short	13364
 	.short	13364
-	.short	-3276
+	.short	-3249
 	.short	28724
 	.short	13424
 	.short	13529
-	.short	20441
+	.short	-9767
 	.short	13364
 	.short	13364
 	.short	13364
@@ -760,15 +760,11 @@ wanoInstructionsBitmap:
 	.short	-9767
 	.short	-9767
 	.short	-9767
+	.short	-9905
 	.short	-9767
-	.short	-9767
-	.short	20276
+	.short	13364
 	.short	-9767
 	.short	13529
-	.short	13364
-	.short	13364
-	.short	13364
-	.short	13364
 	.short	13364
 	.short	13364
 	.short	13391
@@ -780,9 +776,13 @@ wanoInstructionsBitmap:
 	.short	13364
 	.short	13364
 	.short	13364
+	.short	13391
+	.short	13364
+	.short	13364
+	.short	13364
 	.short	13364
 	.short	-9932
-	.short	20441
+	.short	13529
 	.short	13364
 	.short	13364
 	.short	13364
@@ -880,41 +880,41 @@ wanoInstructionsBitmap:
 	.short	-9767
 	.short	-9767
 	.short	-9767
+	.short	-9905
 	.short	-9767
-	.short	-9767
-	.short	20441
+	.short	13529
 	.short	-9932
-	.short	20441
-	.short	20276
-	.short	13391
+	.short	13529
 	.short	13364
-	.short	20276
-	.short	20303
-	.short	20276
-	.short	20303
 	.short	13364
 	.short	13391
-	.short	20303
-	.short	20303
 	.short	13364
-	.short	20303
 	.short	13364
-	.short	20276
-	.short	20303
 	.short	13364
-	.short	20303
-	.short	13391
-	.short	20276
 	.short	13364
-	.short	20276
-	.short	20303
 	.short	13364
-	.short	20276
-	.short	20336
+	.short	13364
+	.short	13364
+	.short	13364
 	.short	13391
 	.short	13364
-	.short	20441
-	.short	20303
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13424
+	.short	13364
+	.short	13364
+	.short	13529
+	.short	13364
 	.short	28784
 	.short	7185
 	.short	-13598
@@ -1000,41 +1000,41 @@ wanoInstructionsBitmap:
 	.short	13529
 	.short	13529
 	.short	-9767
-	.short	-9767
-	.short	-9767
+	.short	-9905
 	.short	20441
-	.short	-9767
+	.short	-9905
 	.short	20303
-	.short	13391
-	.short	20276
-	.short	13364
-	.short	13391
-	.short	20276
-	.short	13364
-	.short	13391
-	.short	20276
-	.short	20303
-	.short	13364
-	.short	20276
-	.short	13364
-	.short	20276
-	.short	13364
-	.short	13391
 	.short	-9932
-	.short	13391
-	.short	20276
-	.short	13364
 	.short	20303
-	.short	13364
-	.short	13391
-	.short	13364
+	.short	20276
+	.short	20303
+	.short	20276
 	.short	13391
 	.short	20303
+	.short	20276
+	.short	13391
+	.short	20276
+	.short	20303
+	.short	20276
+	.short	20303
+	.short	20276
+	.short	13391
+	.short	20276
+	.short	20303
+	.short	13364
+	.short	20303
+	.short	20276
+	.short	13391
+	.short	20276
 	.short	13391
 	.short	20276
 	.short	13364
-	.short	13391
-	.short	20276
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13555
+	.short	28724
 	.short	28784
 	.short	-13807
 	.short	-13622
@@ -1120,40 +1120,40 @@ wanoInstructionsBitmap:
 	.short	13529
 	.short	-9932
 	.short	-9767
-	.short	-9932
+	.short	-9905
 	.short	-9767
+	.short	20303
 	.short	20441
-	.short	-9767
 	.short	20276
 	.short	13364
-	.short	20336
-	.short	13364
+	.short	13424
 	.short	13391
 	.short	13364
-	.short	13364
-	.short	13391
-	.short	13364
-	.short	13391
-	.short	13364
+	.short	20303
 	.short	20276
 	.short	13364
+	.short	13391
+	.short	13391
 	.short	20276
 	.short	13364
+	.short	13391
+	.short	28724
+	.short	13391
 	.short	28751
 	.short	-9932
-	.short	13364
-	.short	20276
-	.short	13364
-	.short	20276
-	.short	13364
-	.short	28751
-	.short	13555
 	.short	13391
 	.short	20276
+	.short	13391
+	.short	13391
+	.short	13391
+	.short	28724
+	.short	13555
 	.short	13364
-	.short	20276
 	.short	13364
-	.short	-3249
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	-3085
 	.short	28724
 	.short	-31120
 	.short	-13771
@@ -1240,41 +1240,41 @@ wanoInstructionsBitmap:
 	.short	13529
 	.short	-9767
 	.short	-9932
-	.short	13529
+	.short	13391
 	.short	-9767
-	.short	20441
-	.short	13364
+	.short	-9905
 	.short	20276
 	.short	13364
-	.short	20276
-	.short	13364
-	.short	20276
-	.short	13391
+	.short	20303
 	.short	13364
 	.short	13391
 	.short	13364
 	.short	13391
-	.short	13364
-	.short	20276
-	.short	13364
 	.short	20276
 	.short	13364
 	.short	13391
+	.short	13391
 	.short	13364
-	.short	28724
+	.short	13364
+	.short	13391
+	.short	13364
+	.short	13391
+	.short	13391
+	.short	13364
+	.short	28751
 	.short	20276
 	.short	13364
+	.short	13391
 	.short	20276
-	.short	13364
 	.short	13391
 	.short	13424
-	.short	13391
-	.short	20276
-	.short	-9741
-	.short	20276
 	.short	13364
-	.short	20276
-	.short	28751
+	.short	13364
+	.short	-9741
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	28724
 	.short	28784
 	.short	-13807
 	.short	-13622
@@ -1360,41 +1360,41 @@ wanoInstructionsBitmap:
 	.short	-9932
 	.short	-9932
 	.short	-9767
+	.short	-9905
 	.short	-9767
-	.short	-9767
+	.short	13391
 	.short	20276
 	.short	13364
 	.short	20276
 	.short	13364
-	.short	20276
-	.short	13364
-	.short	13364
-	.short	20276
-	.short	13424
 	.short	13391
 	.short	13364
 	.short	13391
+	.short	20336
 	.short	13364
-	.short	20276
+	.short	13391
+	.short	13391
 	.short	13364
-	.short	20276
+	.short	-9932
+	.short	13391
 	.short	13364
+	.short	13391
 	.short	28751
 	.short	13364
-	.short	13364
+	.short	13391
 	.short	20276
 	.short	13364
-	.short	20276
+	.short	13391
 	.short	13364
 	.short	-9905
 	.short	13364
-	.short	13391
-	.short	20276
-	.short	13364
-	.short	20276
 	.short	13364
 	.short	13364
-	.short	20276
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
 	.short	28784
 	.short	-13788
 	.short	4042
@@ -1479,42 +1479,42 @@ wanoInstructionsBitmap:
 	.short	13529
 	.short	-9932
 	.short	-9767
-	.short	-9767
-	.short	-9767
-	.short	-9767
+	.short	20441
+	.short	20303
+	.short	20441
+	.short	20303
 	.short	20276
-	.short	13364
-	.short	20276
-	.short	13364
-	.short	20276
-	.short	13364
-	.short	13391
-	.short	20276
-	.short	13364
-	.short	-9905
-	.short	13391
+	.short	20303
 	.short	13391
 	.short	13364
+	.short	20303
 	.short	20276
+	.short	20303
+	.short	13364
+	.short	20303
+	.short	20303
+	.short	20276
+	.short	20303
+	.short	13364
+	.short	20303
+	.short	20276
+	.short	20303
+	.short	20276
+	.short	20303
 	.short	13364
 	.short	20303
 	.short	13391
-	.short	28751
-	.short	13364
-	.short	13391
-	.short	20276
-	.short	20276
+	.short	20303
+	.short	20303
+	.short	-3276
 	.short	20276
 	.short	13364
-	.short	-3249
 	.short	13364
-	.short	13391
-	.short	20276
 	.short	28724
-	.short	20276
 	.short	13364
-	.short	13391
-	.short	20276
+	.short	13364
+	.short	13364
+	.short	13364
 	.short	28784
 	.short	-13788
 	.short	30154
@@ -1602,39 +1602,39 @@ wanoInstructionsBitmap:
 	.short	-9767
 	.short	-9932
 	.short	-9767
-	.short	20303
-	.short	13391
-	.short	20303
-	.short	28751
-	.short	20303
-	.short	13391
-	.short	20303
-	.short	13391
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	28724
+	.short	13424
+	.short	13364
+	.short	13364
+	.short	13364
 	.short	-9932
-	.short	20303
-	.short	20276
-	.short	20303
+	.short	13529
 	.short	13364
 	.short	13364
-	.short	20303
-	.short	20276
 	.short	13364
-	.short	20276
-	.short	20303
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
 	.short	-3085
-	.short	20276
-	.short	13391
-	.short	20303
-	.short	13391
-	.short	20276
-	.short	20303
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	13364
 	.short	13446
-	.short	20303
-	.short	28751
-	.short	20303
-	.short	13391
-	.short	20303
-	.short	-9905
+	.short	13364
+	.short	28724
+	.short	-3276
+	.short	13364
+	.short	13364
+	.short	-9932
 	.short	28784
 	.short	-13750
 	.short	-22756
@@ -1962,22 +1962,22 @@ wanoInstructionsBitmap:
 	.short	13529
 	.short	13364
 	.short	13529
-	.short	20303
-	.short	13391
+	.short	13364
+	.short	13364
 	.short	13364
 	.short	13364
 	.short	-3276
 	.short	13364
 	.short	13364
-	.short	20303
-	.short	13391
+	.short	13364
+	.short	13555
 	.short	13364
 	.short	13424
 	.short	13364
 	.short	13529
-	.short	20303
-	.short	20303
-	.short	28751
+	.short	13364
+	.short	13364
+	.short	28915
 	.short	28724
 	.short	13555
 	.short	13364
@@ -1994,20 +1994,20 @@ wanoInstructionsBitmap:
 	.short	13364
 	.short	-3085
 	.short	28915
-	.short	20303
+	.short	-3216
 	.short	4464
 	.short	3855
 	.short	30069
 	.short	3957
 	.short	-13622
 	.short	-13622
-	.short	20303
+	.short	-13622
 	.short	-13622
 	.short	-13622
 	.short	-31215
 	.short	-9082
-	.short	20303
-	.short	-21937
+	.short	19740
+	.short	-21863
 	.short	-21846
 	.short	-21846
 	.short	-21846
@@ -2082,22 +2082,22 @@ wanoInstructionsBitmap:
 	.short	-9767
 	.short	13364
 	.short	13364
-	.short	20276
+	.short	13364
 	.short	13364
 	.short	-3276
 	.short	13364
 	.short	13364
 	.short	13364
-	.short	20276
 	.short	13364
-	.short	20303
+	.short	13364
+	.short	-3276
 	.short	13555
 	.short	13364
 	.short	13364
 	.short	13364
-	.short	20276
 	.short	13364
-	.short	20467
+	.short	13364
+	.short	13555
 	.short	28724
 	.short	28724
 	.short	-3085
@@ -2106,28 +2106,28 @@ wanoInstructionsBitmap:
 	.short	13555
 	.short	19056
 	.short	13446
-	.short	13391
+	.short	13364
 	.short	13364
 	.short	28784
 	.short	13424
 	.short	13364
 	.short	13364
-	.short	20336
+	.short	13424
 	.short	-3216
-	.short	20336
+	.short	28784
 	.short	-9741
 	.short	29967
 	.short	30069
 	.short	3957
 	.short	-13736
 	.short	-13598
-	.short	20426
+	.short	-13622
 	.short	-13622
 	.short	15960
 	.short	-31215
-	.short	20358
+	.short	-9082
 	.short	7262
-	.short	20303
+	.short	19735
 	.short	-26215
 	.short	-21863
 	.short	-21846
@@ -2202,22 +2202,22 @@ wanoInstructionsBitmap:
 	.short	-9767
 	.short	13364
 	.short	13364
-	.short	20276
+	.short	13364
 	.short	13364
 	.short	28724
 	.short	-3216
 	.short	13555
 	.short	-3216
-	.short	20336
-	.short	13364
-	.short	20276
+	.short	13424
 	.short	13364
 	.short	13364
 	.short	13364
 	.short	13364
-	.short	20276
 	.short	13364
-	.short	20276
+	.short	13364
+	.short	13364
+	.short	13364
+	.short	28724
 	.short	28724
 	.short	28915
 	.short	-3085
@@ -2226,28 +2226,28 @@ wanoInstructionsBitmap:
 	.short	28724
 	.short	-3216
 	.short	28724
-	.short	13391
+	.short	13364
 	.short	13424
 	.short	13424
 	.short	13364
 	.short	-3276
 	.short	28724
-	.short	20276
+	.short	-3276
 	.short	28724
-	.short	20276
+	.short	28724
 	.short	30576
 	.short	30119
 	.short	30069
 	.short	22645
 	.short	22616
 	.short	22730
-	.short	20426
+	.short	22730
 	.short	22616
 	.short	22616
 	.short	-31215
-	.short	20467
+	.short	-30989
 	.short	24271
-	.short	20348
+	.short	19068
 	.short	9102
 	.short	-26209
 	.short	-26215
@@ -2319,56 +2319,56 @@ wanoInstructionsBitmap:
 	.short	-9767
 	.short	-9932
 	.short	-9932
-	.short	13529
+	.short	20441
+	.short	20303
 	.short	13364
 	.short	13364
-	.short	20276
-	.short	13364
-	.short	28915
-	.short	13424
 	.short	20303
-	.short	13424
 	.short	20303
-	.short	28751
-	.short	20303
-	.short	13391
-	.short	20336
-	.short	-9932
-	.short	13364
-	.short	20276
-	.short	20303
-	.short	28751
 	.short	20303
 	.short	20467
-	.short	13391
 	.short	20303
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	-9932
+	.short	13364
+	.short	13364
 	.short	20276
-	.short	-3249
+	.short	20303
+	.short	20303
+	.short	-3085
+	.short	13424
+	.short	-3216
+	.short	-3276
+	.short	-3085
 	.short	28784
-	.short	20276
+	.short	-3276
+	.short	13364
 	.short	20303
-	.short	28724
-	.short	20303
-	.short	28751
+	.short	13364
+	.short	28784
 	.short	13364
 	.short	28915
 	.short	20303
 	.short	13391
-	.short	20276
-	.short	20241
-	.short	30031
-	.short	20341
-	.short	22607
+	.short	28724
+	.short	9233
+	.short	30069
+	.short	30069
+	.short	22645
 	.short	22616
 	.short	-13736
-	.short	20312
+	.short	22616
 	.short	-13736
-	.short	20303
+	.short	22616
 	.short	-31196
-	.short	20303
-	.short	-31153
-	.short	20303
-	.short	24143
+	.short	-30989
+	.short	-31098
+	.short	-12324
+	.short	24158
 	.short	18952
 	.short	-29042
 	.short	18972
@@ -2440,54 +2440,54 @@ wanoInstructionsBitmap:
 	.short	13529
 	.short	-9932
 	.short	13364
+	.short	13391
 	.short	13364
 	.short	13364
 	.short	20276
-	.short	13364
 	.short	13364
 	.short	20336
 	.short	13364
 	.short	13391
-	.short	20467
-	.short	28724
-	.short	20276
+	.short	28915
+	.short	20303
 	.short	13364
-	.short	13424
+	.short	13391
+	.short	20336
 	.short	28724
 	.short	-3216
-	.short	20276
-	.short	20276
+	.short	13364
 	.short	28724
-	.short	20336
-	.short	-3085
+	.short	28751
+	.short	28784
 	.short	-3249
-	.short	20336
-	.short	-3249
-	.short	13391
-	.short	13424
-	.short	13424
-	.short	13391
-	.short	20276
-	.short	13364
-	.short	20336
+	.short	-3216
+	.short	-3216
+	.short	-3276
 	.short	13555
-	.short	-3085
-	.short	20467
-	.short	13364
+	.short	13424
+	.short	13424
+	.short	13424
 	.short	20276
-	.short	3919
-	.short	30031
-	.short	30031
-	.short	20341
-	.short	-13736
-	.short	-13736
-	.short	20312
-	.short	20239
-	.short	22543
-	.short	-31153
+	.short	13364
+	.short	28784
+	.short	13555
 	.short	20467
+	.short	28915
+	.short	20303
+	.short	28724
+	.short	3914
+	.short	30069
+	.short	30069
+	.short	3957
+	.short	-13736
+	.short	-13736
+	.short	3928
+	.short	-13809
+	.short	22543
+	.short	-31215
+	.short	-3085
 	.short	-30989
-	.short	20358
+	.short	-9082
 	.short	-9082
 	.short	24284
 	.short	24158
@@ -2560,54 +2560,54 @@ wanoInstructionsBitmap:
 	.short	-9767
 	.short	13529
 	.short	13364
-	.short	28915
+	.short	28751
 	.short	28724
-	.short	20276
-	.short	-3276
 	.short	13364
-	.short	20467
-	.short	20303
+	.short	20276
+	.short	20276
+	.short	-3085
+	.short	-3085
 	.short	13391
-	.short	20276
+	.short	-3249
 	.short	13364
-	.short	20336
-	.short	28724
+	.short	13424
+	.short	28751
 	.short	13424
 	.short	28784
 	.short	-3276
-	.short	20336
+	.short	13424
 	.short	28724
 	.short	13391
-	.short	20467
 	.short	-3085
 	.short	-3249
-	.short	20467
+	.short	-3085
+	.short	-3085
 	.short	-3276
-	.short	-3249
+	.short	-3085
 	.short	-3276
 	.short	-3276
-	.short	-3249
+	.short	-3276
 	.short	20276
 	.short	13529
-	.short	20276
+	.short	28724
 	.short	13424
-	.short	28915
-	.short	20358
-	.short	13364
+	.short	20467
+	.short	28806
 	.short	20276
+	.short	-9932
 	.short	13585
-	.short	30031
-	.short	20303
-	.short	20303
+	.short	30069
+	.short	30069
+	.short	22645
 	.short	22730
 	.short	-13622
-	.short	20312
-	.short	20239
-	.short	20303
-	.short	-31153
-	.short	20467
+	.short	22616
+	.short	22543
+	.short	22616
+	.short	-31196
 	.short	-3085
-	.short	20336
+	.short	-3085
+	.short	28784
 	.short	-31098
 	.short	-31098
 	.short	-9009
@@ -2680,54 +2680,54 @@ wanoInstructionsBitmap:
 	.short	13529
 	.short	-9872
 	.short	28724
-	.short	13424
-	.short	13424
-	.short	20467
-	.short	28915
-	.short	-3216
-	.short	20467
-	.short	28915
-	.short	-3085
-	.short	20336
-	.short	-3276
-	.short	20467
-	.short	13364
-	.short	28784
-	.short	13364
-	.short	28784
-	.short	20276
-	.short	28784
-	.short	-3249
-	.short	20467
-	.short	-3085
-	.short	-3249
-	.short	20467
-	.short	-3276
 	.short	13391
-	.short	28724
-	.short	-3085
-	.short	13391
-	.short	20467
-	.short	13364
-	.short	20276
+	.short	13424
 	.short	13555
-	.short	-30989
-	.short	20436
+	.short	20467
+	.short	20303
+	.short	13555
+	.short	28915
+	.short	20303
+	.short	-3249
+	.short	-3276
+	.short	13555
+	.short	13391
 	.short	28784
-	.short	20336
+	.short	13364
+	.short	28751
+	.short	13364
+	.short	28784
+	.short	20303
+	.short	20303
+	.short	20467
+	.short	-3249
+	.short	20303
+	.short	20276
+	.short	13391
+	.short	20303
+	.short	-3085
+	.short	13424
+	.short	20467
+	.short	13364
+	.short	20303
+	.short	13555
+	.short	20303
+	.short	28751
+	.short	20303
+	.short	-9905
 	.short	13585
-	.short	30031
-	.short	30031
+	.short	30069
+	.short	30069
 	.short	22645
 	.short	-13622
 	.short	-13622
-	.short	20312
-	.short	20312
+	.short	22616
+	.short	22616
 	.short	22616
 	.short	-31196
-	.short	20467
+	.short	28915
 	.short	-3085
-	.short	20467
+	.short	-3085
 	.short	-3194
 	.short	20979
 	.short	-31098
@@ -2800,55 +2800,55 @@ wanoInstructionsBitmap:
 	.short	13364
 	.short	13364
 	.short	13555
+	.short	28751
+	.short	-3085
+	.short	-3085
+	.short	20467
+	.short	20467
+	.short	-3216
 	.short	28915
-	.short	-3085
-	.short	20303
-	.short	20303
-	.short	20303
-	.short	-3216
-	.short	20303
 	.short	13391
-	.short	20303
+	.short	-3249
+	.short	28724
+	.short	-3216
 	.short	28751
-	.short	20336
-	.short	28751
-	.short	20467
+	.short	28915
 	.short	28784
 	.short	-3216
-	.short	20303
+	.short	13555
+	.short	-3085
+	.short	-3249
+	.short	-3249
+	.short	-3085
 	.short	-3249
 	.short	20467
-	.short	-3249
-	.short	20303
-	.short	20303
-	.short	20303
-	.short	-3249
-	.short	20303
-	.short	13364
 	.short	-3085
 	.short	20303
-	.short	28724
-	.short	20303
+	.short	20276
+	.short	-3085
+	.short	-3085
+	.short	20276
+	.short	20467
+	.short	28915
 	.short	28751
-	.short	28784
-	.short	-3085
-	.short	20252
-	.short	-3249
-	.short	20303
-	.short	13647
-	.short	20303
-	.short	20341
-	.short	20303
-	.short	-13622
-	.short	-13622
-	.short	20303
-	.short	-13745
-	.short	20303
-	.short	-31153
-	.short	20303
-	.short	-3249
 	.short	20467
-	.short	-3249
+	.short	-3300
+	.short	20336
+	.short	-3216
+	.short	13680
+	.short	30069
+	.short	30069
+	.short	22695
+	.short	-13622
+	.short	-13622
+	.short	-13622
+	.short	-13736
+	.short	22616
+	.short	-31196
+	.short	28915
+	.short	-3216
+	.short	-3085
+	.short	-3085
 	.short	-31098
 	.short	-31098
 	.short	-8973
@@ -2920,40 +2920,40 @@ wanoInstructionsBitmap:
 	.short	-3276
 	.short	13555
 	.short	-3085
+	.short	-3249
 	.short	-3085
 	.short	-3085
-	.short	-3085
-	.short	-3085
+	.short	20467
 	.short	-3085
 	.short	28915
 	.short	13555
-	.short	13555
+	.short	13391
 	.short	-3085
 	.short	-3085
 	.short	-3085
-	.short	-3085
+	.short	-3249
 	.short	-3085
 	.short	28784
 	.short	28724
 	.short	-3085
 	.short	-3085
+	.short	-3249
+	.short	20467
+	.short	-3085
+	.short	13391
+	.short	20467
+	.short	-3085
+	.short	-3249
+	.short	20336
 	.short	-3085
 	.short	-3085
-	.short	-3085
-	.short	13555
-	.short	-3085
-	.short	-3085
-	.short	-3085
+	.short	20467
+	.short	20467
+	.short	20303
+	.short	28751
+	.short	20467
 	.short	-3216
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	28915
-	.short	-3085
-	.short	28724
-	.short	-3085
-	.short	-3216
-	.short	-3085
+	.short	20467
 	.short	-3276
 	.short	13585
 	.short	13685
@@ -3040,40 +3040,40 @@ wanoInstructionsBitmap:
 	.short	-3276
 	.short	-3085
 	.short	-3085
+	.short	-3249
 	.short	-3085
 	.short	-3085
+	.short	20336
 	.short	-3085
-	.short	-3216
+	.short	20467
 	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3216
-	.short	28915
-	.short	-3085
-	.short	28915
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
+	.short	-3249
 	.short	-3085
 	.short	-3085
 	.short	-3216
+	.short	28751
+	.short	-3085
+	.short	28915
+	.short	-3085
+	.short	-3085
+	.short	-3085
+	.short	-3249
+	.short	20467
+	.short	-3085
+	.short	-3249
+	.short	20467
 	.short	-3216
-	.short	-3276
+	.short	-3249
+	.short	20276
 	.short	-3085
 	.short	-3085
-	.short	-3085
-	.short	-3194
+	.short	20467
+	.short	20358
 	.short	-3085
 	.short	28915
-	.short	-3085
+	.short	20467
 	.short	28915
-	.short	-30989
+	.short	20467
 	.short	-31120
 	.short	29969
 	.short	30069
@@ -3159,42 +3159,42 @@ wanoInstructionsBitmap:
 	.short	13424
 	.short	-3276
 	.short	13555
-	.short	13364
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
+	.short	20276
+	.short	20303
+	.short	20303
+	.short	-3249
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	20467
+	.short	20303
 	.short	-3085
 	.short	28724
-	.short	-3276
-	.short	13555
+	.short	20276
+	.short	20303
 	.short	-3085
 	.short	13555
-	.short	-3085
+	.short	-3249
 	.short	28915
+	.short	20467
+	.short	20303
 	.short	-3085
+	.short	20303
+	.short	20467
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	20467
+	.short	-3249
 	.short	-3085
-	.short	-3085
-	.short	-3194
-	.short	28915
-	.short	-3276
-	.short	-3216
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-3085
-	.short	-31120
+	.short	20303
+	.short	-3249
+	.short	20303
+	.short	-3249
+	.short	20303
+	.short	-3249
+	.short	20467
+	.short	-31153
 	.short	30071
 	.short	30069
 	.short	30069
@@ -3642,24 +3642,24 @@ wanoInstructionsBitmap:
 	.short	-3085
 	.short	-30989
 	.short	-31098
-	.short	20303
-	.short	20303
-	.short	-3249
+	.short	-31098
+	.short	-3194
+	.short	-3085
 	.short	-30989
-	.short	-31153
 	.short	-31098
 	.short	-31098
-	.short	20336
-	.short	-3249
+	.short	-31098
+	.short	-31120
+	.short	-3194
 	.short	-3216
 	.short	-3194
 	.short	-30989
 	.short	-31151
 	.short	-31151
 	.short	-31098
-	.short	20467
-	.short	20303
-	.short	20303
+	.short	-3085
+	.short	-3085
+	.short	-31098
 	.short	-3085
 	.short	-30989
 	.short	-30989
@@ -3676,8 +3676,8 @@ wanoInstructionsBitmap:
 	.short	-31098
 	.short	4486
 	.short	30005
-	.short	20341
-	.short	30031
+	.short	30069
+	.short	30069
 	.short	-13809
 	.short	-13622
 	.short	-13622
@@ -3686,11 +3686,11 @@ wanoInstructionsBitmap:
 	.short	22543
 	.short	-22761
 	.short	-31151
-	.short	-31153
+	.short	-31098
 	.short	20979
 	.short	-31098
-	.short	20358
-	.short	-31153
+	.short	-31098
+	.short	-31025
 	.short	20870
 	.short	-31098
 	.short	20870
@@ -3762,25 +3762,25 @@ wanoInstructionsBitmap:
 	.short	-3085
 	.short	-30989
 	.short	-31098
-	.short	20358
 	.short	-31098
-	.short	20467
+	.short	-31098
+	.short	-3085
 	.short	-30989
 	.short	20870
 	.short	-31098
 	.short	-30989
 	.short	-31120
-	.short	-31153
+	.short	-31098
 	.short	-31098
 	.short	-3194
-	.short	-31153
+	.short	-31098
 	.short	-28964
 	.short	-3108
 	.short	-31098
 	.short	20870
-	.short	-3249
+	.short	-3085
 	.short	-31098
-	.short	-3249
+	.short	-3085
 	.short	-31098
 	.short	2182
 	.short	-8987
@@ -3788,16 +3788,16 @@ wanoInstructionsBitmap:
 	.short	-3121
 	.short	20870
 	.short	-8973
-	.short	20444
+	.short	-3108
 	.short	-31151
 	.short	20979
 	.short	20817
 	.short	20817
 	.short	20943
 	.short	4486
-	.short	30031
+	.short	30119
 	.short	30069
-	.short	30031
+	.short	30069
 	.short	-13809
 	.short	-7478
 	.short	-13622
@@ -3810,10 +3810,10 @@ wanoInstructionsBitmap:
 	.short	20943
 	.short	-31098
 	.short	-31151
-	.short	20815
+	.short	20943
 	.short	20870
 	.short	20817
-	.short	20815
+	.short	20870
 	.short	-12337
 	.short	-12337
 	.short	20817
@@ -3882,25 +3882,25 @@ wanoInstructionsBitmap:
 	.short	20870
 	.short	-31098
 	.short	-30989
-	.short	20305
+	.short	-12463
 	.short	-31012
-	.short	20358
+	.short	20870
 	.short	20870
 	.short	20817
 	.short	-3194
 	.short	-31098
 	.short	-31098
-	.short	-31153
 	.short	-31098
 	.short	-31098
-	.short	-31153
+	.short	-31098
+	.short	-31098
 	.short	9436
 	.short	20956
 	.short	-31098
 	.short	20817
-	.short	-31153
 	.short	-31098
-	.short	-3249
+	.short	-31098
+	.short	-3194
 	.short	-31098
 	.short	-9082
 	.short	-12337
@@ -3908,16 +3908,16 @@ wanoInstructionsBitmap:
 	.short	-31151
 	.short	-12463
 	.short	31956
-	.short	20305
+	.short	-31151
 	.short	-31151
 	.short	-30989
 	.short	20817
 	.short	-12463
 	.short	-12337
 	.short	13702
-	.short	30031
+	.short	30119
 	.short	13685
-	.short	30031
+	.short	30069
 	.short	22543
 	.short	-13736
 	.short	-13622
@@ -3930,10 +3930,10 @@ wanoInstructionsBitmap:
 	.short	20817
 	.short	-31098
 	.short	-31025
-	.short	20815
 	.short	20817
 	.short	20817
-	.short	-12465
+	.short	20817
+	.short	-12463
 	.short	-12337
 	.short	-12337
 	.short	-12463
@@ -3999,61 +3999,61 @@ wanoInstructionsBitmap:
 	.short	-3085
 	.short	-3085
 	.short	-3085
-	.short	-31098
-	.short	-31098
-	.short	-31151
-	.short	20305
-	.short	20303
-	.short	-9137
-	.short	20358
-	.short	20815
 	.short	20358
 	.short	20303
-	.short	-31153
-	.short	-31153
 	.short	20303
-	.short	20358
-	.short	20303
-	.short	20943
-	.short	20815
-	.short	-31151
+	.short	19025
+	.short	20453
+	.short	-9082
+	.short	20870
 	.short	20870
 	.short	20303
+	.short	-9082
+	.short	-31098
+	.short	-31098
+	.short	-31098
+	.short	-31098
+	.short	-31098
+	.short	20943
 	.short	20303
-	.short	20358
-	.short	-31153
 	.short	20303
-	.short	20358
 	.short	20815
-	.short	20303
+	.short	-31098
+	.short	-31098
+	.short	-31098
+	.short	-31151
+	.short	-31098
+	.short	-31098
+	.short	20870
+	.short	-31098
 	.short	-12410
 	.short	-31151
-	.short	20303
 	.short	-31153
-	.short	20358
-	.short	20303
-	.short	20817
+	.short	-31151
+	.short	-31098
+	.short	20305
+	.short	20815
 	.short	20870
-	.short	20358
-	.short	20303
+	.short	13702
 	.short	30069
-	.short	30031
-	.short	20303
+	.short	30069
+	.short	30069
+	.short	22543
 	.short	-13736
-	.short	20303
+	.short	-13622
 	.short	22616
 	.short	-7478
-	.short	20426
-	.short	2127
-	.short	20303
-	.short	20815
-	.short	20358
-	.short	20303
-	.short	20815
-	.short	-12465
-	.short	20303
-	.short	20305
-	.short	20303
+	.short	22730
+	.short	2250
+	.short	-31151
+	.short	20870
+	.short	20870
+	.short	20817
+	.short	20943
+	.short	-12337
+	.short	-12463
+	.short	-12463
+	.short	-12463
 	.short	-12337
 	.short	-12337
 	.short	-12337
@@ -4120,60 +4120,60 @@ wanoInstructionsBitmap:
 	.short	-31098
 	.short	-31098
 	.short	-31098
-	.short	-31098
+	.short	-31153
 	.short	-9082
-	.short	20444
-	.short	20444
+	.short	-9137
+	.short	-12324
 	.short	-12410
 	.short	-31012
-	.short	-31153
-	.short	-31153
+	.short	-31012
+	.short	20431
+	.short	-31098
+	.short	-31098
+	.short	20358
+	.short	-31012
+	.short	-9009
+	.short	-31151
+	.short	-12410
+	.short	20305
+	.short	20817
 	.short	20358
 	.short	-31098
-	.short	20303
-	.short	20444
-	.short	-9009
-	.short	-31153
-	.short	-12410
-	.short	20817
-	.short	20817
-	.short	20870
-	.short	-31153
-	.short	-31153
+	.short	-31025
 	.short	-31098
-	.short	-31153
-	.short	20336
+	.short	-31151
+	.short	20848
 	.short	20817
-	.short	20303
-	.short	20305
+	.short	-12463
+	.short	20817
 	.short	-31098
 	.short	-31098
-	.short	20305
+	.short	20817
 	.short	20943
-	.short	-12465
+	.short	-12337
 	.short	20817
 	.short	20815
 	.short	-31098
 	.short	13788
 	.short	30031
 	.short	13685
-	.short	20303
-	.short	20312
-	.short	20426
-	.short	-13622
-	.short	22607
+	.short	30069
+	.short	-13736
 	.short	-13622
 	.short	-13622
-	.short	20303
+	.short	22543
+	.short	-13622
+	.short	-13622
+	.short	22730
 	.short	-12324
-	.short	20815
-	.short	-12465
-	.short	20431
 	.short	20943
-	.short	20303
-	.short	20305
 	.short	-12463
-	.short	-12465
+	.short	20943
+	.short	20943
+	.short	-12337
+	.short	-12463
+	.short	-12463
+	.short	-12337
 	.short	-12337
 	.short	-12337
 	.short	-12337
@@ -4240,60 +4240,60 @@ wanoInstructionsBitmap:
 	.short	-31098
 	.short	-31098
 	.short	-31098
-	.short	-12410
+	.short	-12465
 	.short	-8996
-	.short	20431
+	.short	-12465
 	.short	-8996
-	.short	-9137
+	.short	-8996
 	.short	24284
-	.short	-12465
-	.short	20431
-	.short	-9137
-	.short	-31120
-	.short	-9137
-	.short	20358
 	.short	-12337
-	.short	-12465
+	.short	20431
+	.short	-8996
+	.short	-31120
+	.short	20444
+	.short	-9082
+	.short	-12337
+	.short	-12337
 	.short	-12324
-	.short	-31098
+	.short	20358
 	.short	20817
+	.short	20305
+	.short	-31098
+	.short	20943
+	.short	20817
+	.short	20817
+	.short	-30989
+	.short	-31098
 	.short	-31151
-	.short	-31153
-	.short	20431
-	.short	20817
-	.short	20815
-	.short	20467
-	.short	-31098
-	.short	-31153
-	.short	20431
+	.short	-12337
 	.short	20817
 	.short	20870
-	.short	20305
+	.short	20817
 	.short	-31025
-	.short	-12465
+	.short	-12337
 	.short	-12337
 	.short	-12465
 	.short	-31151
 	.short	-22577
 	.short	30031
 	.short	13685
-	.short	30031
-	.short	20426
-	.short	20426
-	.short	20303
-	.short	22607
+	.short	30069
+	.short	26826
+	.short	-13622
+	.short	-13622
+	.short	22543
 	.short	-13622
 	.short	22730
-	.short	22607
+	.short	22730
 	.short	-12450
-	.short	-12465
-	.short	20358
-	.short	20815
 	.short	-12337
-	.short	-12465
-	.short	20305
+	.short	-12410
+	.short	20943
 	.short	-12337
-	.short	-12465
+	.short	-12337
+	.short	-12463
+	.short	-12337
+	.short	-12337
 	.short	-12337
 	.short	-12337
 	.short	-12337
@@ -4360,60 +4360,60 @@ wanoInstructionsBitmap:
 	.short	-31098
 	.short	-31120
 	.short	-31098
-	.short	-31098
-	.short	-8996
-	.short	20318
+	.short	20303
+	.short	20303
 	.short	24158
-	.short	24143
-	.short	31838
-	.short	24143
-	.short	24143
-	.short	-12337
-	.short	-31098
-	.short	-31153
+	.short	20303
+	.short	24158
+	.short	20303
+	.short	20303
+	.short	20318
 	.short	20431
-	.short	-12337
-	.short	-9137
+	.short	-31153
+	.short	20303
+	.short	-12465
+	.short	20431
+	.short	-9009
 	.short	-12410
-	.short	-31098
-	.short	-12324
-	.short	-31098
-	.short	-12465
-	.short	20305
-	.short	-12337
-	.short	20815
 	.short	20358
-	.short	-31151
-	.short	-12465
+	.short	20303
+	.short	-31153
+	.short	20303
 	.short	20305
-	.short	-31098
-	.short	20870
+	.short	-12465
+	.short	20303
+	.short	20358
+	.short	-31153
+	.short	-12410
 	.short	20305
-	.short	-12337
+	.short	-31153
+	.short	20303
 	.short	-12465
-	.short	-12337
+	.short	20431
+	.short	20303
 	.short	-12465
-	.short	-31098
-	.short	13585
-	.short	30031
+	.short	-12465
+	.short	20303
+	.short	20241
+	.short	20303
 	.short	30069
-	.short	30031
-	.short	20328
-	.short	20426
+	.short	30069
+	.short	26728
+	.short	-13622
 	.short	-13622
 	.short	-13809
 	.short	-13598
 	.short	-13110
-	.short	22607
-	.short	-12337
-	.short	-12465
-	.short	-12465
+	.short	22616
 	.short	-12337
 	.short	-12337
-	.short	-12465
-	.short	20431
+	.short	-12463
 	.short	-12337
-	.short	-12465
+	.short	-12337
+	.short	-12337
+	.short	-12337
+	.short	-12337
+	.short	-12337
 	.short	-12337
 	.short	-12337
 	.short	-1585
@@ -4480,60 +4480,60 @@ wanoInstructionsBitmap:
 	.short	-31098
 	.short	-31151
 	.short	-31098
-	.short	-12337
-	.short	-9122
-	.short	20303
+	.short	-12465
+	.short	-9137
+	.short	31838
+	.short	20348
+	.short	20318
+	.short	31868
 	.short	31823
 	.short	20318
-	.short	20303
-	.short	20303
-	.short	20303
-	.short	20303
-	.short	20444
-	.short	20303
-	.short	20431
 	.short	24143
-	.short	20303
+	.short	-12465
+	.short	20318
+	.short	24271
+	.short	24271
+	.short	-9009
 	.short	-12337
-	.short	-31153
-	.short	-12324
 	.short	20358
-	.short	20303
-	.short	-12337
-	.short	20303
+	.short	20444
+	.short	-12410
 	.short	20431
-	.short	20303
-	.short	20303
-	.short	20303
-	.short	20358
+	.short	-12337
+	.short	-12465
+	.short	20431
 	.short	-31153
+	.short	-31153
+	.short	-12410
+	.short	-31098
+	.short	20303
 	.short	20943
-	.short	20305
+	.short	-12465
 	.short	-12465
 	.short	20431
-	.short	20303
 	.short	-12337
-	.short	-12463
+	.short	20303
+	.short	20305
 	.short	13585
-	.short	20303
-	.short	20341
-	.short	20303
-	.short	20426
-	.short	-13745
-	.short	20303
-	.short	-13745
+	.short	30031
+	.short	30069
+	.short	30069
+	.short	26826
+	.short	-13622
+	.short	-13622
+	.short	-13809
 	.short	-13598
-	.short	20426
-	.short	20303
-	.short	20241
-	.short	20303
-	.short	20303
-	.short	20303
-	.short	20431
-	.short	20303
-	.short	20431
-	.short	-12465
-	.short	20303
+	.short	4042
+	.short	22616
+	.short	-12527
+	.short	20943
+	.short	-12463
+	.short	-12337
+	.short	-1585
+	.short	-12337
+	.short	-12337
+	.short	-12337
+	.short	-12337
 	.short	-12337
 	.short	-12337
 	.short	-12295
@@ -4600,42 +4600,42 @@ wanoInstructionsBitmap:
 	.short	-31098
 	.short	20817
 	.short	-12337
-	.short	24271
-	.short	2172
+	.short	24143
+	.short	20348
 	.short	18952
-	.short	7196
+	.short	20252
 	.short	23575
-	.short	-23460
+	.short	20303
 	.short	5965
-	.short	31823
+	.short	20232
 	.short	24188
 	.short	24143
-	.short	24158
+	.short	20318
 	.short	24158
 	.short	24313
 	.short	-12450
 	.short	-12337
-	.short	-31098
+	.short	20358
 	.short	-12337
+	.short	-12465
+	.short	20431
 	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	20943
+	.short	-12465
+	.short	20431
 	.short	-12410
-	.short	-31025
+	.short	-31153
 	.short	20870
 	.short	20817
+	.short	-12465
 	.short	-12337
+	.short	-12465
+	.short	20431
+	.short	20815
 	.short	-12337
-	.short	-12463
-	.short	-12337
-	.short	20943
-	.short	-12337
-	.short	-12337
-	.short	-12337
+	.short	-12465
+	.short	20431
 	.short	29969
-	.short	30069
+	.short	30031
 	.short	30069
 	.short	3957
 	.short	26826
@@ -4647,9 +4647,9 @@ wanoInstructionsBitmap:
 	.short	22616
 	.short	-12508
 	.short	-12337
-	.short	-12465
+	.short	-12337
 	.short	24313
-	.short	-1713
+	.short	-1698
 	.short	-12295
 	.short	-12337
 	.short	-12337
@@ -4720,42 +4720,42 @@ wanoInstructionsBitmap:
 	.short	-12337
 	.short	-12324
 	.short	-12337
-	.short	31838
-	.short	-29110
+	.short	31823
+	.short	20298
 	.short	8983
-	.short	3149
-	.short	-21846
+	.short	20301
+	.short	20394
 	.short	-20304
 	.short	3242
 	.short	20366
-	.short	20303
-	.short	2172
-	.short	2056
+	.short	31868
+	.short	2127
+	.short	20232
 	.short	31868
 	.short	31868
 	.short	24158
 	.short	-12337
+	.short	20431
 	.short	-12337
+	.short	-12465
+	.short	20431
 	.short	-12337
+	.short	-31153
+	.short	20431
 	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-31025
-	.short	-12337
-	.short	-12337
-	.short	-12337
+	.short	-12465
 	.short	20817
 	.short	-12410
+	.short	-12465
+	.short	-12337
+	.short	-12465
+	.short	-12465
 	.short	-12337
 	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
+	.short	-12465
+	.short	20431
 	.short	30005
-	.short	-7563
+	.short	-7601
 	.short	29987
 	.short	3957
 	.short	-13622
@@ -4767,8 +4767,8 @@ wanoInstructionsBitmap:
 	.short	22543
 	.short	24100
 	.short	-12295
-	.short	20431
-	.short	20303
+	.short	-1585
+	.short	-17927
 	.short	24087
 	.short	-12450
 	.short	-12295
@@ -4839,43 +4839,43 @@ wanoInstructionsBitmap:
 	.short	-31025
 	.short	-12337
 	.short	-12337
-	.short	-12337
-	.short	7292
+	.short	20431
+	.short	20303
 	.short	-21924
-	.short	-20310
-	.short	-20304
-	.short	-20304
-	.short	-20304
-	.short	-21840
-	.short	7245
-	.short	-4790
-	.short	19018
-	.short	-11122
-	.short	5911
-	.short	7310
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	-21937
+	.short	20303
+	.short	-4785
+	.short	20303
+	.short	20366
+	.short	5967
+	.short	20366
 	.short	31981
 	.short	24158
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
+	.short	20303
+	.short	-12465
+	.short	20431
+	.short	-12465
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	-12465
+	.short	20303
 	.short	20817
-	.short	-12463
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	-12337
-	.short	24271
-	.short	30005
-	.short	30069
+	.short	20305
+	.short	20303
+	.short	20431
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	20431
+	.short	20303
+	.short	20431
+	.short	30031
+	.short	20303
 	.short	30069
 	.short	3957
 	.short	-13622
@@ -4964,9 +4964,9 @@ wanoInstructionsBitmap:
 	.short	-20310
 	.short	-20304
 	.short	-20304
+	.short	20400
 	.short	-20304
-	.short	-20304
-	.short	-20304
+	.short	20400
 	.short	-24662
 	.short	-29006
 	.short	23781
@@ -4989,9 +4989,9 @@ wanoInstructionsBitmap:
 	.short	-12337
 	.short	-12337
 	.short	-12337
+	.short	-12465
 	.short	-12337
-	.short	-12337
-	.short	-12295
+	.short	-12465
 	.short	-12337
 	.short	24271
 	.short	30005
@@ -5085,8 +5085,8 @@ wanoInstructionsBitmap:
 	.short	-20304
 	.short	-29776
 	.short	-20341
-	.short	-20304
-	.short	-29776
+	.short	20303
+	.short	-29873
 	.short	8368
 	.short	-20304
 	.short	-21840
@@ -5109,8 +5109,8 @@ wanoInstructionsBitmap:
 	.short	-12337
 	.short	-12337
 	.short	-12337
-	.short	-1585
-	.short	-12337
+	.short	20431
+	.short	20303
 	.short	-12337
 	.short	-12337
 	.short	4559
@@ -5322,18 +5322,18 @@ wanoInstructionsBitmap:
 	.short	-20310
 	.short	-20304
 	.short	-20304
-	.short	20303
-	.short	-20401
-	.short	20303
-	.short	-29873
+	.short	-20304
+	.short	-20304
+	.short	-20304
+	.short	-29776
 	.short	-29813
 	.short	-29813
 	.short	-29813
 	.short	-29813
 	.short	-29813
 	.short	-20304
-	.short	20363
-	.short	20303
+	.short	-20341
+	.short	6041
 	.short	19018
 	.short	24974
 	.short	5923
@@ -5442,9 +5442,9 @@ wanoInstructionsBitmap:
 	.short	-20448
 	.short	-20304
 	.short	-20304
-	.short	20400
 	.short	-20304
-	.short	20400
+	.short	-20304
+	.short	-20304
 	.short	-29776
 	.short	-29813
 	.short	-29813
@@ -5453,7 +5453,7 @@ wanoInstructionsBitmap:
 	.short	-29813
 	.short	-20304
 	.short	-20304
-	.short	-23473
+	.short	-23382
 	.short	7196
 	.short	-29556
 	.short	19180
@@ -5562,9 +5562,9 @@ wanoInstructionsBitmap:
 	.short	-20448
 	.short	-20304
 	.short	-20304
-	.short	20400
+	.short	-20304
 	.short	-29813
-	.short	20363
+	.short	-29813
 	.short	-29813
 	.short	-29813
 	.short	-29813
@@ -5573,7 +5573,7 @@ wanoInstructionsBitmap:
 	.short	-29813
 	.short	-20304
 	.short	-20304
-	.short	23631
+	.short	23728
 	.short	-29156
 	.short	-16660
 	.short	-18148
@@ -5679,30 +5679,30 @@ wanoInstructionsBitmap:
 	.short	-14692
 	.short	-14650
 	.short	-21837
-	.short	-20448
-	.short	-20304
-	.short	-20304
+	.short	20256
+	.short	20303
 	.short	20400
-	.short	-29813
+	.short	20303
 	.short	20363
-	.short	-29813
 	.short	20303
 	.short	20303
 	.short	-29813
+	.short	-29813
+	.short	-29813
+	.short	-29813
 	.short	20363
-	.short	-29813
-	.short	-29813
+	.short	20303
 	.short	-20304
-	.short	20303
-	.short	-6833
-	.short	20303
-	.short	20453
-	.short	-6833
-	.short	20303
-	.short	20377
-	.short	-6833
-	.short	20303
-	.short	20303
+	.short	-24679
+	.short	-6877
+	.short	-11241
+	.short	9189
+	.short	-6683
+	.short	3231
+	.short	-23399
+	.short	-6835
+	.short	-4790
+	.short	31868
 	.short	31868
 	.short	-1543
 	.short	-1543
@@ -5800,30 +5800,30 @@ wanoInstructionsBitmap:
 	.short	22956
 	.short	-26170
 	.short	-20407
+	.short	-20401
 	.short	-20304
+	.short	-20401
 	.short	-20304
-	.short	20400
+	.short	-20401
 	.short	-20304
-	.short	20400
+	.short	-20401
 	.short	-20304
-	.short	20400
-	.short	-20304
+	.short	-29813
+	.short	-29813
+	.short	-29813
 	.short	-29873
-	.short	-29813
-	.short	-29813
-	.short	-29813
 	.short	-20304
-	.short	-20401
-	.short	-20401
-	.short	20394
 	.short	-20304
-	.short	20303
-	.short	20400
-	.short	-20401
-	.short	3151
-	.short	20247
+	.short	-20304
+	.short	-21846
+	.short	-20304
+	.short	-21846
+	.short	-20304
+	.short	-20304
+	.short	3242
+	.short	7191
 	.short	-4790
-	.short	31823
+	.short	31868
 	.short	-1668
 	.short	-1543
 	.short	-1543
@@ -5920,30 +5920,30 @@ wanoInstructionsBitmap:
 	.short	-21411
 	.short	7572
 	.short	8437
-	.short	-20448
-	.short	-20304
-	.short	20400
-	.short	-20304
-	.short	20400
-	.short	-20304
-	.short	20400
+	.short	-20401
 	.short	-20304
 	.short	-20401
-	.short	-29813
-	.short	-29813
+	.short	-20304
+	.short	-20401
+	.short	-20304
+	.short	-20401
+	.short	-20304
+	.short	-20304
 	.short	-29813
 	.short	-29813
 	.short	-29873
-	.short	-29873
-	.short	20400
 	.short	-29813
-	.short	-20401
-	.short	20400
+	.short	-29813
+	.short	-29813
 	.short	-20304
-	.short	-20401
-	.short	20236
+	.short	-29813
+	.short	-20304
+	.short	-20304
+	.short	-20304
+	.short	-20304
+	.short	23564
 	.short	19086
-	.short	31823
+	.short	31981
 	.short	-1668
 	.short	-1543
 	.short	-1543
@@ -6040,30 +6040,30 @@ wanoInstructionsBitmap:
 	.short	23901
 	.short	22877
 	.short	-26130
-	.short	8224
+	.short	8271
 	.short	-20304
+	.short	-20401
+	.short	-20304
+	.short	-20401
+	.short	-20304
+	.short	-20401
 	.short	20400
-	.short	-20304
-	.short	20400
-	.short	-20304
-	.short	20400
-	.short	-20304
-	.short	-29873
-	.short	-20304
-	.short	-20304
-	.short	-20304
 	.short	-29813
+	.short	-20304
+	.short	-20304
+	.short	20303
 	.short	-29873
-	.short	-20401
+	.short	20303
 	.short	20400
-	.short	-20304
 	.short	-20401
+	.short	20303
 	.short	20400
-	.short	-20304
 	.short	-20401
-	.short	20400
+	.short	20303
+	.short	20303
+	.short	-21840
 	.short	5965
-	.short	-4785
+	.short	-4679
 	.short	31868
 	.short	-1668
 	.short	-1668
@@ -6160,29 +6160,29 @@ wanoInstructionsBitmap:
 	.short	23901
 	.short	23901
 	.short	21702
+	.short	18767
 	.short	18761
-	.short	18761
-	.short	-20304
-	.short	20303
 	.short	-20401
 	.short	-20304
-	.short	20400
+	.short	20303
 	.short	20303
 	.short	-20304
-	.short	20394
+	.short	-20304
+	.short	-20304
+	.short	-21846
 	.short	-20310
+	.short	-20401
+	.short	-29873
+	.short	20363
 	.short	-20304
-	.short	20303
-	.short	-29813
-	.short	20400
-	.short	20303
-	.short	20303
 	.short	20303
 	.short	20400
 	.short	-20401
-	.short	20303
+	.short	-20401
 	.short	20400
-	.short	20303
+	.short	-20304
+	.short	8271
+	.short	3104
 	.short	-4686
 	.short	31868
 	.short	31981
@@ -6280,28 +6280,28 @@ wanoInstructionsBitmap:
 	.short	6425
 	.short	23901
 	.short	22877
-	.short	15849
+	.short	15695
 	.short	18749
-	.short	18761
+	.short	18767
 	.short	8362
-	.short	18761
+	.short	18767
 	.short	8265
-	.short	20394
+	.short	-21846
 	.short	8362
 	.short	-21846
 	.short	-26215
 	.short	-21846
-	.short	-20448
-	.short	-29813
-	.short	-29813
+	.short	-20401
+	.short	-29873
+	.short	20363
 	.short	-20304
-	.short	-20304
-	.short	8368
+	.short	-20401
+	.short	20400
 	.short	8224
-	.short	-21984
-	.short	-21846
+	.short	-21937
+	.short	20394
 	.short	-26198
-	.short	20377
+	.short	-21937
 	.short	-24662
 	.short	-4733
 	.short	31981
@@ -6400,29 +6400,29 @@ wanoInstructionsBitmap:
 	.short	14951
 	.short	23833
 	.short	22877
-	.short	-23297
+	.short	-23473
 	.short	15677
+	.short	18767
 	.short	18761
-	.short	18761
-	.short	-21846
-	.short	-26215
-	.short	20303
 	.short	-21937
 	.short	-26215
 	.short	-26215
+	.short	-21863
+	.short	-26215
+	.short	-26215
 	.short	-21846
-	.short	-20448
-	.short	-29813
-	.short	-29813
+	.short	-20401
+	.short	-29873
+	.short	20363
 	.short	-20304
-	.short	8368
-	.short	-21943
+	.short	8271
+	.short	20297
 	.short	18720
-	.short	-21846
-	.short	15769
+	.short	-21937
+	.short	20377
 	.short	-23399
-	.short	20303
-	.short	-11185
+	.short	3151
+	.short	-11105
 	.short	-4627
 	.short	31981
 	.short	31868
@@ -6520,27 +6520,27 @@ wanoInstructionsBitmap:
 	.short	24672
 	.short	6425
 	.short	11801
-	.short	-23321
-	.short	15780
+	.short	20455
+	.short	20303
 	.short	-26307
-	.short	-26307
-	.short	-26215
+	.short	20285
+	.short	20303
 	.short	-26215
 	.short	15769
-	.short	-26215
+	.short	20377
 	.short	3225
 	.short	-26215
-	.short	-21943
+	.short	20303
 	.short	-20304
-	.short	-29813
-	.short	-29813
-	.short	-20304
-	.short	-20304
-	.short	-21840
-	.short	18761
-	.short	-26215
-	.short	-23540
-	.short	19724
+	.short	20363
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	20400
+	.short	18767
+	.short	20303
+	.short	20236
+	.short	20303
 	.short	23629
 	.short	30236
 	.short	-4746
@@ -6659,7 +6659,7 @@ wanoInstructionsBitmap:
 	.short	-21840
 	.short	-23399
 	.short	19876
-	.short	23711
+	.short	20383
 	.short	8995
 	.short	-11229
 	.short	30393
@@ -6779,8 +6779,8 @@ wanoInstructionsBitmap:
 	.short	-26198
 	.short	19876
 	.short	24867
-	.short	7310
-	.short	7196
+	.short	20303
+	.short	7247
 	.short	-17991
 	.short	30326
 	.short	-4627
@@ -7361,15 +7361,15 @@ wanoInstructionsBitmap:
 	.short	-29299
 	.short	31611
 	.short	-25929
-	.short	-25702
+	.short	20378
 	.short	21815
 	.short	26426
 	.short	6503
 	.short	-15314
 	.short	6100
-	.short	-11086
-	.short	5911
-	.short	-11241
+	.short	20303
+	.short	20303
+	.short	-11185
 	.short	-11052
 	.short	-11052
 	.short	-6734
@@ -7378,8 +7378,8 @@ wanoInstructionsBitmap:
 	.short	7299
 	.short	-18148
 	.short	-17991
-	.short	30393
-	.short	30326
+	.short	20409
+	.short	30287
 	.short	30326
 	.short	30326
 	.short	30326
@@ -7481,15 +7481,15 @@ wanoInstructionsBitmap:
 	.short	31629
 	.short	-18661
 	.short	31588
-	.short	-20838
+	.short	20378
 	.short	-19400
 	.short	26520
 	.short	-26472
 	.short	-23912
 	.short	22724
-	.short	7196
+	.short	20252
 	.short	-31869
-	.short	7299
+	.short	20355
 	.short	-17991
 	.short	-31815
 	.short	-11236
@@ -7499,7 +7499,7 @@ wanoInstructionsBitmap:
 	.short	-17991
 	.short	30393
 	.short	30326
-	.short	30326
+	.short	30287
 	.short	-4746
 	.short	30326
 	.short	30326
@@ -7601,15 +7601,15 @@ wanoInstructionsBitmap:
 	.short	22639
 	.short	-15272
 	.short	22616
-	.short	14363
-	.short	29298
+	.short	14415
+	.short	29263
 	.short	14867
 	.short	-26510
 	.short	24728
 	.short	-14823
-	.short	30326
+	.short	20342
 	.short	-18058
-	.short	30393
+	.short	20409
 	.short	30326
 	.short	30326
 	.short	-17991
@@ -7619,7 +7619,7 @@ wanoInstructionsBitmap:
 	.short	-17991
 	.short	30326
 	.short	30326
-	.short	30326
+	.short	30287
 	.short	30326
 	.short	30326
 	.short	-18058
@@ -7721,26 +7721,26 @@ wanoInstructionsBitmap:
 	.short	9252
 	.short	9252
 	.short	25636
-	.short	14510
-	.short	-12026
+	.short	14415
+	.short	-11953
 	.short	1751
-	.short	14342
+	.short	20230
 	.short	-27177
 	.short	-27496
-	.short	30393
+	.short	20409
 	.short	-18058
+	.short	20342
+	.short	20303
+	.short	20342
+	.short	30287
+	.short	20303
+	.short	20409
+	.short	-18097
+	.short	20342
+	.short	20303
 	.short	30326
-	.short	30326
-	.short	30326
-	.short	30326
-	.short	30326
-	.short	-17991
-	.short	-17991
-	.short	30326
-	.short	30326
-	.short	30326
-	.short	30326
-	.short	30326
+	.short	30287
+	.short	20303
 	.short	30326
 	.short	-18058
 	.short	-18058
@@ -7841,26 +7841,26 @@ wanoInstructionsBitmap:
 	.short	-15260
 	.short	-15204
 	.short	-25956
-	.short	14254
-	.short	14801
+	.short	14159
+	.short	14671
 	.short	-12901
 	.short	10935
 	.short	-10342
 	.short	21856
-	.short	30364
+	.short	20380
+	.short	20303
+	.short	30287
+	.short	20342
 	.short	30326
+	.short	30287
+	.short	20342
+	.short	30287
+	.short	-18097
+	.short	-18097
+	.short	20342
 	.short	30326
-	.short	30326
-	.short	30326
-	.short	30326
-	.short	30326
-	.short	30326
-	.short	-17991
-	.short	-17991
-	.short	30326
-	.short	30326
-	.short	30326
-	.short	30326
+	.short	20303
+	.short	20342
 	.short	-18058
 	.short	-18058
 	.short	-17991
@@ -7960,27 +7960,27 @@ wanoInstructionsBitmap:
 	.short	-29257
 	.short	-4336
 	.short	-4147
-	.short	-20838
-	.short	-25801
-	.short	-29201
+	.short	20378
+	.short	20303
+	.short	20303
 	.short	-12873
 	.short	9711
 	.short	-18533
 	.short	-10091
-	.short	-4708
+	.short	20380
 	.short	30326
 	.short	30326
-	.short	30326
+	.short	20342
 	.short	30393
-	.short	30393
+	.short	30287
+	.short	20409
+	.short	-17991
+	.short	-18097
+	.short	-18097
 	.short	-17991
 	.short	-17991
-	.short	-17991
-	.short	-17991
-	.short	-17991
-	.short	-17991
-	.short	30326
-	.short	30393
+	.short	30287
+	.short	20409
 	.short	30393
 	.short	-18058
 	.short	-17991
@@ -8080,27 +8080,27 @@ wanoInstructionsBitmap:
 	.short	-20170
 	.short	32433
 	.short	31358
-	.short	-25903
+	.short	20433
 	.short	-29286
-	.short	-29403
+	.short	20261
 	.short	-18634
 	.short	-29299
 	.short	-11877
 	.short	24632
-	.short	-15264
+	.short	20320
 	.short	-31815
 	.short	-17991
+	.short	20409
 	.short	-17991
-	.short	-17991
-	.short	-18058
-	.short	-17991
+	.short	-18097
+	.short	20409
 	.short	-11052
-	.short	-17991
-	.short	-17991
+	.short	-18097
+	.short	-18097
 	.short	-18058
 	.short	-17991
-	.short	-17991
-	.short	30393
+	.short	-18097
+	.short	20409
 	.short	-17991
 	.short	-17991
 	.short	-17991
@@ -8200,28 +8200,28 @@ wanoInstructionsBitmap:
 	.short	13965
 	.short	25872
 	.short	31358
-	.short	-11800
-	.short	-4113
-	.short	13965
-	.short	-14237
-	.short	-4336
+	.short	20303
+	.short	-4273
+	.short	20303
+	.short	-14257
+	.short	20240
 	.short	-18547
 	.short	6456
-	.short	-27623
-	.short	22724
+	.short	20303
+	.short	22607
 	.short	-31798
 	.short	-31869
-	.short	7299
-	.short	-31869
-	.short	-18045
-	.short	-31869
-	.short	-17991
-	.short	-17991
-	.short	30393
-	.short	-17991
-	.short	-17991
-	.short	-17991
-	.short	-17991
+	.short	20303
+	.short	20303
+	.short	20303
+	.short	-31921
+	.short	20303
+	.short	20409
+	.short	20303
+	.short	20409
+	.short	20303
+	.short	20409
+	.short	-18097
 	.short	-17991
 	.short	-31869
 	.short	-17991

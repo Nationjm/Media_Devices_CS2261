@@ -1,6 +1,6 @@
 
 void setupSounds();
-void playSong(const signed char* songData, int length);
+void playSong(const signed char* songData, int length, int offState);
 void playSoundEffect(const signed char* soundData, int length);
 
 void stopSounds();

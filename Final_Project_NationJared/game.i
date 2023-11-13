@@ -477,6 +477,13 @@ extern const unsigned int BinksBrew_sampleRate;
 extern const unsigned int BinksBrew_length;
 extern const signed char BinksBrew_data[];
 # 16 "game.c" 2
+# 1 "loseScreen.h" 1
+# 21 "loseScreen.h"
+extern const unsigned short loseScreenBitmap[19200];
+
+
+extern const unsigned short loseScreenPal[256];
+# 17 "game.c" 2
 
 
 extern unsigned short state;
@@ -502,6 +509,9 @@ enum {
 
 
 OBJ_ATTR shadowOAM[128];
+
+int luffyLives;
+int kaidoHealth;
 
 typedef struct {
     unsigned short fill0[3];
@@ -575,6 +585,8 @@ void win() {
 }
 
 void lose() {
+    DMANow(3, loseScreenPal, ((unsigned short*) 0x05000000), 512 / 2);
+    drawFullscreenImage4(loseScreenBitmap);
     flipPage();
 }
 
@@ -617,6 +629,7 @@ void goToPause() {
 void goToWin() {
     state = WIN;
     (*(volatile unsigned short*) 0x04000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
+    playSong(BinksBrew_data, BinksBrew_length);
 }
 
 void goToLose() {
@@ -644,6 +657,12 @@ void initLuffy() {
     luffy.punchingTime = 22;
     luffy.jumping = 0;
     luffy.jumpingTime = 85;
+    luffyLives = 3;
+
+    luffyFist.x = luffy.x + 32 + luffy.width;
+    luffyFist.y = luffy.y + 16;
+    luffyFist.height = 8;
+    luffyFist.width = 8;
 }
 
 void luffyUpdate() {
@@ -712,31 +731,37 @@ void luffyPunching() {
         if (luffy.punchingTime < 20) {
             shadowOAM[luffy.oamIndex + 1].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 1].attr1 = (0 << 14) | ((luffy.x + 32 + luffy.width) & 0x1FF);
+            luffyFist.x = luffy.x + 32 + luffy.width;
             shadowOAM[luffy.oamIndex + 1].attr2 = (((9) * (32) + (2)) & 0x3FF);
         }
         if (luffy.punchingTime < 18) {
             shadowOAM[luffy.oamIndex + 2].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 2].attr1 = (0 << 14) | ((luffy.x + 36 + luffy.width) & 0x1FF);
+            luffyFist.x = luffy.x + 36 + luffy.width;
             shadowOAM[luffy.oamIndex + 2].attr2 = (((9) * (32) + (2)) & 0x3FF);
         }
         if (luffy.punchingTime < 16) {
             shadowOAM[luffy.oamIndex + 3].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 3].attr1 = (0 << 14) | ((luffy.x + 40 + luffy.width) & 0x1FF);
+            luffyFist.x = luffy.x + 40 + luffy.width;
             shadowOAM[luffy.oamIndex + 3].attr2 = (((9) * (32) + (2)) & 0x3FF);
         }
         if (luffy.punchingTime < 14) {
             shadowOAM[luffy.oamIndex + 4].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 4].attr1 = (0 << 14) | ((luffy.x + 44 + luffy.width) & 0x1FF);
+            luffyFist.x = luffy.x + 44 + luffy.width;
             shadowOAM[luffy.oamIndex + 4].attr2 = (((9) * (32) + (2)) & 0x3FF);
         }
         if (luffy.punchingTime < 12) {
             shadowOAM[luffy.oamIndex + 5].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 5].attr1 = (0 << 14) | ((luffy.x + 48 + luffy.width) & 0x1FF);
+            luffyFist.x = luffy.x + 48 + luffy.width;
             shadowOAM[luffy.oamIndex + 5].attr2 = (((9) * (32) + (2)) & 0x3FF);
         }
         if (luffy.punchingTime < 10) {
             shadowOAM[luffy.oamIndex + 6].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 6].attr1 = (1 << 14) | ((luffy.x + 52 + luffy.width) & 0x1FF) | (1 << 12);
+            luffyFist.x = luffy.x + 56 + luffy.width;
             shadowOAM[luffy.oamIndex + 6].attr2 = (((9) * (32) + (0)) & 0x3FF);
         }
         if (luffy.punchingTime < 0) {
@@ -753,26 +778,31 @@ void luffyPunching() {
         if (luffy.punchingTime < 18) {
             shadowOAM[luffy.oamIndex + 2].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 2].attr1 = (0 << 14) | ((luffy.x - 12) & 0x1FF);
+            luffyFist.x = luffy.x - 12;
             shadowOAM[luffy.oamIndex + 2].attr2 = (((9) * (32) + (2)) & 0x3FF);
         }
         if (luffy.punchingTime < 16) {
             shadowOAM[luffy.oamIndex + 3].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 3].attr1 = (0 << 14) | ((luffy.x - 16) & 0x1FF);
+            luffyFist.x = luffy.x - 16;
             shadowOAM[luffy.oamIndex + 3].attr2 = (((9) * (32) + (2)) & 0x3FF);
         }
         if (luffy.punchingTime < 14) {
             shadowOAM[luffy.oamIndex + 4].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 4].attr1 = (0 << 14) | ((luffy.x - 20) & 0x1FF);
+            luffyFist.x = luffy.x - 20;
             shadowOAM[luffy.oamIndex + 4].attr2 = (((9) * (32) + (2)) & 0x3FF);
         }
         if (luffy.punchingTime < 12) {
             shadowOAM[luffy.oamIndex + 5].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 5].attr1 = (0 << 14) | ((luffy.x - 24) & 0x1FF);
+            luffyFist.x = luffy.x - 24;
             shadowOAM[luffy.oamIndex + 5].attr2 = (((9) * (32) + (2)) & 0x3FF);
         }
         if (luffy.punchingTime < 10) {
             shadowOAM[luffy.oamIndex + 6].attr0 = (0 << 14) | ((luffy.y + 16) & 0xFF);
             shadowOAM[luffy.oamIndex + 6].attr1 = (1 << 14) | ((luffy.x - 36) & 0x1FF);
+            luffyFist.x = luffy.x - 28;
             shadowOAM[luffy.oamIndex + 6].attr2 = (((9) * (32) + (0)) & 0x3FF);
         }
         if (luffy.punchingTime < 0) {
@@ -780,6 +810,10 @@ void luffyPunching() {
             luffy.punching = 0;
             luffy.timeUntilNextFrame = 1;
         }
+    }
+
+    if (punchCollision()) {
+        goToWin();
     }
 
     luffy.punchingTime--;
@@ -837,11 +871,12 @@ void initKaido() {
     kaido.width = 58;
     kaido.isMoving = 0;
     kaido.oamIndex = 7;
-    kaido.numFrames = 0;
+    kaido.numFrames = 2;
     kaido.xVel = 1;
     kaido.attacking = 0;
     kaido.attackingTime = 20;
-    kaido.timeUntilNextFrame = 10;
+    kaido.timeUntilNextFrame = 30;
+    kaidoHealth = 10;
 
 
     fireball.x = kaido.x + (kaido.width * 2) - 25;
@@ -860,7 +895,14 @@ void kaidoUpdate() {
     SHADOW_OAM_AFF[0].a = 1 << 7;
     shadowOAM[kaido.oamIndex].attr0 = (0 << 14) | ((kaido.y) & 0xFF) | (3 << 8);
     shadowOAM[kaido.oamIndex].attr1 = (3 << 14) | ((kaido.x) & 0x1FF);
-    shadowOAM[kaido.oamIndex].attr2 = (((15) * (32) + (0)) & 0x3FF) | (((1) & 0xF) << 12);
+    shadowOAM[kaido.oamIndex].attr2 = (((16) * (32) + (kaido.frame * 8)) & 0x3FF) | (((1) & 0xF) << 12);
+    if (kaido.timeUntilNextFrame == 0) {
+        kaido.timeUntilNextFrame = 30;
+        kaido.frame = (kaido.frame + 1) % kaido.numFrames;
+    } else if (kaido.timeUntilNextFrame < 0) {
+        kaido.timeUntilNextFrame = 30;
+    }
+    kaido.timeUntilNextFrame--;
 }
 
 void fireballUpdate() {

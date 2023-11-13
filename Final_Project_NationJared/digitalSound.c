@@ -37,7 +37,7 @@ void setupSounds() {
     REG_SOUNDCNT_L = 0;
 }
 
-void playSong(const signed char* songData, int length) {
+void playSong(const signed char* songData, int length, int offState) {
     DMANow(1, songData, REG_FIFO_A, DMA_DESTINATION_FIXED | DMA_AT_REFRESH | DMA_REPEAT | DMA_32);
 
     REG_TM0CNT = 0;
@@ -52,13 +52,28 @@ void playSong(const signed char* songData, int length) {
     song.durationInVBlanks = (VBLANK_FREQ * length) / SOUND_FREQ;
     song.vBlankCount = 0;
 
-    if (!(state == WIN)) {
-        stopSounds();
+    if (!(state == offState)) {
+        stopSong();
     }
 }
 
-void stopSounds() {
+void stopSong() {
     song.isPlaying = 0;
     REG_TM0CNT = TIMER_OFF;
     dma[1].cnt = 0;
+}
+
+void playSoundEffect(const signed char* soundData, int length) {
+    DMANow(2, soundData, REG_FIFO_B, DMA_DESTINATION_FIXED | DMA_AT_REFRESH | DMA_REPEAT | DMA_ON | DMA_32);
+    REG_TM1CNT = 0;
+    int cyclesPerSample = PROCESSOR_CYCLES_PER_SECOND / SOUND_FREQ;\
+    REG_TM1D = 65536 - cyclesPerSample; 
+    REG_TM1CNT = TIMER_ON;
+
+    soundEffect.data = soundData;
+    soundEffect.dataLength = length;
+    soundEffect.looping = 0;
+    soundEffect.isPlaying = 1;
+    soundEffect.durationInVBlanks = (VBLANK_FREQ * length) / SOUND_FREQ;
+    soundEffect.vBlankCount = 0;
 }

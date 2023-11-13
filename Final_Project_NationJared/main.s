@@ -141,30 +141,25 @@ main:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r7, fp, lr}
-	ldr	r3, .L40
+	ldr	r4, .L40
+	ldr	r3, .L40+4
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L40+4
-	ldr	r2, .L40+8
+	ldr	r5, .L40+8
 	ldrh	r3, [r4]
-	ldr	fp, [r2]
-	ldr	r5, .L40+12
-	ldr	r10, .L40+16
-	ldr	r9, .L40+20
-	ldr	r8, .L40+24
-	ldr	r7, .L40+28
+	ldr	r8, .L40+12
+	ldr	r7, .L40+16
+	ldr	fp, .L40+20
+	ldr	r10, .L40+24
+	ldr	r9, .L40+28
 	ldr	r6, .L40+32
 .L28:
 	strh	r3, [r5]	@ movhi
-	ldrh	r3, [r7, #48]
+	ldrh	r3, [r6, #48]
 	strh	r3, [r4]	@ movhi
 	mov	lr, pc
-	bx	r10
-	mov	r1, fp
-	mov	r0, r6
-	mov	lr, pc
-	bx	r9
-	ldr	r3, [r8]
+	bx	r8
+	ldr	r3, [r7]
 	cmp	r3, #8
 	ldrls	pc, [pc, r3, asl #2]
 	b	.L29
@@ -183,7 +178,7 @@ main:
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
-	tst	r3, #4
+	tst	r3, #8
 	bne	.L35
 .L29:
 	ldrh	r3, [r4]
@@ -193,11 +188,11 @@ main:
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
-	tst	r3, #4
+	tst	r3, #8
 	beq	.L29
 .L35:
 	ldrh	r3, [r4]
-	tst	r3, #4
+	tst	r3, #8
 	bne	.L28
 	ldr	r3, .L40+44
 	mov	lr, pc
@@ -205,9 +200,8 @@ main:
 	ldrh	r3, [r4]
 	b	.L28
 .L24:
-	ldr	r3, .L40+48
 	mov	lr, pc
-	bx	r3
+	bx	r9
 	ldrh	r3, [r5]
 	tst	r3, #4
 	beq	.L29
@@ -215,13 +209,13 @@ main:
 	tst	r3, #4
 	bne	.L28
 .L38:
-	ldr	r3, .L40+52
+	ldr	r3, .L40+48
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
 	b	.L28
 .L25:
-	ldr	r3, .L40+56
+	ldr	r3, .L40+52
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
@@ -230,15 +224,14 @@ main:
 	ldrh	r3, [r4]
 	tst	r3, #4
 	bne	.L28
-	ldr	r3, .L40+60
+	ldr	r3, .L40+56
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
 	b	.L28
 .L26:
-	ldr	r3, .L40+64
 	mov	lr, pc
-	bx	r3
+	bx	r10
 	ldrh	r3, [r5]
 	tst	r3, #8
 	beq	.L29
@@ -247,16 +240,15 @@ main:
 	bne	.L28
 	b	.L38
 .L27:
-	ldr	r3, .L40+68
 	mov	lr, pc
-	bx	r3
+	bx	fp
 	ldrh	r3, [r5]
 	tst	r3, #8
 	beq	.L29
 	ldrh	r3, [r4]
 	tst	r3, #8
 	bne	.L28
-	ldr	r3, .L40+72
+	ldr	r3, .L40+60
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
@@ -264,24 +256,21 @@ main:
 .L41:
 	.align	2
 .L40:
-	.word	initialize
 	.word	buttons
-	.word	BinksBrew_length
+	.word	initialize
 	.word	oldButtons
 	.word	waitForVBlank
-	.word	playSong
 	.word	state
+	.word	start
+	.word	instructions
+	.word	pause
 	.word	67109120
-	.word	BinksBrew_data
 	.word	win
 	.word	lose
 	.word	goToStart
-	.word	pause
 	.word	goToKaido1
 	.word	kaido1
 	.word	goToPause
-	.word	instructions
-	.word	start
 	.word	goToInstructions
 	.size	main, .-main
 	.text
@@ -321,7 +310,8 @@ setupInterrupts:
 	.comm	oldButtons,2,2
 	.comm	soundEffect,24,4
 	.comm	song,24,4
-	.comm	fireball,24,4
+	.comm	fireball,36,4
 	.comm	kaido,52,4
+	.comm	luffyFist,20,4
 	.comm	luffy,64,4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

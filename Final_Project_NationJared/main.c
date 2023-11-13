@@ -40,7 +40,7 @@ int main() {
         buttons = REG_BUTTONS;
 
         waitForVBlank();
-        playSong(BinksBrew_data, BinksBrew_length);
+        
 
         // State Machine
         switch(state) {
@@ -70,13 +70,13 @@ int main() {
                 break;
             case WIN:
                 win();
-                if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                if (BUTTON_PRESSED(BUTTON_START)) {
                     goToStart();
                 }
                 break;
             case LOSE:
                 lose();
-                if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                if (BUTTON_PRESSED(BUTTON_START)) {
                     goToStart();
                 }
                 break;
@@ -120,7 +120,7 @@ void interruptHandler() {
             song.vBlankCount++;
             if (song.vBlankCount >= song.durationInVBlanks) {
                 if (song.looping) {
-                    playSong(song.data, song.dataLength);
+                    playSong(song.data, song.dataLength, WIN);
                 } else {
                     song.isPlaying = 0;
                     dma[1].cnt = 0;

@@ -319,8 +319,16 @@ void initLuffy();
 void luffyPunching();
 void luffyJumping();
 
+
 void initKaido();
 void kaidoUpdate();
+
+void fireballUpdate();
+
+
+int fireballCollision();
+int punchCollision();
+
 
 void setupSounds();
 void setupInterrupts();
@@ -353,6 +361,15 @@ typedef struct {
     int y;
     int width;
     int height;
+    unsigned char oamIndex;
+} LUFFYFIST;
+LUFFYFIST luffyFist;
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
     int isMoving;
     int xVel;
     int numFrames;
@@ -371,6 +388,9 @@ typedef struct {
     int width;
     int height;
     int xVel;
+    int timeUntilNextFrame;
+    int numFrames;
+    int frame;
     unsigned char oamIndex;
 } FIREBALL;
 FIREBALL fireball;
@@ -437,7 +457,7 @@ int main() {
         buttons = (*(volatile unsigned short*) 0x04000130);
 
         waitForVBlank();
-        playSong(BinksBrew_data, BinksBrew_length);
+
 
 
         switch(state) {
@@ -467,13 +487,13 @@ int main() {
                 break;
             case WIN:
                 win();
-                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
+                if ((!(~(oldButtons) & ((1 << 3))) && (~(buttons) & ((1 << 3))))) {
                     goToStart();
                 }
                 break;
             case LOSE:
                 lose();
-                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
+                if ((!(~(oldButtons) & ((1 << 3))) && (~(buttons) & ((1 << 3))))) {
                     goToStart();
                 }
                 break;
