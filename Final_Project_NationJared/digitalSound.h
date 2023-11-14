@@ -3,7 +3,8 @@ void setupSounds();
 void playSong(const signed char* songData, int length, int offState);
 void playSoundEffect(const signed char* soundData, int length);
 
-void stopSounds();
+void stopSong();
+void stopSoundEffect();
 
 #define SOUND_FREQ 11025
 #define REG_SOUNDCNT_X *(volatile unsigned short *)0x04000084
@@ -48,6 +49,7 @@ typedef struct {
     int isPlaying;
     int looping;
     int durationInVBlanks;
+    int state;
     int vBlankCount;
 } SOUND;
 

@@ -398,17 +398,19 @@ FIREBALL fireball;
 # 1 "digitalSound.h" 1
 
 void setupSounds();
-void playSong(const signed char* songData, int length);
+void playSong(const signed char* songData, int length, int offState);
 void playSoundEffect(const signed char* soundData, int length);
 
-void stopSounds();
-# 45 "digitalSound.h"
+void stopSong();
+void stopSoundEffect();
+# 46 "digitalSound.h"
 typedef struct {
     const signed char* data;
     int dataLength;
     int isPlaying;
     int looping;
     int durationInVBlanks;
+    int state;
     int vBlankCount;
 } SOUND;
 
@@ -537,12 +539,22 @@ void interruptHandler() {
             song.vBlankCount++;
             if (song.vBlankCount >= song.durationInVBlanks) {
                 if (song.looping) {
-                    playSong(song.data, song.dataLength);
+                    playSong(song.data, song.dataLength, WIN);
                 } else {
                     song.isPlaying = 0;
                     dma[1].cnt = 0;
                     (*(volatile unsigned short*) 0x04000102) = (0 << 7);
                 }
+            }
+            if (!(state == song.state)) {
+                stopSong();
+            }
+        } else if (soundEffect.isPlaying) {
+            soundEffect.vBlankCount++;
+            if (soundEffect.vBlankCount >= soundEffect.durationInVBlanks) {
+                soundEffect.isPlaying = 0;
+                dma[2].cnt = 0;
+                (*(volatile unsigned short*) 0x04000106) = (0 << 7);
             }
         }
     }

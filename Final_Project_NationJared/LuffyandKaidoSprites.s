@@ -16313,13 +16313,13 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	4096
 	.short	0
+	.short	4096
 	.short	0
+	.short	4096
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	4096
 	.short	0
 	.short	0
 	.short	0
@@ -16342,6 +16342,8 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	4369
+	.short	4369
 	.short	0
 	.short	0
 	.short	0
@@ -16350,23 +16352,21 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	4369
+	.short	4369
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	1
 	.short	0
+	.short	1
 	.short	0
+	.short	1
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0

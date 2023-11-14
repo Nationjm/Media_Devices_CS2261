@@ -127,8 +127,18 @@ void interruptHandler() {
                     REG_TM0CNT = TIMER_OFF;
                 }
             }
+            if (!(state == song.state)) {
+                stopSong();
+            }
+        } else if (soundEffect.isPlaying) {
+            soundEffect.vBlankCount++;
+            if (soundEffect.vBlankCount >= soundEffect.durationInVBlanks) {
+                soundEffect.isPlaying = 0;
+                dma[2].cnt = 0;
+                REG_TM1CNT = TIMER_OFF;
+            }
         }
-    }
+    } 
 
     REG_IF = REG_IF;
     REG_IME = 1;

@@ -1331,17 +1331,19 @@ void DMANow(int channel, volatile const void *src, volatile void *dst, unsigned 
 # 1 "digitalSound.h" 1
 
 void setupSounds();
-void playSong(const signed char* songData, int length);
+void playSong(const signed char* songData, int length, int offState);
 void playSoundEffect(const signed char* soundData, int length);
 
-void stopSounds();
-# 45 "digitalSound.h"
+void stopSong();
+void stopSoundEffect();
+# 46 "digitalSound.h"
 typedef struct {
     const signed char* data;
     int dataLength;
     int isPlaying;
     int looping;
     int durationInVBlanks;
+    int state;
     int vBlankCount;
 } SOUND;
 
@@ -1387,7 +1389,7 @@ void setupSounds() {
     *(volatile unsigned short *)0x04000080 = 0;
 }
 
-void playSong(const signed char* songData, int length) {
+void playSong(const signed char* songData, int length, int offState) {
     DMANow(1, songData, (unsigned short*)0x040000A0, (2 << 21) | (3 << 28) | (1 << 25) | (1 << 26));
 
     (*(volatile unsigned short*) 0x04000102) = 0;
@@ -1401,14 +1403,32 @@ void playSong(const signed char* songData, int length) {
     song.isPlaying = 1;
     song.durationInVBlanks = ((59.727) * length) / 11025;
     song.vBlankCount = 0;
-
-    if (!(state == WIN)) {
-        stopSounds();
-    }
+    song.state = offState;
 }
 
-void stopSounds() {
+void stopSong() {
     song.isPlaying = 0;
     (*(volatile unsigned short*) 0x04000102) = (0 << 7);
     dma[1].cnt = 0;
+}
+
+void playSoundEffect(const signed char* soundData, int length) {
+    DMANow(2, soundData, (unsigned short*)0x040000A4, (2 << 21) | (3 << 28) | (1 << 25) | (1 << 31) | (1 << 26));
+    (*(volatile unsigned short*) 0x04000106) = 0;
+    int cyclesPerSample = (16777216) / 11025;
+    (*(volatile unsigned short*) 0x04000104) = 65536 - cyclesPerSample;
+    (*(volatile unsigned short*) 0x04000106) = (1 << 7);
+
+    soundEffect.data = soundData;
+    soundEffect.dataLength = length;
+    soundEffect.looping = 0;
+    soundEffect.isPlaying = 1;
+    soundEffect.durationInVBlanks = ((59.727) * length) / 11025;
+    soundEffect.vBlankCount = 0;
+}
+
+void stopSoundEffect() {
+    soundEffect.isPlaying = 0;
+    (*(volatile unsigned short*) 0x04000106) = (0 << 7);
+    dma[2].cnt = 0;
 }

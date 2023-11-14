@@ -51,10 +51,7 @@ void playSong(const signed char* songData, int length, int offState) {
     song.isPlaying = 1;
     song.durationInVBlanks = (VBLANK_FREQ * length) / SOUND_FREQ;
     song.vBlankCount = 0;
-
-    if (!(state == offState)) {
-        stopSong();
-    }
+    song.state = offState;
 }
 
 void stopSong() {
@@ -76,4 +73,10 @@ void playSoundEffect(const signed char* soundData, int length) {
     soundEffect.isPlaying = 1;
     soundEffect.durationInVBlanks = (VBLANK_FREQ * length) / SOUND_FREQ;
     soundEffect.vBlankCount = 0;
+}
+
+void stopSoundEffect() {
+    soundEffect.isPlaying = 0;
+    REG_TM1CNT = TIMER_OFF;
+    dma[2].cnt = 0;
 }

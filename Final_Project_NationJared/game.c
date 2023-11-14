@@ -42,6 +42,8 @@ OBJ_ATTR shadowOAM[128]; // Set up the shadowOAM
 
 int luffyLives;
 int kaidoHealth;
+int luffyPunched;
+int kaidoWordOAMIndex = 19;
 
 typedef struct {
     unsigned short fill0[3];
@@ -187,9 +189,11 @@ void initLuffy() {
     luffy.punchingTime = 22;
     luffy.jumping = 0;
     luffy.jumpingTime = 85;
-    luffyLives = 3;
 
-    luffyFist.x = luffy.x + 32 + luffy.width;
+    luffyLives = 3;
+    luffyPunched = 0;
+
+    luffyFist.x = luffy.x;
     luffyFist.y = luffy.y + 16;
     luffyFist.height = 8;
     luffyFist.width = 8;
@@ -197,6 +201,7 @@ void initLuffy() {
 
 void luffyUpdate() {
     luffy.isMoving = 0;
+    luffyFist.x = luffy.x;
     if (BUTTON_HELD(BUTTON_LEFT) && luffy.punching == 0) { // Handle Luffy running left
         luffy.direction = LEFT;
         if (luffy.x > 0) {
@@ -233,7 +238,8 @@ void luffyUpdate() {
         }
     }
 
-    if (BUTTON_PRESSED(BUTTON_A)) { // Set Luffy's punching variable to 1 when A is pressed
+    if (BUTTON_PRESSED(BUTTON_A) && luffy.jumping != 1) { // Set Luffy's punching variable to 1 when A is pressed
+        luffyPunched = 1;
         luffy.punching = 1;
     }
 
@@ -243,6 +249,7 @@ void luffyUpdate() {
 
     if (BUTTON_PRESSED(BUTTON_UP)) { // Set Luffy's jumping variable to 1 when A is pressed
         luffy.jumping = 1;
+        luffy.punching = 0;
     }
 
     if (luffy.jumping) { // Call Luffy's jumping function
@@ -342,7 +349,12 @@ void luffyPunching() { // Handle animating Luffy while his punching variable is 
         }  
     }
 
-    if (punchCollision()) {
+    if (punchCollision() & (luffyPunched == 1)) {
+        luffyPunched = 0;
+        kaidoHealth--;
+    }
+
+    if (kaidoHealth == 0) {
         goToWin();
     }
   
@@ -421,6 +433,7 @@ void initKaido() {
 }
 
 void kaidoUpdate() {
+    // Double Affine Sprite to make him larger
     SHADOW_OAM_AFF[0].d = 1 << 7;
     SHADOW_OAM_AFF[0].a = 1 << 7;
     shadowOAM[kaido.oamIndex].attr0 = ATTR0_SQUARE | ATTR0_Y(kaido.y) | ATTR0_DOUBLEAFFINE;
@@ -433,6 +446,35 @@ void kaidoUpdate() {
         kaido.timeUntilNextFrame = 30;
     }
     kaido.timeUntilNextFrame--;
+
+    // Kaido Name
+    shadowOAM[kaidoWordOAMIndex].attr0 = ATTR0_WIDE | ATTR0_Y(0);
+    shadowOAM[kaidoWordOAMIndex].attr1 = ATTR1_TINY | ATTR1_X(100);
+    shadowOAM[kaidoWordOAMIndex].attr2 = ATTR2_TILEID(5, 31) | ATTR2_PALROW(1);
+    shadowOAM[kaidoWordOAMIndex + 1].attr0 = ATTR0_WIDE | ATTR0_Y(0);
+    shadowOAM[kaidoWordOAMIndex + 1].attr1 = ATTR1_TINY | ATTR1_X(116);
+    shadowOAM[kaidoWordOAMIndex + 1].attr2 = ATTR2_TILEID(7, 31) | ATTR2_PALROW(1);
+    shadowOAM[kaidoWordOAMIndex + 2].attr0 = ATTR0_Y(0);
+    shadowOAM[kaidoWordOAMIndex + 2].attr1 = ATTR1_TINY | ATTR1_X(132);
+    shadowOAM[kaidoWordOAMIndex + 2].attr2 = ATTR2_TILEID(9, 31) | ATTR2_PALROW(1);
+
+    // Kaido Health
+    for (int i = 0; i < kaidoHealth; i++) {
+        shadowOAM[kaido.oamIndex + 2 + i].attr0 = ATTR0_SQUARE | ATTR0_Y(10);
+        shadowOAM[kaido.oamIndex + 2 + i].attr1 = ATTR1_TINY | ATTR1_X(80 + (i * 8));
+        shadowOAM[kaido.oamIndex + 2 + i].attr2 = ATTR2_TILEID(11, 31) | ATTR2_PALROW(1);
+    }
+    shadowOAM[22].attr0 = ATTR0_SQUARE | ATTR0_Y(10);
+    shadowOAM[22].attr1 = ATTR1_TINY | ATTR1_X(72);
+    shadowOAM[22].attr2 = ATTR2_TILEID(10, 31) | ATTR2_PALROW(1);
+    for (int i = 0; i < 10; i++) {
+        shadowOAM[23 + i].attr0 = ATTR0_SQUARE | ATTR0_Y(10);
+        shadowOAM[23 + i].attr1 = ATTR1_TINY | ATTR1_X(80 + (i * 8));
+        shadowOAM[23 + i].attr2 = ATTR2_TILEID(12, 31) | ATTR2_PALROW(1);
+    }
+    shadowOAM[34].attr0 = ATTR0_SQUARE | ATTR0_Y(10);
+    shadowOAM[34].attr1 = ATTR1_TINY | ATTR1_X(160);
+    shadowOAM[34].attr2 = ATTR2_TILEID(13, 31) | ATTR2_PALROW(1);
 }
 
 void fireballUpdate() {
@@ -454,7 +496,7 @@ void fireballUpdate() {
     fireball.timeUntilNextFrame--;
 
     if (fireballCollision()) {
-        goToLose();
+        // goToLose();
     }
 }
 
