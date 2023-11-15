@@ -27,6 +27,7 @@ void initKaido();
 void kaidoUpdate();
 // Fireball Functions
 void fireballUpdate();
+void shootFireball();
 
 // Collision Functions
 int fireballCollision();
@@ -94,6 +95,8 @@ typedef struct {
     int timeUntilNextFrame;
     int numFrames;
     int frame;
+    int shooting;
+    int timeUntilNextShot;
     unsigned char oamIndex;
 } FIREBALL;
 FIREBALL fireball;

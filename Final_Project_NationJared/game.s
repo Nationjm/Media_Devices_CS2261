@@ -72,6 +72,10 @@ instructions:
 	ldr	r3, .L8+16
 	mov	lr, pc
 	bx	r3
+	ldr	r2, .L8+20
+	ldr	r3, [r2]
+	add	r3, r3, #1
+	str	r3, [r2]
 	pop	{r4, lr}
 	bx	lr
 .L9:
@@ -82,6 +86,7 @@ instructions:
 	.word	wanoInstructionsBitmap
 	.word	drawFullscreenImage4
 	.word	flipPage
+	.word	rSeed
 	.size	instructions, .-instructions
 	.align	2
 	.global	bigMom1
@@ -577,46 +582,48 @@ initKaido:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	mov	r5, #30
+	mov	r6, #30
 	mov	r1, #1
 	ldr	r3, .L76
-	str	r5, [r3, #32]
-	ldr	r5, .L76+4
+	str	r6, [r3, #32]
+	ldr	r6, .L76+4
 	str	r1, [r3, #36]
 	str	r1, [r3, #20]
-	str	r1, [r5, #16]
+	str	r1, [r6, #16]
 	mov	r1, #32
-	str	r1, [r5, #8]
+	str	r1, [r6, #8]
 	mov	r1, #16
 	mov	r7, #7
-	str	r1, [r5, #12]
+	str	r1, [r6, #12]
 	mov	r1, #8
 	mov	r2, #0
+	mov	lr, #2
 	mvn	fp, #24
 	mov	r10, #100
 	mov	r9, #25
 	mov	r8, #58
-	mov	r6, #20
-	mov	r4, #66
-	mov	lr, #125
-	mov	ip, #2
+	mov	r5, #66
+	mov	r4, #125
+	mov	ip, #20
 	mov	r0, #10
-	strb	r1, [r5, #32]
+	strb	r1, [r6, #40]
 	strb	r7, [r3, #48]
 	ldr	r1, .L76+8
-	stm	r5, {r4, lr}
 	str	fp, [r3]
 	str	r10, [r3, #4]
 	str	r9, [r3, #12]
 	str	r8, [r3, #8]
-	str	r6, [r3, #44]
+	str	r5, [r6]
+	str	r4, [r6, #4]
 	str	r2, [r3, #28]
 	str	r2, [r3, #16]
 	str	r2, [r3, #40]
-	str	r2, [r5, #28]
-	str	ip, [r3, #24]
-	str	ip, [r5, #24]
-	str	r0, [r5, #20]
+	str	r2, [r6, #28]
+	str	lr, [r3, #24]
+	str	lr, [r6, #24]
+	str	ip, [r3, #44]
+	str	ip, [r6, #36]
+	str	r0, [r6, #20]
 	str	r0, [r1]
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
@@ -641,27 +648,35 @@ goToKaido1:
 	mov	r1, #67108864
 	mov	r2, #4352
 	mov	r0, #7168
-	push	{r4, lr}
 	ldr	r3, .L80
-	ldr	r4, .L80+4
+	push	{r4, lr}
 	strh	ip, [r3]	@ movhi
-	strh	r2, [r1]	@ movhi
+	ldr	r4, .L80+4
 	mov	r3, #512
-	strh	r0, [r1, #8]	@ movhi
+	strh	r2, [r1]	@ movhi
 	mov	r2, #117440512
+	strh	r0, [r1, #8]	@ movhi
 	mov	r0, #3
 	ldr	r1, .L80+8
 	mov	lr, pc
 	bx	r4
 	bl	initLuffy
+	bl	initKaido
+	ldr	r2, .L80+12
+	ldr	r3, .L80+16
+	ldr	r0, [r2]
+	mov	lr, pc
+	bx	r3
 	pop	{r4, lr}
-	b	initKaido
+	bx	lr
 .L81:
 	.align	2
 .L80:
 	.word	state
 	.word	DMANow
 	.word	shadowOAM
+	.word	rSeed
+	.word	srand
 	.size	goToKaido1, .-goToKaido1
 	.global	__aeabi_idivmod
 	.align	2
@@ -711,33 +726,33 @@ kaidoUpdate:
 	mov	r2, #29
 	str	r1, [r6, #28]
 .L84:
-	mov	ip, #16384
+	mov	lr, #2
 	mov	r9, #100
 	mov	r8, #116
-	mov	lr, #0
 	mov	r0, #132
 	ldr	r3, [r7, #4]
+	ldr	ip, .L93+16
 	add	r1, r3, #1
 	str	r2, [r6, #32]
 	lsl	r2, r1, #3
 	lsl	r6, r3, #3
 	strh	ip, [r5, r6]	@ movhi
 	strh	ip, [r5, r2]	@ movhi
-	ldr	r2, .L93+16
-	ldr	r6, .L93+20
+	ldr	r2, .L93+20
+	ldr	r6, .L93+24
 	ldr	ip, [r2]
-	add	r2, r3, #2
+	add	r2, r3, lr
 	add	r3, r5, r3, lsl #3
 	strh	r6, [r3, #4]	@ movhi
 	strh	r9, [r3, #2]	@ movhi
-	ldr	r3, .L93+24
+	ldr	r3, .L93+28
 	add	r1, r5, r1, lsl #3
 	strh	r3, [r1, #4]	@ movhi
 	strh	r8, [r1, #2]	@ movhi
-	ldr	r1, .L93+28
+	ldr	r1, .L93+32
 	add	r3, r5, r2, lsl #3
 	lsl	r6, r2, #3
-	cmp	ip, lr
+	cmp	ip, #0
 	strh	lr, [r5, r6]	@ movhi
 	strh	r0, [r3, #2]	@ movhi
 	strh	r1, [r3, #4]	@ movhi
@@ -746,7 +761,7 @@ kaidoUpdate:
 	mov	r3, #80
 	add	ip, ip, r6
 	lsl	ip, ip, #19
-	ldr	lr, .L93+32
+	ldr	lr, .L93+36
 	lsr	ip, ip, #16
 	add	r2, r5, r4
 .L87:
@@ -765,11 +780,11 @@ kaidoUpdate:
 	mov	ip, #72
 	mov	r1, #10
 	mov	r3, r0
-	ldr	r2, .L93+36
+	ldr	r2, .L93+40
 	strh	ip, [r5, #178]	@ movhi
 	strh	r1, [r5, #176]	@ movhi
 	strh	r2, [r5, #180]	@ movhi
-	ldr	ip, .L93+40
+	ldr	ip, .L93+44
 	add	r0, r0, #80
 	rsb	lr, r3, #80
 .L86:
@@ -781,8 +796,8 @@ kaidoUpdate:
 	cmp	r3, r0
 	bne	.L86
 	mov	r0, #160
-	ldr	r3, .L93+44
-	ldr	r2, .L93+48
+	ldr	r3, .L93+48
+	ldr	r2, .L93+52
 	strh	r0, [r3, #2]	@ movhi
 	strh	r1, [r3]	@ movhi
 	strh	r2, [r3, #4]	@ movhi
@@ -799,6 +814,7 @@ kaidoUpdate:
 	.word	.LANCHOR0
 	.word	shadowOAM
 	.word	__aeabi_idivmod
+	.word	16386
 	.word	kaidoHealth
 	.word	5093
 	.word	5095
@@ -810,6 +826,64 @@ kaidoUpdate:
 	.word	5101
 	.size	kaidoUpdate, .-kaidoUpdate
 	.align	2
+	.global	shootFireball
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	shootFireball, %function
+shootFireball:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	ldr	r2, .L99
+	push	{r4, r5, lr}
+	ldr	lr, [r2]
+	lsl	r1, lr, #23
+	lsr	r1, r1, #23
+	mvn	r1, r1, lsl #17
+	mvn	r1, r1, lsr #17
+	ldr	r3, [r2, #28]
+	ldr	ip, [r2, #8]
+	lsl	r3, r3, #6
+	add	ip, ip, #240
+	ldrb	r0, [r2, #40]	@ zero_extendqisi2
+	ldr	r4, .L99+4
+	add	r3, r3, #28
+	cmp	lr, ip
+	ldrb	ip, [r2, #4]	@ zero_extendqisi2
+	and	r3, r3, #1020
+	add	r5, r4, r0, lsl #3
+	orr	ip, ip, #16384
+	lsl	r0, r0, #3
+	orr	r3, r3, #4096
+	strh	r1, [r5, #2]	@ movhi
+	strh	ip, [r4, r0]	@ movhi
+	strh	r3, [r5, #4]	@ movhi
+	ble	.L96
+	mov	r0, #0
+	ldr	r1, .L99+8
+	ldr	ip, [r1, #8]
+	ldr	r3, [r1]
+	add	r3, r3, ip, lsl #1
+	sub	r3, r3, #25
+	str	r3, [r2]
+	str	r0, [r2, #32]
+	pop	{r4, r5, lr}
+	bx	lr
+.L96:
+	ldr	r3, [r2, #16]
+	add	lr, r3, lr
+	str	lr, [r2]
+	pop	{r4, r5, lr}
+	bx	lr
+.L100:
+	.align	2
+.L99:
+	.word	fireball
+	.word	shadowOAM
+	.word	kaido
+	.size	shootFireball, .-shootFireball
+	.align	2
 	.global	fireballCollision
 	.syntax unified
 	.arm
@@ -820,7 +894,7 @@ fireballCollision:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r3, .L97
+	ldr	r3, .L103
 	add	r1, r3, #8
 	ldm	r1, {r1, ip}
 	ldr	r2, [r3, #4]
@@ -830,8 +904,8 @@ fireballCollision:
 	str	r1, [sp, #8]
 	str	r2, [sp, #4]
 	str	r3, [sp]
-	ldr	r0, .L97+4
-	ldr	r4, .L97+8
+	ldr	r0, .L103+4
+	ldr	r4, .L103+8
 	ldm	r0, {r0, r1, r2, r3}
 	mov	lr, pc
 	bx	r4
@@ -839,13 +913,18 @@ fireballCollision:
 	@ sp needed
 	pop	{r4, lr}
 	bx	lr
-.L98:
+.L104:
 	.align	2
-.L97:
+.L103:
 	.word	luffy
 	.word	fireball
 	.word	collision
 	.size	fireballCollision, .-fireballCollision
+	.section	.rodata.str1.4,"aMS",%progbits,1
+	.align	2
+.LC0:
+	.ascii	"%d\000"
+	.text
 	.align	2
 	.global	fireballUpdate
 	.syntax unified
@@ -856,64 +935,110 @@ fireballUpdate:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, r5, r6, lr}
-	ldr	r4, .L106
-	ldr	r1, [r4]
-	lsl	r2, r1, #23
-	lsr	r2, r2, #23
-	mvn	r2, r2, lsl #17
-	mvn	r2, r2, lsr #17
-	ldr	r0, [r4, #28]
-	ldr	lr, [r4, #8]
-	ldrb	ip, [r4, #32]	@ zero_extendqisi2
-	ldr	r5, .L106+4
-	lsl	r3, r0, #6
-	add	lr, lr, #240
-	add	r3, r3, #28
-	cmp	r1, lr
-	and	r3, r3, #1020
-	add	lr, r5, ip, lsl #3
-	orr	r3, r3, #4096
-	strh	r2, [lr, #2]	@ movhi
-	ldrb	r2, [r4, #4]	@ zero_extendqisi2
-	strh	r3, [lr, #4]	@ movhi
-	ldrgt	r3, .L106+8
-	ldrle	r3, [r4, #16]
-	orr	r2, r2, #16384
-	lsl	ip, ip, #3
-	ldrgt	r1, [r3]
-	strh	r2, [r5, ip]	@ movhi
-	ldrgt	r2, [r3, #8]
-	addle	r1, r1, r3
-	ldr	r3, [r4, #20]
-	addgt	r1, r1, r2, lsl #1
-	subgt	r1, r1, #25
+	push	{r4, lr}
+	ldr	r4, .L128
+	ldr	r3, [r4, #32]
 	cmp	r3, #0
-	str	r1, [r4]
-	bne	.L102
-	ldr	r3, .L106+12
+	bne	.L124
+.L106:
+	ldr	r3, [r4, #20]
+	cmp	r3, #0
+	bne	.L107
+	ldr	r0, [r4, #28]
+	ldr	r3, .L128+4
 	ldr	r1, [r4, #24]
 	add	r0, r0, #1
 	mov	lr, pc
 	bx	r3
 	mov	r3, #9
 	str	r1, [r4, #28]
+.L108:
 	str	r3, [r4, #20]
-	pop	{r4, r5, r6, lr}
-	b	fireballCollision
-.L102:
+	bl	fireballCollision
+	cmp	r0, #0
+	beq	.L110
+	ldr	r3, [r4, #32]
+	cmp	r3, #0
+	bne	.L125
+.L110:
+	ldr	r1, [r4, #36]
+	cmp	r1, #0
+	beq	.L126
+.L112:
+	blt	.L127
+.L113:
+	ldr	r3, [r4, #32]
+	cmp	r3, #0
+	subeq	r1, r1, #1
+	ldr	r0, .L128+8
+	ldr	r3, .L128+12
+	streq	r1, [r4, #36]
+	mov	lr, pc
+	bx	r3
+	pop	{r4, lr}
+	bx	lr
+.L125:
+	mov	r0, #0
+	ldr	r2, .L128+16
+	ldr	r1, .L128+20
+	ldr	ip, [r2, #8]
+	ldr	r3, [r2]
+	ldr	r2, [r1]
+	add	r3, r3, ip, lsl #1
+	sub	r2, r2, #1
+	sub	r3, r3, #25
+	cmp	r2, r0
+	str	r3, [r4]
+	str	r2, [r1]
+	str	r0, [r4, #32]
+	bne	.L110
+	mov	r0, #8
+	mov	r3, #67108864
+	ldr	r1, .L128+24
+	strh	r0, [r1]	@ movhi
+	ldr	r1, [r4, #36]
+	ldr	r2, .L128+28
+	cmp	r1, #0
+	strh	r2, [r3]	@ movhi
+	bne	.L112
+.L126:
+	mov	r2, #1
+	ldr	r3, .L128+32
+	str	r2, [r4, #32]
+.L123:
+	mov	lr, pc
+	bx	r3
+	ldr	r1, .L128+36
+	smull	r2, r3, r1, r0
+	asr	r1, r0, #31
+	rsb	r1, r1, r3, asr #5
+	add	r1, r1, r1, lsl #2
+	sub	r1, r0, r1, lsl #4
+	str	r1, [r4, #36]
+	b	.L113
+.L107:
 	movlt	r3, #9
 	subge	r3, r3, #1
-	str	r3, [r4, #20]
-	pop	{r4, r5, r6, lr}
-	b	fireballCollision
-.L107:
+	b	.L108
+.L124:
+	bl	shootFireball
+	b	.L106
+.L127:
+	ldr	r3, .L128+32
+	b	.L123
+.L129:
 	.align	2
-.L106:
+.L128:
 	.word	fireball
-	.word	shadowOAM
-	.word	kaido
 	.word	__aeabi_idivmod
+	.word	.LC0
+	.word	mgba_printf
+	.word	kaido
+	.word	luffyLives
+	.word	state
+	.word	1044
+	.word	rand
+	.word	1717986919
 	.size	fireballUpdate, .-fireballUpdate
 	.align	2
 	.global	punchCollision
@@ -926,8 +1051,8 @@ punchCollision:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r1, .L110
-	ldr	r0, .L110+4
+	ldr	r1, .L132
+	ldr	r0, .L132+4
 	ldr	ip, [r1, #12]
 	sub	sp, sp, #16
 	add	r2, r0, #8
@@ -936,7 +1061,7 @@ punchCollision:
 	str	ip, [sp, #12]
 	ldm	r1, {r1, ip}
 	stm	sp, {r1, ip, lr}
-	ldr	r4, .L110+8
+	ldr	r4, .L132+8
 	ldm	r0, {r0, r1}
 	lsl	r3, r3, #1
 	lsl	r2, r2, #1
@@ -946,9 +1071,9 @@ punchCollision:
 	@ sp needed
 	pop	{r4, lr}
 	bx	lr
-.L111:
+.L133:
 	.align	2
-.L110:
+.L132:
 	.word	luffyFist
 	.word	kaido
 	.word	collision
@@ -964,15 +1089,15 @@ luffyPunching:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	ldr	r4, .L124
-	ldr	lr, .L124+4
+	ldr	r4, .L146
+	ldr	lr, .L146+4
 	ldr	r0, [r4]
 	and	r6, r0, lr
 	mvn	ip, r6, lsl #18
 	mvn	ip, ip, lsr #18
 	mov	r8, #227
 	ldrb	r2, [r4, #60]	@ zero_extendqisi2
-	ldr	r3, .L124+8
+	ldr	r3, .L146+8
 	ldr	r7, [r4, #40]
 	ldrh	r1, [r4, #4]
 	add	r5, r3, r2, lsl #3
@@ -983,9 +1108,9 @@ luffyPunching:
 	strh	ip, [r3, r7]	@ movhi
 	strh	r8, [r5, #4]	@ movhi
 	ldr	ip, [r4, #48]
-	beq	.L122
+	beq	.L144
 	cmp	ip, #19
-	bgt	.L115
+	bgt	.L137
 	add	r6, r2, #1
 	lsl	r5, r0, #16
 	add	r1, r1, #16
@@ -994,26 +1119,26 @@ luffyPunching:
 	and	r1, r1, #255
 	strh	r1, [r3, r8]	@ movhi
 	sub	r7, r5, #8
-	ldr	r8, .L124+12
+	ldr	r8, .L146+12
 	add	r6, r3, r6, lsl #3
 	and	r7, r7, lr
 	cmp	ip, #17
 	strh	r7, [r6, #2]	@ movhi
 	strh	r8, [r6, #4]	@ movhi
-	bgt	.L115
+	bgt	.L137
 	add	r7, r2, #2
 	lsl	r6, r7, #3
 	sub	r9, r5, #12
 	add	r7, r3, r7, lsl #3
 	strh	r1, [r3, r6]	@ movhi
 	and	r9, r9, lr
-	ldr	r6, .L124+16
+	ldr	r6, .L146+16
 	strh	r8, [r7, #4]	@ movhi
 	strh	r9, [r7, #2]	@ movhi
 	cmp	ip, #15
 	sub	r7, r0, #12
 	str	r7, [r6]
-	bgt	.L115
+	bgt	.L137
 	add	r7, r2, #3
 	lsl	r10, r7, #3
 	sub	r9, r5, #16
@@ -1025,7 +1150,7 @@ luffyPunching:
 	strh	r8, [r7, #4]	@ movhi
 	strh	r9, [r7, #2]	@ movhi
 	str	r10, [r6]
-	bgt	.L115
+	bgt	.L137
 	add	r7, r2, #4
 	lsl	r10, r7, #3
 	sub	r9, r5, #20
@@ -1037,7 +1162,7 @@ luffyPunching:
 	strh	r8, [r7, #4]	@ movhi
 	strh	r9, [r7, #2]	@ movhi
 	str	r10, [r6]
-	bgt	.L115
+	bgt	.L137
 	add	r7, r2, #5
 	lsl	r10, r7, #3
 	sub	r9, r5, #24
@@ -1049,7 +1174,7 @@ luffyPunching:
 	strh	r8, [r7, #4]	@ movhi
 	strh	r9, [r7, #2]	@ movhi
 	str	r10, [r6]
-	bgt	.L115
+	bgt	.L137
 	mov	r7, #288
 	sub	r5, r5, #36
 	add	r2, r2, #6
@@ -1063,43 +1188,43 @@ luffyPunching:
 	strh	lr, [ip, #2]	@ movhi
 	strh	r1, [r3, r2]	@ movhi
 	strh	r7, [ip, #4]	@ movhi
-	bge	.L115
-.L117:
+	bge	.L137
+.L139:
 	mov	r1, #22
 	mov	r2, #0
 	mov	r3, #1
 	str	r1, [r4, #48]
 	str	r2, [r4, #44]
 	str	r3, [r4, #36]
-.L115:
+.L137:
 	bl	punchCollision
-	ldr	r2, .L124+20
+	ldr	r2, .L146+20
 	ldr	r3, [r2]
 	cmp	r3, #1
 	movne	r0, #0
 	andeq	r0, r0, #1
 	cmp	r0, #0
 	movne	r0, #0
-	ldrne	r1, .L124+24
-	ldreq	r3, .L124+24
+	ldrne	r1, .L146+24
+	ldreq	r3, .L146+24
 	ldrne	r3, [r1]
 	ldreq	r3, [r3]
 	subne	r3, r3, #1
 	strne	r3, [r1]
 	strne	r0, [r2]
 	cmp	r3, #0
-	beq	.L123
-.L120:
+	beq	.L145
+.L142:
 	ldr	r3, [r4, #48]
 	sub	r3, r3, #1
 	str	r3, [r4, #48]
 	pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L122:
+.L144:
 	orr	r6, r6, #53248
 	cmp	ip, #19
 	strh	r6, [r5, #2]	@ movhi
-	bgt	.L115
+	bgt	.L137
 	ldr	r6, [r4, #8]
 	add	r5, r0, r6
 	lsl	r5, r5, #16
@@ -1111,16 +1236,16 @@ luffyPunching:
 	and	r8, r8, lr
 	add	r7, r3, r7, lsl #3
 	and	r1, r1, #255
-	ldr	r9, .L124+12
+	ldr	r9, .L146+12
 	strh	r1, [r3, r10]	@ movhi
 	strh	r8, [r7, #2]	@ movhi
 	add	r10, r0, #32
-	ldr	r8, .L124+16
+	ldr	r8, .L146+16
 	add	r10, r10, r6
 	cmp	ip, #17
 	strh	r9, [r7, #4]	@ movhi
 	str	r10, [r8]
-	bgt	.L115
+	bgt	.L137
 	add	r7, r2, #2
 	lsl	fp, r7, #3
 	strh	r1, [r3, fp]	@ movhi
@@ -1133,7 +1258,7 @@ luffyPunching:
 	strh	r9, [r7, #4]	@ movhi
 	strh	r10, [r7, #2]	@ movhi
 	str	fp, [r8]
-	bgt	.L115
+	bgt	.L137
 	add	r7, r2, #3
 	lsl	fp, r7, #3
 	strh	r1, [r3, fp]	@ movhi
@@ -1146,7 +1271,7 @@ luffyPunching:
 	strh	r9, [r7, #4]	@ movhi
 	strh	r10, [r7, #2]	@ movhi
 	str	fp, [r8]
-	bgt	.L115
+	bgt	.L137
 	add	r7, r2, #4
 	lsl	fp, r7, #3
 	strh	r1, [r3, fp]	@ movhi
@@ -1159,7 +1284,7 @@ luffyPunching:
 	strh	r9, [r7, #4]	@ movhi
 	strh	r10, [r7, #2]	@ movhi
 	str	fp, [r8]
-	bgt	.L115
+	bgt	.L137
 	add	r7, r2, #5
 	lsl	fp, r7, #3
 	strh	r1, [r3, fp]	@ movhi
@@ -1172,7 +1297,7 @@ luffyPunching:
 	strh	r9, [r7, #4]	@ movhi
 	strh	r10, [r7, #2]	@ movhi
 	str	fp, [r8]
-	bgt	.L115
+	bgt	.L137
 	mov	r7, #288
 	add	r5, r5, #52
 	add	r2, r2, #6
@@ -1187,25 +1312,25 @@ luffyPunching:
 	strh	lr, [r0, #2]	@ movhi
 	strh	r1, [r3, r2]	@ movhi
 	strh	r7, [r0, #4]	@ movhi
-	blt	.L117
-	b	.L115
-.L123:
+	blt	.L139
+	b	.L137
+.L145:
 	mov	r2, #7
 	mov	r1, #67108864
-	ldr	ip, .L124+28
-	ldr	r0, .L124+32
-	ldr	r3, .L124+36
+	ldr	ip, .L146+28
+	ldr	r0, .L146+32
+	ldr	r3, .L146+36
 	strh	r2, [ip]	@ movhi
 	strh	r0, [r1]	@ movhi
 	ldr	r1, [r3]
-	ldr	r0, .L124+40
-	ldr	r3, .L124+44
+	ldr	r0, .L146+40
+	ldr	r3, .L146+44
 	mov	lr, pc
 	bx	r3
-	b	.L120
-.L125:
+	b	.L142
+.L147:
 	.align	2
-.L124:
+.L146:
 	.word	luffy
 	.word	511
 	.word	shadowOAM
@@ -1231,30 +1356,30 @@ luffyUpdate:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	mov	r1, #0
 	push	{r4, r5, r6, r7, r8, lr}
-	ldr	r7, .L167
-	ldr	r4, .L167+4
+	ldr	r7, .L194
+	ldr	r4, .L194+4
 	ldrh	r5, [r7]
-	ldr	r2, .L167+8
+	ldr	r2, .L194+8
 	ldr	r3, [r4]
 	tst	r5, #32
 	str	r3, [r2]
 	str	r1, [r4, #16]
 	ldr	r2, [r4, #44]
-	bne	.L127
+	bne	.L149
 	cmp	r2, r1
-	bne	.L128
+	bne	.L150
 	cmp	r3, r1
 	str	r2, [r4, #40]
 	ldrgt	r2, [r4, #20]
 	subgt	r3, r3, r2
 	strgt	r3, [r4]
-.L130:
+.L152:
 	mov	r3, #1
 	str	r3, [r4, #16]
-.L131:
+.L153:
 	ldr	r3, [r4, #52]
 	cmp	r3, #0
-	bne	.L136
+	bne	.L158
 	ldr	r3, [r4]
 	ldrb	r2, [r4, #4]	@ zero_extendqisi2
 	lsl	r3, r3, #23
@@ -1265,7 +1390,7 @@ luffyUpdate:
 	mvn	r2, r2, lsr #17
 	ldr	lr, [r4, #40]
 	ldrb	r0, [r4, #60]	@ zero_extendqisi2
-	ldr	r8, .L167+12
+	ldr	r8, .L194+12
 	cmp	lr, #1
 	orreq	r3, r3, #53248
 	add	ip, r8, r0, lsl #3
@@ -1276,29 +1401,38 @@ luffyUpdate:
 	ldr	r2, [r4, #16]
 	ldr	r3, [r4, #36]
 	orrs	r1, r3, r2
-	beq	.L164
+	beq	.L191
 	cmp	r3, #0
-	bne	.L137
+	bne	.L159
 	cmp	r2, #1
-	beq	.L165
-.L136:
-	ldr	r6, .L167+16
+	beq	.L192
+.L158:
+	ldr	r6, .L194+16
 	ldrh	r3, [r6]
 	tst	r3, #1
-	bne	.L146
-.L163:
+	bne	.L171
+.L189:
 	tst	r3, #64
-	bne	.L166
-.L143:
+	bne	.L193
+.L165:
 	ldr	r3, [r4, #52]
 	cmp	r3, #0
-	beq	.L145
-	b	.L144
-.L127:
+	bne	.L166
+	ldr	r3, .L194+20
+	ldr	r1, [r3]
+	cmp	r1, #0
+	bgt	.L168
+.L170:
+	ldr	r3, [r4, #36]
+	sub	r3, r3, #1
+	str	r3, [r4, #36]
+	pop	{r4, r5, r6, r7, r8, lr}
+	bx	lr
+.L149:
 	tst	r5, #16
-	bne	.L132
+	bne	.L154
 	cmp	r2, #0
-	bne	.L128
+	bne	.L150
 	mov	r1, #1
 	ldr	r2, [r4, #8]
 	rsb	r2, r2, #240
@@ -1307,77 +1441,102 @@ luffyUpdate:
 	ldrlt	r2, [r4, #20]
 	addlt	r3, r2, r3
 	strlt	r3, [r4]
-	b	.L130
-.L132:
+	b	.L152
+.L154:
 	cmp	r2, #0
-	beq	.L131
-.L128:
-	ldr	r6, .L167+16
+	beq	.L153
+.L150:
+	ldr	r6, .L194+16
 	ldrh	r3, [r6]
 	tst	r3, #1
-	beq	.L140
-.L146:
+	beq	.L162
+.L171:
 	tst	r5, #1
-	bne	.L139
+	bne	.L161
 	ldr	r3, [r4, #52]
 	cmp	r3, #1
-	beq	.L139
+	beq	.L161
 	mov	r3, #1
-	ldr	r2, .L167+20
+	ldr	r2, .L194+24
 	str	r3, [r4, #44]
 	str	r3, [r2]
-.L140:
+.L162:
 	bl	luffyPunching
-	b	.L162
-.L139:
+	b	.L188
+.L161:
 	ldr	r3, [r4, #44]
 	cmp	r3, #0
-	bne	.L140
-.L162:
+	bne	.L162
+.L188:
 	ldrh	r3, [r6]
 	tst	r3, #64
-	beq	.L143
-.L166:
+	beq	.L165
+.L193:
 	ldrh	r3, [r7]
 	ands	r3, r3, #64
-	bne	.L143
+	bne	.L165
 	mov	r2, #1
 	str	r3, [r4, #44]
 	str	r2, [r4, #52]
-.L144:
+.L166:
 	bl	luffyJumping
-.L145:
-	ldr	r3, [r4, #36]
-	sub	r3, r3, #1
-	str	r3, [r4, #36]
-	pop	{r4, r5, r6, r7, r8, lr}
-	bx	lr
-.L164:
+	ldr	r3, .L194+20
+	ldr	r1, [r3]
+	cmp	r1, #0
+	ble	.L170
+.L168:
+	ldr	r3, [r4]
+	add	r3, r3, #2
+	lsl	r3, r3, #16
+	ldr	lr, [r4, #4]
+	add	r1, r1, r1, lsl #2
+	lsr	r3, r3, #16
+	add	r1, r3, r1, lsl #1
+	lsl	r1, r1, #16
+	sub	lr, lr, #10
+	ldr	r2, .L194+28
+	ldr	r6, .L194+32
+	ldr	r5, .L194+36
+	lsr	r1, r1, #16
+	and	lr, lr, #255
+.L169:
+	add	ip, r3, #10
+	and	r0, r3, r6
+	lsl	r3, ip, #16
+	lsr	r3, r3, #16
+	cmp	r1, r3
+	strh	lr, [r2]	@ movhi
+	strh	r5, [r2, #4]	@ movhi
+	strh	r0, [r2, #2]	@ movhi
+	add	r2, r2, #8
+	bne	.L169
+	b	.L170
+.L191:
 	mov	r2, #10
 	ldr	r0, [r4, #32]
-	ldr	r3, .L167+24
+	ldr	r3, .L194+40
 	str	r2, [r4, #36]
 	ldr	r1, [r4, #28]
 	add	r0, r0, #1
 	mov	lr, pc
 	bx	r3
 	add	r3, r8, r6
-	ldr	r6, .L167+16
+	ldr	r6, .L194+16
 	lsl	r2, r1, #2
 	strh	r2, [r3, #4]	@ movhi
 	ldrh	r3, [r6]
 	tst	r3, #1
 	str	r1, [r4, #32]
-	beq	.L163
-	b	.L146
-.L137:
+	beq	.L189
+	b	.L171
+.L159:
 	movlt	r3, #10
 	strlt	r3, [r4, #36]
-	b	.L136
-.L165:
+	b	.L158
+.L192:
 	mov	r0, #10
 	ldr	r3, [r4, #32]
-	ldr	r2, .L167+28
+	ldr	r2, .L194+44
 	add	r3, r3, #1
 	smull	r1, r2, r3, r2
 	sub	r2, r2, r3, asr #31
@@ -1389,16 +1548,20 @@ luffyUpdate:
 	str	r2, [r4, #32]
 	strh	r1, [r3, #4]	@ movhi
 	str	r0, [r4, #36]
-	b	.L136
-.L168:
+	b	.L158
+.L195:
 	.align	2
-.L167:
+.L194:
 	.word	buttons
 	.word	luffy
 	.word	luffyFist
 	.word	shadowOAM
 	.word	oldButtons
+	.word	luffyLives
 	.word	luffyPunched
+	.word	shadowOAM+280
+	.word	511
+	.word	1006
 	.word	__aeabi_idivmod
 	.word	1431655766
 	.size	luffyUpdate, .-luffyUpdate
@@ -1413,54 +1576,54 @@ kaido1:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r3, .L171
+	ldr	r3, .L198
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L171+4
+	ldr	r4, .L198+4
 	bl	luffyUpdate
 	bl	kaidoUpdate
 	bl	fireballUpdate
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L171+8
+	ldr	r1, .L198+8
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L171+12
+	ldr	r1, .L198+12
 	mov	lr, pc
 	bx	r4
 	mov	r3, #256
 	mov	r2, #83886080
 	mov	r0, #3
-	ldr	r1, .L171+16
+	ldr	r1, .L198+16
 	mov	lr, pc
 	bx	r4
 	mov	r3, #1024
 	mov	r0, #3
-	ldr	r2, .L171+20
-	ldr	r1, .L171+24
+	ldr	r2, .L198+20
+	ldr	r1, .L198+24
 	mov	lr, pc
 	bx	r4
 	mov	r3, #256
 	mov	r0, #3
-	ldr	r2, .L171+28
-	ldr	r1, .L171+32
+	ldr	r2, .L198+28
+	ldr	r1, .L198+32
 	mov	lr, pc
 	bx	r4
 	mov	r3, #16384
 	mov	r0, #3
-	ldr	r2, .L171+36
-	ldr	r1, .L171+40
+	ldr	r2, .L198+36
+	ldr	r1, .L198+40
 	mov	lr, pc
 	bx	r4
 	pop	{r4, lr}
 	bx	lr
-.L172:
+.L199:
 	.align	2
-.L171:
+.L198:
 	.word	hideSprites
 	.word	DMANow
 	.word	shadowOAM
@@ -1484,52 +1647,52 @@ kaido2:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r3, .L175
-	ldr	r4, .L175+4
+	ldr	r3, .L202
+	ldr	r4, .L202+4
 	mov	lr, pc
 	bx	r3
 	bl	luffyUpdate
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L175+8
+	ldr	r1, .L202+8
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L175+12
+	ldr	r1, .L202+12
 	mov	lr, pc
 	bx	r4
 	mov	r3, #256
 	mov	r2, #83886080
 	mov	r0, #3
-	ldr	r1, .L175+16
+	ldr	r1, .L202+16
 	mov	lr, pc
 	bx	r4
 	mov	r3, #1024
 	mov	r0, #3
-	ldr	r2, .L175+20
-	ldr	r1, .L175+24
+	ldr	r2, .L202+20
+	ldr	r1, .L202+24
 	mov	lr, pc
 	bx	r4
 	mov	r3, #256
 	mov	r0, #3
-	ldr	r2, .L175+28
-	ldr	r1, .L175+32
+	ldr	r2, .L202+28
+	ldr	r1, .L202+32
 	mov	lr, pc
 	bx	r4
 	mov	r3, #16384
 	mov	r0, #3
-	ldr	r2, .L175+36
-	ldr	r1, .L175+40
+	ldr	r2, .L202+36
+	ldr	r1, .L202+40
 	mov	lr, pc
 	bx	r4
 	pop	{r4, lr}
 	bx	lr
-.L176:
+.L203:
 	.align	2
-.L175:
+.L202:
 	.word	hideSprites
 	.word	DMANow
 	.word	shadowOAM
@@ -1543,6 +1706,7 @@ kaido2:
 	.word	LuffyandKaidoSpritesTiles
 	.size	kaido2, .-kaido2
 	.global	SHADOW_OAM_AFF
+	.comm	rSeed,4,4
 	.global	kaidoWordOAMIndex
 	.comm	luffyPunched,4,4
 	.comm	kaidoHealth,4,4
@@ -1552,7 +1716,7 @@ kaido2:
 	.comm	STATE,1,1
 	.comm	soundEffect,28,4
 	.comm	song,28,4
-	.comm	fireball,36,4
+	.comm	fireball,44,4
 	.comm	kaido,52,4
 	.comm	luffyFist,20,4
 	.comm	luffy,64,4

@@ -13,6 +13,7 @@
 #include "LuffyandKaidoSprites.h"
 #include "digitalSound.h"
 #include "BinksBrew.h"
+#include <stdio.h>
 #include "loseScreen.h"
 
 // State Variable from main and enum
@@ -44,6 +45,7 @@ int luffyLives;
 int kaidoHealth;
 int luffyPunched;
 int kaidoWordOAMIndex = 19;
+int rSeed;
 
 typedef struct {
     unsigned short fill0[3];
@@ -71,6 +73,7 @@ void instructions() {
     DMANow(3, wanoInstructionsPal, BG_PALETTE, wanoInstructionsPalLen / 2);
     drawFullscreenImage4(wanoInstructionsBitmap);
     flipPage();
+    rSeed++;
 }
 
 void kaido1() {
@@ -139,6 +142,7 @@ void goToKaido1() {
     DMANow(3, shadowOAM, OAM, 512);
     initLuffy();
     initKaido();
+    srand(rSeed);
 }
 
 void goToKaido2() {
@@ -254,6 +258,13 @@ void luffyUpdate() {
 
     if (luffy.jumping) { // Call Luffy's jumping function
         luffyJumping();
+    }
+
+    // Display Luffy Life Hats 
+    for (int i = 0; i < luffyLives; i++) {
+        shadowOAM[35 + i].attr0 = ATTR0_SQUARE | ATTR0_Y(luffy.y - 10);
+        shadowOAM[35 + i].attr1 = ATTR1_TINY | ATTR1_X(luffy.x + 2 + (10 * i));
+        shadowOAM[35 + i].attr2 = ATTR2_TILEID(14, 31);
     }
 
     luffy.timeUntilNextFrame--;
@@ -430,6 +441,7 @@ void initKaido() {
     fireball.timeUntilNextFrame = 10;
     fireball.frame = 0;
     fireball.numFrames = 2;
+    fireball.timeUntilNextShot = 20;
 }
 
 void kaidoUpdate() {
@@ -448,13 +460,13 @@ void kaidoUpdate() {
     kaido.timeUntilNextFrame--;
 
     // Kaido Name
-    shadowOAM[kaidoWordOAMIndex].attr0 = ATTR0_WIDE | ATTR0_Y(0);
+    shadowOAM[kaidoWordOAMIndex].attr0 = ATTR0_WIDE | ATTR0_Y(2);
     shadowOAM[kaidoWordOAMIndex].attr1 = ATTR1_TINY | ATTR1_X(100);
     shadowOAM[kaidoWordOAMIndex].attr2 = ATTR2_TILEID(5, 31) | ATTR2_PALROW(1);
-    shadowOAM[kaidoWordOAMIndex + 1].attr0 = ATTR0_WIDE | ATTR0_Y(0);
+    shadowOAM[kaidoWordOAMIndex + 1].attr0 = ATTR0_WIDE | ATTR0_Y(2);
     shadowOAM[kaidoWordOAMIndex + 1].attr1 = ATTR1_TINY | ATTR1_X(116);
     shadowOAM[kaidoWordOAMIndex + 1].attr2 = ATTR2_TILEID(7, 31) | ATTR2_PALROW(1);
-    shadowOAM[kaidoWordOAMIndex + 2].attr0 = ATTR0_Y(0);
+    shadowOAM[kaidoWordOAMIndex + 2].attr0 = ATTR0_Y(2);
     shadowOAM[kaidoWordOAMIndex + 2].attr1 = ATTR1_TINY | ATTR1_X(132);
     shadowOAM[kaidoWordOAMIndex + 2].attr2 = ATTR2_TILEID(9, 31) | ATTR2_PALROW(1);
 
@@ -478,13 +490,8 @@ void kaidoUpdate() {
 }
 
 void fireballUpdate() {
-    shadowOAM[fireball.oamIndex].attr0 = ATTR0_WIDE | ATTR0_Y(fireball.y);
-    shadowOAM[fireball.oamIndex].attr1 = ATTR1_MEDIUM | ATTR1_X(fireball.x);
-    shadowOAM[fireball.oamIndex].attr2 = ATTR2_TILEID(28, fireball.frame * 2) | ATTR2_PALROW(1);
-    if (fireball.x > 240 + fireball.width) {
-        fireball.x = kaido.x + kaido.width * 2 - 25;
-    } else {
-        fireball.x += fireball.xVel;
+    if (fireball.shooting) {
+        shootFireball();
     }
 
     if ((fireball.timeUntilNextFrame == 0)) { 
@@ -495,8 +502,37 @@ void fireballUpdate() {
     }
     fireball.timeUntilNextFrame--;
 
-    if (fireballCollision()) {
-        // goToLose();
+    if (fireballCollision() && fireball.shooting) {
+        fireball.shooting = 0;
+        fireball.x = kaido.x + (kaido.width * 2) - 25;
+        luffyLives--;
+        if (luffyLives == 0) {
+            goToLose();
+        }
+    }
+    if (fireball.timeUntilNextShot == 0) {
+        fireball.shooting = 1;
+        fireball.timeUntilNextShot = rand() % 80;
+    } else if (fireball.timeUntilNextShot < 0) {
+        fireball.timeUntilNextShot = rand() % 80;
+    }
+    if (!fireball.shooting) {
+        fireball.timeUntilNextShot--;
+    }
+
+    mgba_printf("%d", fireball.timeUntilNextShot);
+    
+}
+
+void shootFireball() {
+    shadowOAM[fireball.oamIndex].attr0 = ATTR0_WIDE | ATTR0_Y(fireball.y);
+    shadowOAM[fireball.oamIndex].attr1 = ATTR1_MEDIUM | ATTR1_X(fireball.x);
+    shadowOAM[fireball.oamIndex].attr2 = ATTR2_TILEID(28, fireball.frame * 2) | ATTR2_PALROW(1);
+    if (fireball.x > 240 + fireball.width) {
+        fireball.shooting = 0;
+        fireball.x = kaido.x + kaido.width * 2 - 25;
+    } else {
+        fireball.x += fireball.xVel;
     }
 }
 

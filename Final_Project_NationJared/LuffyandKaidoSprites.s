@@ -16374,16 +16374,16 @@ LuffyandKaidoSpritesTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	28672
+	.short	7
+	.short	30464
+	.short	119
+	.short	30576
+	.short	1911
+	.short	-30592
+	.short	2184
+	.short	30583
+	.short	30583
 	.short	0
 	.short	0
 	.short	0
