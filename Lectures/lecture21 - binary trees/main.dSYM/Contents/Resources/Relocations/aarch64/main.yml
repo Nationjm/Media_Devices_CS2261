@@ -1,0 +1,15 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/jarednation/Downloads/GT_Fall_2023/Media_Devices_CS2261/Lectures/lecture21 - binary trees/main'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _newBST, symObjAddr: 0x0, symBinAddr: 0x1000037E8, symSize: 0x5C }
+  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _newBST, symObjAddr: 0x0, symBinAddr: 0x1000037E8, symSize: 0x5C }
+  - { offsetInCU: 0x69, offset: 0x69, size: 0x8, addend: 0x0, symName: _newNode, symObjAddr: 0x5C, symBinAddr: 0x100003844, symSize: 0x74 }
+  - { offsetInCU: 0x9F, offset: 0x9F, size: 0x8, addend: 0x0, symName: _addNode, symObjAddr: 0xD0, symBinAddr: 0x1000038B8, symSize: 0x108 }
+  - { offsetInCU: 0xD5, offset: 0xD5, size: 0x8, addend: 0x0, symName: _addNodeToTree, symObjAddr: 0x1D8, symBinAddr: 0x1000039C0, symSize: 0xA8 }
+  - { offsetInCU: 0x119, offset: 0x119, size: 0x8, addend: 0x0, symName: _printNode, symObjAddr: 0x280, symBinAddr: 0x100003A68, symSize: 0x178 }
+  - { offsetInCU: 0x19F, offset: 0x19F, size: 0x8, addend: 0x0, symName: _printTree, symObjAddr: 0x3F8, symBinAddr: 0x100003BE0, symSize: 0x64 }
+  - { offsetInCU: 0x1C3, offset: 0x1C3, size: 0x8, addend: 0x0, symName: _freeNode, symObjAddr: 0x45C, symBinAddr: 0x100003C44, symSize: 0x3C }
+  - { offsetInCU: 0x1E7, offset: 0x1E7, size: 0x8, addend: 0x0, symName: _freeTree, symObjAddr: 0x498, symBinAddr: 0x100003C80, symSize: 0x58 }
+  - { offsetInCU: 0x20B, offset: 0x20B, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x4F0, symBinAddr: 0x100003CD8, symSize: 0x140 }
+...
