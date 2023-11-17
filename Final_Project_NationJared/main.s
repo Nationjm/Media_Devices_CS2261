@@ -343,7 +343,7 @@ setupInterrupts:
 	.comm	oldButtons,2,2
 	.comm	soundEffect,28,4
 	.comm	song,28,4
-	.comm	fireball,36,4
+	.comm	fireball,44,4
 	.comm	kaido,52,4
 	.comm	luffyFist,20,4
 	.comm	luffy,64,4

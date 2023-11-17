@@ -1358,6 +1358,13 @@ extern const unsigned int BinksBrew_sampleRate;
 extern const unsigned int BinksBrew_length;
 extern const signed char BinksBrew_data[];
 # 9 "digitalSound.c" 2
+# 1 "DrumsOfLiberation.h" 1
+
+
+extern const unsigned int DrumsOfLiberation_sampleRate;
+extern const unsigned int DrumsOfLiberation_length;
+extern const signed char DrumsOfLiberation_data[];
+# 10 "digitalSound.c" 2
 
 
 extern unsigned short state;

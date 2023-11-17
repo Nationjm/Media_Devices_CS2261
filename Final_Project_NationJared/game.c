@@ -15,6 +15,7 @@
 #include "BinksBrew.h"
 #include <stdio.h>
 #include "loseScreen.h"
+#include "DrumsOfLiberation.h"
 
 // State Variable from main and enum
 extern unsigned short state;
@@ -143,6 +144,7 @@ void goToKaido1() {
     initLuffy();
     initKaido();
     srand(rSeed);
+    playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO1);
 }
 
 void goToKaido2() {

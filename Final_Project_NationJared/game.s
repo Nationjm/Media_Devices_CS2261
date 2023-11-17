@@ -644,22 +644,22 @@ goToKaido1:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	mov	ip, #2
-	mov	r1, #67108864
-	mov	r2, #4352
-	mov	r0, #7168
-	ldr	r3, .L80
-	push	{r4, lr}
-	strh	ip, [r3]	@ movhi
-	ldr	r4, .L80+4
+	push	{r4, r5, r6, lr}
+	mov	ip, #7168
+	mov	r4, #2
+	mov	r0, #67108864
+	mov	r1, #4352
+	ldr	r2, .L80
 	mov	r3, #512
-	strh	r2, [r1]	@ movhi
+	strh	r4, [r2]	@ movhi
+	ldr	r5, .L80+4
 	mov	r2, #117440512
-	strh	r0, [r1, #8]	@ movhi
-	mov	r0, #3
+	strh	r1, [r0]	@ movhi
+	strh	ip, [r0, #8]	@ movhi
 	ldr	r1, .L80+8
+	mov	r0, #3
 	mov	lr, pc
-	bx	r4
+	bx	r5
 	bl	initLuffy
 	bl	initKaido
 	ldr	r2, .L80+12
@@ -667,7 +667,14 @@ goToKaido1:
 	ldr	r0, [r2]
 	mov	lr, pc
 	bx	r3
-	pop	{r4, lr}
+	ldr	r3, .L80+20
+	mov	r2, r4
+	ldr	r1, [r3]
+	ldr	r0, .L80+24
+	ldr	r3, .L80+28
+	mov	lr, pc
+	bx	r3
+	pop	{r4, r5, r6, lr}
 	bx	lr
 .L81:
 	.align	2
@@ -677,6 +684,9 @@ goToKaido1:
 	.word	shadowOAM
 	.word	rSeed
 	.word	srand
+	.word	DrumsOfLiberation_length
+	.word	DrumsOfLiberation_data
+	.word	playSong
 	.size	goToKaido1, .-goToKaido1
 	.global	__aeabi_idivmod
 	.align	2

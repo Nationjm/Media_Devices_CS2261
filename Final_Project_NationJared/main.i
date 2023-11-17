@@ -324,6 +324,7 @@ void initKaido();
 void kaidoUpdate();
 
 void fireballUpdate();
+void shootFireball();
 
 
 int fireballCollision();
@@ -391,6 +392,8 @@ typedef struct {
     int timeUntilNextFrame;
     int numFrames;
     int frame;
+    int shooting;
+    int timeUntilNextShot;
     unsigned char oamIndex;
 } FIREBALL;
 FIREBALL fireball;
@@ -424,6 +427,13 @@ extern const unsigned int BinksBrew_sampleRate;
 extern const unsigned int BinksBrew_length;
 extern const signed char BinksBrew_data[];
 # 8 "main.c" 2
+# 1 "DrumsOfLiberation.h" 1
+
+
+extern const unsigned int DrumsOfLiberation_sampleRate;
+extern const unsigned int DrumsOfLiberation_length;
+extern const signed char DrumsOfLiberation_data[];
+# 9 "main.c" 2
 
 
 unsigned short oldButtons;

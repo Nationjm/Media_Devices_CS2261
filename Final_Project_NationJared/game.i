@@ -1347,6 +1347,13 @@ extern const unsigned short loseScreenBitmap[19200];
 
 extern const unsigned short loseScreenPal[256];
 # 18 "game.c" 2
+# 1 "DrumsOfLiberation.h" 1
+
+
+extern const unsigned int DrumsOfLiberation_sampleRate;
+extern const unsigned int DrumsOfLiberation_length;
+extern const signed char DrumsOfLiberation_data[];
+# 19 "game.c" 2
 
 
 extern unsigned short state;
@@ -1475,6 +1482,7 @@ void goToKaido1() {
     initLuffy();
     initKaido();
     srand(rSeed);
+    playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO1);
 }
 
 void goToKaido2() {

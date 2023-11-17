@@ -6,6 +6,7 @@
 #include "digitalSound.h"
 
 #include "BinksBrew.h"
+#include "DrumsOfLiberation.h"
 
 // State Variable from main and enum
 extern unsigned short state;

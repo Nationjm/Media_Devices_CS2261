@@ -5,6 +5,7 @@
 #include "game.h"
 #include "digitalSound.h"
 #include "BinksBrew.h"
+#include "DrumsOfLiberation.h"
 
 // button variables
 unsigned short oldButtons;
