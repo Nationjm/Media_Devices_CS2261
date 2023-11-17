@@ -141,7 +141,18 @@ pause:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r3, .L20
+	mov	r2, #83886080
+	ldr	r1, .L20
+	mov	r3, #256
+	mov	r0, #3
+	ldr	r4, .L20+4
+	mov	lr, pc
+	bx	r4
+	ldr	r0, .L20+8
+	ldr	r3, .L20+12
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L20+16
 	mov	lr, pc
 	bx	r3
 	pop	{r4, lr}
@@ -149,6 +160,10 @@ pause:
 .L21:
 	.align	2
 .L20:
+	.word	PauseScreenPal
+	.word	DMANow
+	.word	PauseScreenBitmap
+	.word	drawFullscreenImage4
 	.word	flipPage
 	.size	pause, .-pause
 	.align	2
@@ -264,6 +279,58 @@ goToInstructions:
 	.word	state
 	.size	goToInstructions, .-goToInstructions
 	.align	2
+	.global	goToKaido1
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	goToKaido1, %function
+goToKaido1:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, lr}
+	mov	ip, #7168
+	mov	r4, #2
+	mov	r0, #67108864
+	mov	r1, #4352
+	ldr	r2, .L38
+	mov	r3, #512
+	strh	r4, [r2]	@ movhi
+	ldr	r5, .L38+4
+	strh	r1, [r0]	@ movhi
+	mov	r2, #117440512
+	strh	ip, [r0, #8]	@ movhi
+	ldr	r1, .L38+8
+	mov	r0, #3
+	mov	lr, pc
+	bx	r5
+	ldr	r2, .L38+12
+	ldr	r3, .L38+16
+	ldr	r0, [r2]
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L38+20
+	mov	r2, r4
+	ldr	r1, [r3]
+	ldr	r0, .L38+24
+	ldr	r3, .L38+28
+	mov	lr, pc
+	bx	r3
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L39:
+	.align	2
+.L38:
+	.word	state
+	.word	DMANow
+	.word	shadowOAM
+	.word	rSeed
+	.word	srand
+	.word	DrumsOfLiberation_length
+	.word	DrumsOfLiberation_data
+	.word	playSong
+	.size	goToKaido1, .-goToKaido1
+	.align	2
 	.global	goToKaido2
 	.syntax unified
 	.arm
@@ -275,12 +342,12 @@ goToKaido2:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r2, #3
-	ldr	r3, .L37
+	ldr	r3, .L41
 	strh	r2, [r3]	@ movhi
 	bx	lr
-.L38:
+.L42:
 	.align	2
-.L37:
+.L41:
 	.word	state
 	.size	goToKaido2, .-goToKaido2
 	.align	2
@@ -295,12 +362,12 @@ goToBigMom1:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r2, #4
-	ldr	r3, .L40
+	ldr	r3, .L44
 	strh	r2, [r3]	@ movhi
 	bx	lr
-.L41:
+.L45:
 	.align	2
-.L40:
+.L44:
 	.word	state
 	.size	goToBigMom1, .-goToBigMom1
 	.align	2
@@ -315,12 +382,12 @@ goToBigMom2:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r2, #5
-	ldr	r3, .L43
+	ldr	r3, .L47
 	strh	r2, [r3]	@ movhi
 	bx	lr
-.L44:
+.L48:
 	.align	2
-.L43:
+.L47:
 	.word	state
 	.size	goToBigMom2, .-goToBigMom2
 	.align	2
@@ -336,14 +403,14 @@ goToPause:
 	@ link register save eliminated.
 	mov	r0, #6
 	mov	r3, #67108864
-	ldr	r1, .L46
-	ldr	r2, .L46+4
+	ldr	r1, .L50
+	ldr	r2, .L50+4
 	strh	r0, [r1]	@ movhi
 	strh	r2, [r3]	@ movhi
 	bx	lr
-.L47:
+.L51:
 	.align	2
-.L46:
+.L50:
 	.word	state
 	.word	1044
 	.size	goToPause, .-goToPause
@@ -360,21 +427,21 @@ goToWin:
 	mov	r2, #7
 	mov	r1, #67108864
 	push	{r4, lr}
-	ldr	ip, .L50
-	ldr	r0, .L50+4
-	ldr	r3, .L50+8
+	ldr	ip, .L54
+	ldr	r0, .L54+4
+	ldr	r3, .L54+8
 	strh	r2, [ip]	@ movhi
 	strh	r0, [r1]	@ movhi
 	ldr	r1, [r3]
-	ldr	r0, .L50+12
-	ldr	r3, .L50+16
+	ldr	r0, .L54+12
+	ldr	r3, .L54+16
 	mov	lr, pc
 	bx	r3
 	pop	{r4, lr}
 	bx	lr
-.L51:
+.L55:
 	.align	2
-.L50:
+.L54:
 	.word	state
 	.word	1044
 	.word	BinksBrew_length
@@ -394,14 +461,14 @@ goToLose:
 	@ link register save eliminated.
 	mov	r0, #8
 	mov	r3, #67108864
-	ldr	r1, .L53
-	ldr	r2, .L53+4
+	ldr	r1, .L57
+	ldr	r2, .L57+4
 	strh	r0, [r1]	@ movhi
 	strh	r2, [r3]	@ movhi
 	bx	lr
-.L54:
+.L58:
 	.align	2
-.L53:
+.L57:
 	.word	state
 	.word	1044
 	.size	goToLose, .-goToLose
@@ -421,9 +488,9 @@ initLuffy:
 	mov	fp, #110
 	mov	ip, #126
 	mov	r2, #0
-	ldr	r3, .L57
+	ldr	r3, .L61
 	str	lr, [r3, #56]
-	ldr	lr, .L57+4
+	ldr	lr, .L61+4
 	stm	r3, {r0, fp}
 	mov	r10, #2
 	mov	r9, #44
@@ -433,7 +500,7 @@ initLuffy:
 	mov	r5, #4
 	mov	r4, #22
 	stm	lr, {r0, ip}
-	ldr	r0, .L57+8
+	ldr	r0, .L61+8
 	strb	r2, [r3, #60]
 	mov	r1, #8
 	str	r2, [r3, #40]
@@ -450,15 +517,15 @@ initLuffy:
 	str	r6, [r3, #36]
 	str	r5, [r3, #28]
 	str	r4, [r3, #48]
-	ldr	r3, .L57+12
+	ldr	r3, .L61+12
 	str	r1, [lr, #12]
 	str	r1, [lr, #8]
 	str	r2, [r3]
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L58:
+.L62:
 	.align	2
-.L57:
+.L61:
 	.word	luffy
 	.word	luffyFist
 	.word	luffyPunched
@@ -474,7 +541,7 @@ luffyJumping:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L72
+	ldr	r3, .L76
 	push	{r4, r5, r6, r7, lr}
 	ldr	r4, [r3, #4]
 	and	r5, r4, #255
@@ -483,7 +550,7 @@ luffyJumping:
 	ldr	r0, [r3]
 	ldrb	ip, [r3, #60]	@ zero_extendqisi2
 	ldr	r6, [r3, #40]
-	ldr	r2, .L72+4
+	ldr	r2, .L76+4
 	lsl	r0, r0, #23
 	cmp	r6, #1
 	lsr	r0, r0, #23
@@ -497,7 +564,7 @@ luffyJumping:
 	ldr	lr, [r3, #56]
 	sub	ip, lr, #71
 	cmp	ip, #13
-	bhi	.L61
+	bhi	.L65
 	mov	r5, #268
 	ldr	r0, [r3, #24]
 	add	r2, r2, r1
@@ -505,14 +572,14 @@ luffyJumping:
 	strh	r5, [r2, #4]	@ movhi
 	str	r4, [r3, #4]
 	sub	ip, lr, #1
-.L66:
+.L70:
 	str	ip, [r3, #56]
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
-.L61:
+.L65:
 	sub	ip, lr, #36
 	cmp	ip, #33
-	bhi	.L63
+	bhi	.L67
 	cmp	r6, #1
 	add	ip, r2, r1
 	orreq	r0, r0, #53248
@@ -530,10 +597,10 @@ luffyJumping:
 	str	ip, [r3, #56]
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
-.L63:
+.L67:
 	sub	ip, lr, #1
 	cmp	ip, #33
-	bhi	.L67
+	bhi	.L71
 	ldr	r4, [r3, #4]
 	and	lr, r4, #255
 	mvn	lr, lr, lsl #17
@@ -548,14 +615,14 @@ luffyJumping:
 	add	r2, r2, r1
 	cmp	r4, #109
 	strh	r0, [r2, #4]	@ movhi
-	bgt	.L66
+	bgt	.L70
 	ldr	r2, [r3, #24]
 	add	r4, r4, r2, lsl #1
 	str	r4, [r3, #4]
 	str	ip, [r3, #56]
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
-.L67:
+.L71:
 	cmp	lr, #0
 	movlt	r1, #0
 	movlt	r2, #1
@@ -565,9 +632,9 @@ luffyJumping:
 	str	ip, [r3, #56]
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
-.L73:
+.L77:
 	.align	2
-.L72:
+.L76:
 	.word	luffy
 	.word	shadowOAM
 	.size	luffyJumping, .-luffyJumping
@@ -584,9 +651,9 @@ initKaido:
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	mov	r6, #30
 	mov	r1, #1
-	ldr	r3, .L76
+	ldr	r3, .L80
 	str	r6, [r3, #32]
-	ldr	r6, .L76+4
+	ldr	r6, .L80+4
 	str	r1, [r3, #36]
 	str	r1, [r3, #20]
 	str	r1, [r6, #16]
@@ -608,7 +675,7 @@ initKaido:
 	mov	r0, #10
 	strb	r1, [r6, #40]
 	strb	r7, [r3, #48]
-	ldr	r1, .L76+8
+	ldr	r1, .L80+8
 	str	fp, [r3]
 	str	r10, [r3, #4]
 	str	r9, [r3, #12]
@@ -627,67 +694,13 @@ initKaido:
 	str	r0, [r1]
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L77:
+.L81:
 	.align	2
-.L76:
+.L80:
 	.word	kaido
 	.word	fireball
 	.word	kaidoHealth
 	.size	initKaido, .-initKaido
-	.align	2
-	.global	goToKaido1
-	.syntax unified
-	.arm
-	.fpu softvfp
-	.type	goToKaido1, %function
-goToKaido1:
-	@ Function supports interworking.
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, r5, r6, lr}
-	mov	ip, #7168
-	mov	r4, #2
-	mov	r0, #67108864
-	mov	r1, #4352
-	ldr	r2, .L80
-	mov	r3, #512
-	strh	r4, [r2]	@ movhi
-	ldr	r5, .L80+4
-	mov	r2, #117440512
-	strh	r1, [r0]	@ movhi
-	strh	ip, [r0, #8]	@ movhi
-	ldr	r1, .L80+8
-	mov	r0, #3
-	mov	lr, pc
-	bx	r5
-	bl	initLuffy
-	bl	initKaido
-	ldr	r2, .L80+12
-	ldr	r3, .L80+16
-	ldr	r0, [r2]
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L80+20
-	mov	r2, r4
-	ldr	r1, [r3]
-	ldr	r0, .L80+24
-	ldr	r3, .L80+28
-	mov	lr, pc
-	bx	r3
-	pop	{r4, r5, r6, lr}
-	bx	lr
-.L81:
-	.align	2
-.L80:
-	.word	state
-	.word	DMANow
-	.word	shadowOAM
-	.word	rSeed
-	.word	srand
-	.word	DrumsOfLiberation_length
-	.word	DrumsOfLiberation_data
-	.word	playSong
-	.size	goToKaido1, .-goToKaido1
 	.global	__aeabi_idivmod
 	.align	2
 	.global	kaidoUpdate

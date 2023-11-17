@@ -55,6 +55,8 @@ int main() {
                 instructions();
                 if (BUTTON_PRESSED(BUTTON_START)) {
                     goToKaido1();
+                    initLuffy();
+                    initKaido();
                 }
                 break;
             case PAUSE:

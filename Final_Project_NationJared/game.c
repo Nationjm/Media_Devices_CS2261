@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include "loseScreen.h"
 #include "DrumsOfLiberation.h"
+#include "PauseScreen.h"
 
 // State Variable from main and enum
 extern unsigned short state;
@@ -111,6 +112,8 @@ void bigMom2() {
 }
 
 void pause() {
+    DMANow(3, PauseScreenPal, BG_PALETTE, PauseScreenPalLen / 2);
+    drawFullscreenImage4(PauseScreenBitmap);
     flipPage();
 }
 
@@ -141,8 +144,6 @@ void goToKaido1() {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(28);
     DMANow(3, shadowOAM, OAM, 512);
-    initLuffy();
-    initKaido();
     srand(rSeed);
     playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO1);
 }

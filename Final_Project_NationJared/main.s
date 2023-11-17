@@ -174,18 +174,18 @@ main:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r7, fp, lr}
-	ldr	r4, .L43
-	ldr	r3, .L43+4
+	ldr	r4, .L42
+	ldr	r3, .L42+4
 	mov	lr, pc
 	bx	r3
-	ldr	r5, .L43+8
+	ldr	r5, .L42+8
 	ldrh	r3, [r4]
-	ldr	r8, .L43+12
-	ldr	r7, .L43+16
-	ldr	fp, .L43+20
-	ldr	r10, .L43+24
-	ldr	r9, .L43+28
-	ldr	r6, .L43+32
+	ldr	r8, .L42+12
+	ldr	r7, .L42+16
+	ldr	fp, .L42+20
+	ldr	r10, .L42+24
+	ldr	r9, .L42+28
+	ldr	r6, .L42+32
 .L31:
 	strh	r3, [r5]	@ movhi
 	ldrh	r3, [r6, #48]
@@ -207,7 +207,7 @@ main:
 	.word	.L26
 	.word	.L24
 .L26:
-	ldr	r3, .L43+36
+	ldr	r3, .L42+36
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
@@ -217,7 +217,7 @@ main:
 	ldrh	r3, [r4]
 	b	.L31
 .L24:
-	ldr	r3, .L43+40
+	ldr	r3, .L42+40
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
@@ -227,7 +227,7 @@ main:
 	ldrh	r3, [r4]
 	tst	r3, #8
 	bne	.L31
-	ldr	r3, .L43+44
+	ldr	r3, .L42+44
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
@@ -241,14 +241,13 @@ main:
 	ldrh	r3, [r4]
 	tst	r3, #4
 	bne	.L31
-.L41:
-	ldr	r3, .L43+48
+	ldr	r3, .L42+48
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
 	b	.L31
 .L28:
-	ldr	r3, .L43+52
+	ldr	r3, .L42+52
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
@@ -257,7 +256,7 @@ main:
 	ldrh	r3, [r4]
 	tst	r3, #4
 	bne	.L31
-	ldr	r3, .L43+56
+	ldr	r3, .L42+56
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
@@ -271,7 +270,17 @@ main:
 	ldrh	r3, [r4]
 	tst	r3, #8
 	bne	.L31
-	b	.L41
+	ldr	r3, .L42+48
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L42+60
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L42+64
+	mov	lr, pc
+	bx	r3
+	ldrh	r3, [r4]
+	b	.L31
 .L30:
 	mov	lr, pc
 	bx	fp
@@ -281,14 +290,14 @@ main:
 	ldrh	r3, [r4]
 	tst	r3, #8
 	bne	.L31
-	ldr	r3, .L43+60
+	ldr	r3, .L42+68
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
 	b	.L31
-.L44:
-	.align	2
 .L43:
+	.align	2
+.L42:
 	.word	buttons
 	.word	initialize
 	.word	oldButtons
@@ -304,6 +313,8 @@ main:
 	.word	goToKaido1
 	.word	kaido1
 	.word	goToPause
+	.word	initLuffy
+	.word	initKaido
 	.word	goToInstructions
 	.size	main, .-main
 	.text
@@ -321,18 +332,18 @@ setupInterrupts:
 	mov	r2, #1
 	mov	lr, #8
 	mov	ip, #67108864
-	ldr	r3, .L47
-	ldr	r1, .L47+4
-	ldr	r0, .L47+8
+	ldr	r3, .L46
+	ldr	r1, .L46+4
+	ldr	r0, .L46+8
 	strh	r2, [r3]	@ movhi
 	strh	r2, [r3, #8]	@ movhi
 	strh	lr, [ip, #4]	@ movhi
 	str	r0, [r1, #4092]
 	ldr	lr, [sp], #4
 	bx	lr
-.L48:
-	.align	2
 .L47:
+	.align	2
+.L46:
 	.word	67109376
 	.word	50360320
 	.word	interruptHandler

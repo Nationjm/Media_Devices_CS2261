@@ -1354,6 +1354,13 @@ extern const unsigned int DrumsOfLiberation_sampleRate;
 extern const unsigned int DrumsOfLiberation_length;
 extern const signed char DrumsOfLiberation_data[];
 # 19 "game.c" 2
+# 1 "PauseScreen.h" 1
+# 21 "PauseScreen.h"
+extern const unsigned short PauseScreenBitmap[19200];
+
+
+extern const unsigned short PauseScreenPal[256];
+# 20 "game.c" 2
 
 
 extern unsigned short state;
@@ -1449,6 +1456,8 @@ void bigMom2() {
 }
 
 void pause() {
+    DMANow(3, PauseScreenPal, ((unsigned short*) 0x05000000), 512 / 2);
+    drawFullscreenImage4(PauseScreenBitmap);
     flipPage();
 }
 
@@ -1479,8 +1488,6 @@ void goToKaido1() {
     (*(volatile unsigned short*) 0x04000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x04000008) = ((0) << 2) | ((28) << 8);
     DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
-    initLuffy();
-    initKaido();
     srand(rSeed);
     playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO1);
 }
