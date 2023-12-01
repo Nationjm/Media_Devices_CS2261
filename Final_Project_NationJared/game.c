@@ -17,6 +17,9 @@
 #include "loseScreen.h"
 #include "DrumsOfLiberation.h"
 #include "PauseScreen.h"
+#include "LuffyPunchSound.h"
+#include "Clouds.h"
+#include "MovingMountains.h"
 
 // State Variable from main and enum
 extern unsigned short state;
@@ -48,6 +51,13 @@ int kaidoHealth;
 int luffyPunched;
 int kaidoWordOAMIndex = 19;
 int rSeed;
+int punchDamage = 1;
+
+
+// Background offset variables
+int offVariable = 0;
+int vOff;
+int hOff;
 
 typedef struct {
     unsigned short fill0[3];
@@ -84,12 +94,12 @@ void kaido1() {
     kaidoUpdate();
     fireballUpdate();
     DMANow(3, shadowOAM, OAM, 512);
-    DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &CHARBLOCK[0], Rooftop_Ground_TilesetBitmapTilesLen / 2);
-    DMANow(3, Rooftop_Ground_TilesetBitmapPal, BG_PALETTE, 256);
-    DMANow(3, RooftopGroundBackgroundMap, &SCREENBLOCK[28], RooftopGroundBackgroundMapLen / 2);
-    DMANow(3, LuffyandKaidoSpritesPal, SPRITE_PALETTE, 256);
-    DMANow(3, LuffyandKaidoSpritesTiles, &CHARBLOCK[4], LuffyandKaidoSpritesTilesLen / 2);
-    
+    if (offVariable % 2 == 0) {
+        hOff++;
+    }
+    offVariable++;
+    REG_BG1HOFF = hOff;
+    REG_BG2HOFF = hOff * 2;
 }
 
 void kaido2() {
@@ -141,11 +151,21 @@ void goToInstructions() {
 
 void goToKaido1() {
     state = KAIDO1;
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE | BG_ENABLE(1) | BG_ENABLE(2);
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(28);
+    REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(16) | BG_SIZE_WIDE;
+    REG_BG2CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(8) | BG_SIZE_WIDE;
     DMANow(3, shadowOAM, OAM, 512);
     srand(rSeed);
     playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO1);
+    DMANow(3, LuffyandKaidoSpritesPal, SPRITE_PALETTE, 256);
+
+    DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &CHARBLOCK[0], Rooftop_Ground_TilesetBitmapTilesLen / 2);
+    DMANow(3, Rooftop_Ground_TilesetBitmapPal, BG_PALETTE, 256);
+    DMANow(3, RooftopGroundBackgroundMap, &SCREENBLOCK[28], RooftopGroundBackgroundMapLen / 2);
+    DMANow(3, LuffyandKaidoSpritesTiles, &CHARBLOCK[4], LuffyandKaidoSpritesTilesLen / 2);
+    DMANow(3, MovingMountainsMap, &SCREENBLOCK[16], MovingMountainsMapLen / 2);
+    DMANow(3, CloudsMap, &SCREENBLOCK[8], CloudsMapLen / 2);
 }
 
 void goToKaido2() {
@@ -365,10 +385,11 @@ void luffyPunching() { // Handle animating Luffy while his punching variable is 
 
     if (punchCollision() & (luffyPunched == 1)) {
         luffyPunched = 0;
-        kaidoHealth--;
+        playSoundEffect(LuffyPunchSound_data, LuffyPunchSound_length);
+        kaidoHealth -= punchDamage;
     }
 
-    if (kaidoHealth == 0) {
+    if (kaidoHealth == 0 || kaidoHealth < 0) {
         goToWin();
     }
   
@@ -415,6 +436,12 @@ void luffyJumping() {
     }
 
     luffy.jumpingTime--;
+}
+
+void gearFive() {
+    SPRITE_PALETTE[8] = RGB(31, 31, 31);
+    SPRITE_PALETTE[12] = RGB(31, 31, 31);
+    punchDamage = 2;
 }
 
 // Kaido Functions

@@ -1,3 +1,9 @@
+/*
+    Currently 
+*/
+
+
+
 #include "gba.h"
 #include "mode0.h"
 #include "sprites.h"
@@ -70,6 +76,10 @@ int main() {
                 if (BUTTON_PRESSED(BUTTON_SELECT)) {
                     goToPause();
                 }
+
+                if (BUTTON_PRESSED(BUTTON_LSHOULDER) && BUTTON_PRESSED(BUTTON_RSHOULDER)) {
+                    gearFive();
+                }
                 break;
             case WIN:
                 win();
@@ -133,12 +143,16 @@ void interruptHandler() {
             if (!(state == song.state)) {
                 stopSong();
             }
-        } else if (soundEffect.isPlaying) {
+        } 
+        if (soundEffect.isPlaying) {
             soundEffect.vBlankCount++;
             if (soundEffect.vBlankCount >= soundEffect.durationInVBlanks) {
                 soundEffect.isPlaying = 0;
                 dma[2].cnt = 0;
                 REG_TM1CNT = TIMER_OFF;
+            }
+            if (!(state == KAIDO1)) {
+                stopSoundEffect();
             }
         }
     } 

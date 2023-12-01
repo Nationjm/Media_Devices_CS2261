@@ -22,84 +22,100 @@ interruptHandler:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	mov	r2, #0
-	ldr	r3, .L15
+	ldr	r3, .L23
 	ldrh	r1, [r3, #2]
 	tst	r1, #1
 	push	{r4, lr}
 	strh	r2, [r3, #8]	@ movhi
 	beq	.L3
-	ldr	r4, .L15+4
+	ldr	r4, .L23+4
 	ldr	r3, [r4, #8]
 	cmp	r3, r2
-	beq	.L4
+	beq	.L5
 	ldr	r3, [r4, #24]
 	ldr	r2, [r4, #16]
 	add	r3, r3, #1
 	cmp	r3, r2
 	str	r3, [r4, #24]
-	blt	.L5
+	blt	.L6
 	ldr	r3, [r4, #12]
 	cmp	r3, #0
-	bne	.L13
-	ldr	r1, .L15+8
-	ldr	r2, .L15+12
+	bne	.L19
+	ldr	r1, .L23+8
+	ldr	r2, .L23+12
 	ldr	r1, [r1]
 	str	r3, [r4, #8]
 	str	r3, [r1, #20]
 	strh	r3, [r2, #2]	@ movhi
-.L5:
-	ldr	r3, .L15+16
+.L6:
+	ldr	r3, .L23+16
 	ldr	r2, [r4, #20]
 	ldr	r3, [r3]
 	cmp	r2, r3
-	bne	.L14
+	bne	.L20
+.L5:
+	ldr	r3, .L23+20
+	ldr	r2, [r3, #8]
+	cmp	r2, #0
+	beq	.L3
+.L22:
+	ldr	r2, [r3, #24]
+	ldr	r1, [r3, #16]
+	add	r2, r2, #1
+	cmp	r2, r1
+	str	r2, [r3, #24]
+	blt	.L10
+	mov	r2, #0
+	ldr	r0, .L23+8
+	ldr	r1, .L23+12
+	ldr	r0, [r0]
+	str	r2, [r3, #8]
+	str	r2, [r0, #32]
+	strh	r2, [r1, #6]	@ movhi
+.L10:
+	ldr	r3, .L23+16
+	ldr	r3, [r3]
+	cmp	r3, #2
+	bne	.L21
 .L3:
 	mov	r1, #1
-	ldr	r3, .L15
+	ldr	r3, .L23
 	ldrh	r2, [r3, #2]
 	strh	r1, [r3, #8]	@ movhi
 	strh	r2, [r3, #2]	@ movhi
 	pop	{r4, lr}
 	bx	lr
-.L4:
-	ldr	r2, .L15+20
-	ldr	r1, [r2, #8]
-	cmp	r1, #0
-	beq	.L3
-	ldr	r1, [r2, #24]
-	ldr	r0, [r2, #16]
-	add	r1, r1, #1
-	cmp	r1, r0
-	str	r1, [r2, #24]
-	blt	.L3
-	ldr	r0, .L15+8
-	ldr	r1, .L15+12
-	ldr	r0, [r0]
-	str	r3, [r2, #8]
-	str	r3, [r0, #32]
-	strh	r3, [r1, #6]	@ movhi
-	b	.L3
-.L14:
-	ldr	r3, .L15+24
+.L21:
+	ldr	r3, .L23+24
 	mov	lr, pc
 	bx	r3
 	b	.L3
-.L13:
+.L20:
+	ldr	r3, .L23+28
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L23+20
+	ldr	r2, [r3, #8]
+	cmp	r2, #0
+	beq	.L3
+	b	.L22
+.L19:
 	mov	r2, #7
 	ldm	r4, {r0, r1}
-	ldr	r3, .L15+28
+	ldr	r3, .L23+32
 	mov	lr, pc
 	bx	r3
-	b	.L5
-.L16:
+	b	.L6
+.L24:
 	.align	2
-.L15:
+.L23:
 	.word	67109376
 	.word	song
 	.word	dma
 	.word	67109120
 	.word	state
 	.word	soundEffect
+	.word	stopSoundEffect
 	.word	stopSong
 	.word	playSong
 	.size	interruptHandler, .-interruptHandler
@@ -116,39 +132,39 @@ initialize:
 	push	{r4, r5, r6, lr}
 	mov	r5, #67108864
 	mov	r4, #0
-	ldr	r3, .L19
+	ldr	r3, .L27
 	mov	lr, pc
 	bx	r3
-	ldr	r2, .L19+4
-	ldr	r3, .L19+8
+	ldr	r2, .L27+4
+	ldr	r3, .L27+8
 	strh	r2, [r5]	@ movhi
-	ldr	r1, .L19+12
+	ldr	r1, .L27+12
 	ldrh	r0, [r3, #48]
-	ldr	r2, .L19+16
-	ldr	r3, .L19+20
+	ldr	r2, .L27+16
+	ldr	r3, .L27+20
 	strh	r0, [r1]	@ movhi
 	strh	r4, [r2]	@ movhi
 	mov	lr, pc
 	bx	r3
 	mov	r1, #8
 	mov	r2, #1
-	ldr	r3, .L19+24
-	ldr	r0, .L19+28
-	ldr	ip, .L19+32
+	ldr	r3, .L27+24
+	ldr	r0, .L27+28
+	ldr	ip, .L27+32
 	strh	r1, [r5, #4]	@ movhi
-	ldr	r1, .L19+36
+	ldr	r1, .L27+36
 	strh	r2, [r3]	@ movhi
 	strh	r2, [r3, #8]	@ movhi
 	str	ip, [r0, #4092]
-	ldr	r3, .L19+40
+	ldr	r3, .L27+40
 	str	r4, [r1]
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L20:
+.L28:
 	.align	2
-.L19:
+.L27:
 	.word	mgba_open
 	.word	1044
 	.word	67109120
@@ -174,19 +190,19 @@ main:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r7, fp, lr}
-	ldr	r4, .L42
-	ldr	r3, .L42+4
+	ldr	r4, .L58
+	ldr	r3, .L58+4
 	mov	lr, pc
 	bx	r3
-	ldr	r5, .L42+8
+	ldr	r5, .L58+8
 	ldrh	r3, [r4]
-	ldr	r8, .L42+12
-	ldr	r7, .L42+16
-	ldr	fp, .L42+20
-	ldr	r10, .L42+24
-	ldr	r9, .L42+28
-	ldr	r6, .L42+32
-.L31:
+	ldr	r8, .L58+12
+	ldr	r7, .L58+16
+	ldr	fp, .L58+20
+	ldr	r10, .L58+24
+	ldr	r9, .L58+28
+	ldr	r6, .L58+32
+.L39:
 	strh	r3, [r5]	@ movhi
 	ldrh	r3, [r6, #48]
 	strh	r3, [r4]	@ movhi
@@ -195,109 +211,123 @@ main:
 	ldr	r3, [r7]
 	cmp	r3, #8
 	ldrls	pc, [pc, r3, asl #2]
-	b	.L32
-.L25:
-	.word	.L30
-	.word	.L29
-	.word	.L28
+	b	.L40
+.L33:
+	.word	.L38
+	.word	.L37
+	.word	.L36
+	.word	.L40
+	.word	.L40
+	.word	.L40
+	.word	.L35
+	.word	.L34
 	.word	.L32
-	.word	.L32
-	.word	.L32
-	.word	.L27
-	.word	.L26
-	.word	.L24
-.L26:
-	ldr	r3, .L42+36
+.L34:
+	ldr	r3, .L58+36
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
 	tst	r3, #8
-	bne	.L38
+	bne	.L47
+.L40:
+	ldrh	r3, [r4]
+	b	.L39
 .L32:
-	ldrh	r3, [r4]
-	b	.L31
-.L24:
-	ldr	r3, .L42+40
+	ldr	r3, .L58+40
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
 	tst	r3, #8
-	beq	.L32
-.L38:
+	beq	.L40
+.L47:
 	ldrh	r3, [r4]
 	tst	r3, #8
-	bne	.L31
-	ldr	r3, .L42+44
+	bne	.L39
+	ldr	r3, .L58+44
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
-	b	.L31
-.L27:
+	b	.L39
+.L35:
 	mov	lr, pc
 	bx	r9
 	ldrh	r3, [r5]
 	tst	r3, #4
-	beq	.L32
+	beq	.L40
 	ldrh	r3, [r4]
 	tst	r3, #4
-	bne	.L31
-	ldr	r3, .L42+48
+	bne	.L39
+	ldr	r3, .L58+48
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
-	b	.L31
-.L28:
-	ldr	r3, .L42+52
+	b	.L39
+.L36:
+	ldr	r3, .L58+52
 	mov	lr, pc
 	bx	r3
-	ldrh	r3, [r5]
-	tst	r3, #4
-	beq	.L32
+	ldrh	r2, [r5]
+	tst	r2, #4
 	ldrh	r3, [r4]
+	beq	.L45
 	tst	r3, #4
-	bne	.L31
-	ldr	r3, .L42+56
+	beq	.L57
+.L45:
+	tst	r2, #512
+	beq	.L39
+	tst	r2, #256
+	beq	.L39
+	tst	r3, #768
+	bne	.L39
+	ldr	r3, .L58+56
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
-	b	.L31
-.L29:
+	b	.L39
+.L37:
 	mov	lr, pc
 	bx	r10
 	ldrh	r3, [r5]
 	tst	r3, #8
-	beq	.L32
+	beq	.L40
 	ldrh	r3, [r4]
 	tst	r3, #8
-	bne	.L31
-	ldr	r3, .L42+48
+	bne	.L39
+	ldr	r3, .L58+48
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L42+60
+	ldr	r3, .L58+60
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L42+64
+	ldr	r3, .L58+64
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
-	b	.L31
-.L30:
+	b	.L39
+.L38:
 	mov	lr, pc
 	bx	fp
 	ldrh	r3, [r5]
 	tst	r3, #8
-	beq	.L32
+	beq	.L40
 	ldrh	r3, [r4]
 	tst	r3, #8
-	bne	.L31
-	ldr	r3, .L42+68
+	bne	.L39
+	ldr	r3, .L58+68
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
-	b	.L31
-.L43:
+	b	.L39
+.L57:
+	ldr	r3, .L58+72
+	mov	lr, pc
+	bx	r3
+	ldrh	r2, [r5]
+	ldrh	r3, [r4]
+	b	.L45
+.L59:
 	.align	2
-.L42:
+.L58:
 	.word	buttons
 	.word	initialize
 	.word	oldButtons
@@ -312,10 +342,11 @@ main:
 	.word	goToStart
 	.word	goToKaido1
 	.word	kaido1
-	.word	goToPause
+	.word	gearFive
 	.word	initLuffy
 	.word	initKaido
 	.word	goToInstructions
+	.word	goToPause
 	.size	main, .-main
 	.text
 	.align	2
@@ -332,18 +363,18 @@ setupInterrupts:
 	mov	r2, #1
 	mov	lr, #8
 	mov	ip, #67108864
-	ldr	r3, .L46
-	ldr	r1, .L46+4
-	ldr	r0, .L46+8
+	ldr	r3, .L62
+	ldr	r1, .L62+4
+	ldr	r0, .L62+8
 	strh	r2, [r3]	@ movhi
 	strh	r2, [r3, #8]	@ movhi
 	strh	lr, [ip, #4]	@ movhi
 	str	r0, [r1, #4092]
 	ldr	lr, [sp], #4
 	bx	lr
-.L47:
+.L63:
 	.align	2
-.L46:
+.L62:
 	.word	67109376
 	.word	50360320
 	.word	interruptHandler

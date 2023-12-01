@@ -8,11 +8,27 @@
         "."
     ],
     "fileStates": {
+        "Clouds.tmx": {
+            "scale": 1.8666015624999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 256.08035994558963,
+                "y": 128.30804645809354
+            }
+        },
+        "MovingMountains.tmx": {
+            "scale": 1.8666015624999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 256.08035994558963,
+                "y": 128.30804645809354
+            }
+        },
         "RooftopGroundBackground.tmx": {
             "scale": 2.97,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 120.5387205387205,
+                "x": 119.86531986531986,
                 "y": 129.46127946127945
             }
         },
@@ -32,13 +48,15 @@
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 8,
     "map.tileWidth": 8,
-    "map.width": 32,
+    "map.width": 64,
     "openFiles": [
         "Rooftop_Ground_TilesetBitmap.tsx",
         "RooftopGroundBackground.tmx"
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
+        "MovingMountains.tmx",
+        "Clouds.tmx",
         "Rooftop_Ground_TilesetBitmap.tsx",
         "RooftopGroundBackground.tmx",
         "RooftopGroundTiles.tsx"

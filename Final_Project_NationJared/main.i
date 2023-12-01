@@ -498,6 +498,10 @@ int main() {
                 if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
                     goToPause();
                 }
+
+                if ((!(~(oldButtons) & ((1 << 9))) && (~(buttons) & ((1 << 9)))) && (!(~(oldButtons) & ((1 << 8))) && (~(buttons) & ((1 << 8))))) {
+                    gearFive();
+                }
                 break;
             case WIN:
                 win();
@@ -561,12 +565,16 @@ void interruptHandler() {
             if (!(state == song.state)) {
                 stopSong();
             }
-        } else if (soundEffect.isPlaying) {
+        }
+        if (soundEffect.isPlaying) {
             soundEffect.vBlankCount++;
             if (soundEffect.vBlankCount >= soundEffect.durationInVBlanks) {
                 soundEffect.isPlaying = 0;
                 dma[2].cnt = 0;
                 (*(volatile unsigned short*) 0x04000106) = (0 << 7);
+            }
+            if (!(state == KAIDO1)) {
+                stopSoundEffect();
             }
         }
     }

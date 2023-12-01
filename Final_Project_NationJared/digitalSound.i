@@ -1365,6 +1365,13 @@ extern const unsigned int DrumsOfLiberation_sampleRate;
 extern const unsigned int DrumsOfLiberation_length;
 extern const signed char DrumsOfLiberation_data[];
 # 10 "digitalSound.c" 2
+# 1 "LuffyPunchSound.h" 1
+
+
+extern const unsigned int LuffyPunchSound_sampleRate;
+extern const unsigned int LuffyPunchSound_length;
+extern const signed char LuffyPunchSound_data[];
+# 11 "digitalSound.c" 2
 
 
 extern unsigned short state;

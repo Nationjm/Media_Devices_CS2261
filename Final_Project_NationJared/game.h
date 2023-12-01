@@ -21,6 +21,7 @@ void luffyUpdate();
 void initLuffy();
 void luffyPunching();
 void luffyJumping();
+void gearFive();
 
 // Kaido Functions
 void initKaido();

@@ -318,6 +318,7 @@ void luffyUpdate();
 void initLuffy();
 void luffyPunching();
 void luffyJumping();
+void gearFive();
 
 
 void initKaido();
@@ -441,10 +442,10 @@ extern const unsigned short RooftopGroundBackgroundMap[1024];
 # 12 "game.c" 2
 # 1 "Rooftop_Ground_TilesetBitmap.h" 1
 # 21 "Rooftop_Ground_TilesetBitmap.h"
-extern const unsigned short Rooftop_Ground_TilesetBitmapTiles[9600];
+extern const unsigned char Rooftop_Ground_TilesetBitmapTiles[19200];
 
 
-extern const unsigned short Rooftop_Ground_TilesetBitmapPal[256];
+extern const unsigned char Rooftop_Ground_TilesetBitmapPal[512];
 # 13 "game.c" 2
 # 1 "LuffyandKaidoSprites.h" 1
 # 21 "LuffyandKaidoSprites.h"
@@ -1361,6 +1362,33 @@ extern const unsigned short PauseScreenBitmap[19200];
 
 extern const unsigned short PauseScreenPal[256];
 # 20 "game.c" 2
+# 1 "LuffyPunchSound.h" 1
+
+
+extern const unsigned int LuffyPunchSound_sampleRate;
+extern const unsigned int LuffyPunchSound_length;
+extern const signed char LuffyPunchSound_data[];
+# 21 "game.c" 2
+# 1 "Clouds.h" 1
+
+
+
+
+
+
+
+extern const unsigned short CloudsMap[2048];
+# 22 "game.c" 2
+# 1 "MovingMountains.h" 1
+
+
+
+
+
+
+
+extern const unsigned short MovingMountainsMap[2048];
+# 23 "game.c" 2
 
 
 extern unsigned short state;
@@ -1392,6 +1420,13 @@ int kaidoHealth;
 int luffyPunched;
 int kaidoWordOAMIndex = 19;
 int rSeed;
+int punchDamage = 1;
+
+
+
+int offVariable = 0;
+int vOff;
+int hOff;
 
 typedef struct {
     unsigned short fill0[3];
@@ -1428,12 +1463,12 @@ void kaido1() {
     kaidoUpdate();
     fireballUpdate();
     DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
-    DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &((CB*) 0x06000000)[0], 19200 / 2);
-    DMANow(3, Rooftop_Ground_TilesetBitmapPal, ((unsigned short*) 0x05000000), 256);
-    DMANow(3, RooftopGroundBackgroundMap, &((SB*) 0x06000000)[28], (2048) / 2);
-    DMANow(3, LuffyandKaidoSpritesPal, ((u16*) 0x5000200), 256);
-    DMANow(3, LuffyandKaidoSpritesTiles, &((CB*) 0x06000000)[4], 32768 / 2);
-
+    if (offVariable % 2 == 0) {
+        hOff++;
+    }
+    offVariable++;
+    (*(volatile unsigned short*) 0x04000014) = hOff;
+    (*(volatile unsigned short*) 0x04000018) = hOff * 2;
 }
 
 void kaido2() {
@@ -1485,11 +1520,21 @@ void goToInstructions() {
 
 void goToKaido1() {
     state = KAIDO1;
-    (*(volatile unsigned short*) 0x04000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
+    (*(volatile unsigned short*) 0x04000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4)));
     (*(volatile unsigned short*) 0x04000008) = ((0) << 2) | ((28) << 8);
+    (*(volatile unsigned short*) 0x0400000A) = ((0) << 2) | ((16) << 8) | (1 << 14);
+    (*(volatile unsigned short*) 0x0400000C) = ((0) << 2) | ((8) << 8) | (1 << 14);
     DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
     srand(rSeed);
     playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO1);
+    DMANow(3, LuffyandKaidoSpritesPal, ((u16*) 0x5000200), 256);
+
+    DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &((CB*) 0x06000000)[0], 19200 / 2);
+    DMANow(3, Rooftop_Ground_TilesetBitmapPal, ((unsigned short*) 0x05000000), 256);
+    DMANow(3, RooftopGroundBackgroundMap, &((SB*) 0x06000000)[28], (2048) / 2);
+    DMANow(3, LuffyandKaidoSpritesTiles, &((CB*) 0x06000000)[4], 32768 / 2);
+    DMANow(3, MovingMountainsMap, &((SB*) 0x06000000)[16], (4096) / 2);
+    DMANow(3, CloudsMap, &((SB*) 0x06000000)[8], (4096) / 2);
 }
 
 void goToKaido2() {
@@ -1709,10 +1754,11 @@ void luffyPunching() {
 
     if (punchCollision() & (luffyPunched == 1)) {
         luffyPunched = 0;
-        kaidoHealth--;
+        playSoundEffect(LuffyPunchSound_data, LuffyPunchSound_length);
+        kaidoHealth -= punchDamage;
     }
 
-    if (kaidoHealth == 0) {
+    if (kaidoHealth == 0 || kaidoHealth < 0) {
         goToWin();
     }
 
@@ -1759,6 +1805,12 @@ void luffyJumping() {
     }
 
     luffy.jumpingTime--;
+}
+
+void gearFive() {
+    ((u16*) 0x5000200)[8] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+    ((u16*) 0x5000200)[12] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+    punchDamage = 2;
 }
 
 
