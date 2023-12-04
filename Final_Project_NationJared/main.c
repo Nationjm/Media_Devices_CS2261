@@ -1,5 +1,11 @@
 /*
-    Currently 
+    Currently, I have implemented all the states of the game and the game functions properly.
+    If both the left shoulder and right shoulder are pressed at the same time, the palette of luffy changes.
+    This is also my cheat, and he deals double damage to Kaido.
+    I have implemented parallax background as well.
+    I have implemented tile modification, but it is only an example of how I will use it.
+    When the cheat is pressed, a wall appears and the fireball will bounce off of it later on, 
+    but currently, it is just to show that I can modify tiles.
 */
 
 

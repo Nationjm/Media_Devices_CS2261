@@ -442,10 +442,10 @@ extern const unsigned short RooftopGroundBackgroundMap[1024];
 # 12 "game.c" 2
 # 1 "Rooftop_Ground_TilesetBitmap.h" 1
 # 21 "Rooftop_Ground_TilesetBitmap.h"
-extern const unsigned char Rooftop_Ground_TilesetBitmapTiles[19200];
+extern const unsigned short Rooftop_Ground_TilesetBitmapTiles[9600];
 
 
-extern const unsigned char Rooftop_Ground_TilesetBitmapPal[512];
+extern const unsigned short Rooftop_Ground_TilesetBitmapPal[256];
 # 13 "game.c" 2
 # 1 "LuffyandKaidoSprites.h" 1
 # 21 "LuffyandKaidoSprites.h"
@@ -1811,6 +1811,11 @@ void gearFive() {
     ((u16*) 0x5000200)[8] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
     ((u16*) 0x5000200)[12] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
     punchDamage = 2;
+    ((SB*) 0x06000000)[28].tilemap[((15) * (32) + (20))] = (5 & 1023);
+    ((SB*) 0x06000000)[28].tilemap[((16) * (32) + (20))] = (5 & 1023);
+    ((SB*) 0x06000000)[28].tilemap[((17) * (32) + (20))] = (5 & 1023);
+    ((SB*) 0x06000000)[28].tilemap[((18) * (32) + (20))] = (5 & 1023);
+    ((SB*) 0x06000000)[28].tilemap[((19) * (32) + (20))] = (5 & 1023);
 }
 
 
