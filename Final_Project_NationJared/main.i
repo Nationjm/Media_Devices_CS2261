@@ -2,7 +2,7 @@
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "main.c"
-# 11 "main.c"
+# 9 "main.c"
 # 1 "gba.h" 1
 
 
@@ -44,7 +44,7 @@ typedef volatile struct {
 extern DMA *dma;
 # 99 "gba.h"
 void DMANow(int channel, volatile const void *src, volatile void *dst, unsigned int cnt);
-# 12 "main.c" 2
+# 10 "main.c" 2
 # 1 "mode0.h" 1
 # 32 "mode0.h"
 typedef struct {
@@ -56,7 +56,7 @@ typedef struct {
 typedef struct {
  u16 tilemap[1024];
 } SB;
-# 13 "main.c" 2
+# 11 "main.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
 typedef struct {
@@ -87,7 +87,7 @@ typedef struct {
     int numFrames;
     u8 oamIndex;
 } SPRITE;
-# 14 "main.c" 2
+# 12 "main.c" 2
 # 1 "print.h" 1
 # 25 "print.h"
 # 1 "/opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/9.1.0/include/stdint.h" 1 3 4
@@ -294,7 +294,7 @@ void mgba_printf_level(int level, const char* ptr, ...);
 void mgba_printf(const char* string, ...);
 void mgba_break(void);
 void mgba_close(void);
-# 15 "main.c" 2
+# 13 "main.c" 2
 # 1 "game.h" 1
 
 
@@ -302,6 +302,7 @@ void mgba_close(void);
 void start();
 void instructions();
 void kaido1();
+void kaido2();
 void pause();
 void win();
 void lose();
@@ -310,6 +311,7 @@ void lose();
 void goToStart();
 void goToInstructions();
 void goToKaido1();
+void goToKaido2();
 void goToPause();
 void goToWin();
 void goToLose();
@@ -320,6 +322,8 @@ void initLuffy();
 void luffyPunching();
 void luffyJumping();
 void gearFive();
+void groundChange();
+void luffyLightningThrow();
 
 
 void initKaido();
@@ -355,6 +359,7 @@ typedef struct {
     int punchingTime;
     int jumping;
     int jumpingTime;
+    int lightning;
     unsigned char oamIndex;
 } LUFFY;
 LUFFY luffy;
@@ -399,7 +404,7 @@ typedef struct {
     unsigned char oamIndex;
 } FIREBALL;
 FIREBALL fireball;
-# 16 "main.c" 2
+# 14 "main.c" 2
 # 1 "digitalSound.h" 1
 
 void setupSounds();
@@ -421,21 +426,21 @@ typedef struct {
 
 SOUND song;
 SOUND soundEffect;
-# 17 "main.c" 2
+# 15 "main.c" 2
 # 1 "BinksBrew.h" 1
 
 
 extern const unsigned int BinksBrew_sampleRate;
 extern const unsigned int BinksBrew_length;
 extern const signed char BinksBrew_data[];
-# 18 "main.c" 2
+# 16 "main.c" 2
 # 1 "DrumsOfLiberation.h" 1
 
 
 extern const unsigned int DrumsOfLiberation_sampleRate;
 extern const unsigned int DrumsOfLiberation_length;
 extern const signed char DrumsOfLiberation_data[];
-# 19 "main.c" 2
+# 17 "main.c" 2
 
 
 unsigned short oldButtons;
@@ -472,6 +477,7 @@ int main() {
 
         waitForVBlank();
 
+        mgba_printf("%d", state);
 
 
         switch(state) {
@@ -497,12 +503,21 @@ int main() {
                 break;
             case KAIDO1:
                 kaido1();
+
                 if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
                     goToPause();
                 }
 
-                if ((!(~(oldButtons) & ((1 << 9))) && (~(buttons) & ((1 << 9)))) && (!(~(oldButtons) & ((1 << 8))) && (~(buttons) & ((1 << 8))))) {
+                if ((~(buttons) & ((1 << 9))) && (!(~(oldButtons) & ((1 << 8))) && (~(buttons) & ((1 << 8))))) {
                     gearFive();
+                }
+
+                break;
+            case KAIDO2:
+                kaido2();
+                gearFive();
+                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
+                    goToPause();
                 }
                 break;
             case WIN:

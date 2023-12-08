@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "RooftopGroundBackground.tmx",
+    "activeFile": "Clouds.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -51,14 +51,16 @@
     "map.width": 64,
     "openFiles": [
         "Rooftop_Ground_TilesetBitmap.tsx",
-        "RooftopGroundBackground.tmx"
+        "RooftopGroundBackground.tmx",
+        "Clouds.tmx",
+        "MovingMountains.tmx"
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
-        "MovingMountains.tmx",
-        "Clouds.tmx",
         "Rooftop_Ground_TilesetBitmap.tsx",
         "RooftopGroundBackground.tmx",
+        "MovingMountains.tmx",
+        "Clouds.tmx",
         "RooftopGroundTiles.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

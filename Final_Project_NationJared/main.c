@@ -1,11 +1,7 @@
 /*
-    Currently, I have implemented all the states of the game and the game functions properly.
-    If both the left shoulder and right shoulder are pressed at the same time, the palette of luffy changes.
-    This is also my cheat, and he deals double damage to Kaido.
-    I have implemented parallax background as well.
-    I have implemented tile modification, but it is only an example of how I will use it.
-    When the cheat is pressed, a wall appears and the fireball will bounce off of it later on, 
-    but currently, it is just to show that I can modify tiles.
+    My second game state, Kaido2 has all of its' functions included in game.c.
+    I attempted to put them into a new .c file, but had limited time and was prioritizing
+    functionality rather than organization. I'll fix it later if I have time.
 */
 
 
@@ -53,8 +49,9 @@ int main() {
         buttons = REG_BUTTONS;
 
         waitForVBlank();
-        
 
+        mgba_printf("%d", state);
+        
         // State Machine
         switch(state) {
             case START:
@@ -79,12 +76,21 @@ int main() {
                 break;
             case KAIDO1:
                 kaido1();
+
                 if (BUTTON_PRESSED(BUTTON_SELECT)) {
                     goToPause();
                 }
 
-                if (BUTTON_PRESSED(BUTTON_LSHOULDER) && BUTTON_PRESSED(BUTTON_RSHOULDER)) {
+                if (BUTTON_HELD(BUTTON_LSHOULDER) && BUTTON_PRESSED(BUTTON_RSHOULDER)) {
                     gearFive();
+                }
+
+                break;
+            case KAIDO2:   
+                kaido2();
+                gearFive();
+                if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                    goToPause();
                 }
                 break;
             case WIN:

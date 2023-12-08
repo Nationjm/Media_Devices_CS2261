@@ -177,6 +177,10 @@ initialize:
 	.word	state
 	.word	goToStart
 	.size	initialize, .-initialize
+	.section	.rodata.str1.4,"aMS",%progbits,1
+	.align	2
+.LC0:
+	.ascii	"%d\000"
 	.section	.text.startup,"ax",%progbits
 	.align	2
 	.global	main
@@ -190,163 +194,187 @@ main:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r7, fp, lr}
-	ldr	r4, .L58
-	ldr	r3, .L58+4
+	ldr	r4, .L57
+	ldr	r3, .L57+4
 	mov	lr, pc
 	bx	r3
-	ldr	r5, .L58+8
+	ldr	r6, .L57+8
 	ldrh	r3, [r4]
-	ldr	r8, .L58+12
-	ldr	r7, .L58+16
-	ldr	fp, .L58+20
-	ldr	r10, .L58+24
-	ldr	r9, .L58+28
-	ldr	r6, .L58+32
-.L39:
-	strh	r3, [r5]	@ movhi
-	ldrh	r3, [r6, #48]
+	ldr	r10, .L57+12
+	ldr	r5, .L57+16
+	ldr	r9, .L57+20
+	ldr	fp, .L57+24
+	ldr	r8, .L57+28
+	ldr	r7, .L57+32
+.L40:
+	strh	r3, [r6]	@ movhi
+	ldrh	r3, [r8, #48]
 	strh	r3, [r4]	@ movhi
 	mov	lr, pc
-	bx	r8
-	ldr	r3, [r7]
+	bx	r10
+	mov	r0, r7
+	ldr	r1, [r5]
+	mov	lr, pc
+	bx	r9
+	ldr	r3, [r5]
 	cmp	r3, #8
 	ldrls	pc, [pc, r3, asl #2]
-	b	.L40
+	b	.L41
 .L33:
+	.word	.L39
 	.word	.L38
 	.word	.L37
 	.word	.L36
-	.word	.L40
-	.word	.L40
-	.word	.L40
+	.word	.L41
+	.word	.L41
 	.word	.L35
 	.word	.L34
 	.word	.L32
 .L34:
-	ldr	r3, .L58+36
+	ldr	r3, .L57+36
 	mov	lr, pc
 	bx	r3
-	ldrh	r3, [r5]
+	ldrh	r3, [r6]
 	tst	r3, #8
-	bne	.L47
-.L40:
+	bne	.L49
+.L41:
 	ldrh	r3, [r4]
-	b	.L39
+	b	.L40
 .L32:
-	ldr	r3, .L58+40
+	ldr	r3, .L57+40
 	mov	lr, pc
 	bx	r3
-	ldrh	r3, [r5]
+	ldrh	r3, [r6]
 	tst	r3, #8
-	beq	.L40
-.L47:
+	beq	.L41
+.L49:
 	ldrh	r3, [r4]
 	tst	r3, #8
-	bne	.L39
-	ldr	r3, .L58+44
+	bne	.L40
+	ldr	r3, .L57+44
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
-	b	.L39
+	b	.L40
 .L35:
+	ldr	r3, .L57+48
 	mov	lr, pc
-	bx	r9
-	ldrh	r3, [r5]
+	bx	r3
+	ldrh	r3, [r6]
 	tst	r3, #4
-	beq	.L40
+	beq	.L41
 	ldrh	r3, [r4]
 	tst	r3, #4
-	bne	.L39
-	ldr	r3, .L58+48
+	bne	.L40
+	ldr	r3, .L57+52
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
-	b	.L39
+	b	.L40
 .L36:
-	ldr	r3, .L58+52
+	ldr	r3, .L57+56
 	mov	lr, pc
 	bx	r3
-	ldrh	r2, [r5]
-	tst	r2, #4
-	ldrh	r3, [r4]
-	beq	.L45
-	tst	r3, #4
-	beq	.L57
-.L45:
-	tst	r2, #512
-	beq	.L39
-	tst	r2, #256
-	beq	.L39
-	tst	r3, #768
-	bne	.L39
-	ldr	r3, .L58+56
-	mov	lr, pc
-	bx	r3
-	ldrh	r3, [r4]
-	b	.L39
-.L37:
-	mov	lr, pc
-	bx	r10
-	ldrh	r3, [r5]
-	tst	r3, #8
-	beq	.L40
-	ldrh	r3, [r4]
-	tst	r3, #8
-	bne	.L39
-	ldr	r3, .L58+48
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L58+60
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L58+64
-	mov	lr, pc
-	bx	r3
-	ldrh	r3, [r4]
-	b	.L39
-.L38:
 	mov	lr, pc
 	bx	fp
-	ldrh	r3, [r5]
+	ldrh	r3, [r6]
+	tst	r3, #4
+	beq	.L41
+	ldrh	r3, [r4]
+	tst	r3, #4
+	bne	.L40
+	ldr	r3, .L57+60
+	mov	lr, pc
+	bx	r3
+	ldrh	r3, [r4]
+	b	.L40
+.L38:
+	ldr	r3, .L57+64
+	mov	lr, pc
+	bx	r3
+	ldrh	r3, [r6]
 	tst	r3, #8
+	beq	.L41
+	ldrh	r3, [r4]
+	tst	r3, #8
+	bne	.L40
+	ldr	r3, .L57+52
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L57+68
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L57+72
+	mov	lr, pc
+	bx	r3
+	ldrh	r3, [r4]
+	b	.L40
+.L37:
+	ldr	r3, .L57+76
+	mov	lr, pc
+	bx	r3
+	ldrh	r2, [r6]
+	tst	r2, #4
+	ldrh	r3, [r4]
+	beq	.L46
+	tst	r3, #4
+	beq	.L56
+.L46:
+	tst	r2, #256
 	beq	.L40
+	tst	r3, #768
+	bne	.L40
+	mov	lr, pc
+	bx	fp
+	ldrh	r3, [r4]
+	b	.L40
+.L39:
+	ldr	r3, .L57+80
+	mov	lr, pc
+	bx	r3
+	ldrh	r3, [r6]
+	tst	r3, #8
+	beq	.L41
 	ldrh	r3, [r4]
 	tst	r3, #8
-	bne	.L39
-	ldr	r3, .L58+68
+	bne	.L40
+	ldr	r3, .L57+84
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r4]
-	b	.L39
-.L57:
-	ldr	r3, .L58+72
+	b	.L40
+.L56:
+	ldr	r3, .L57+60
 	mov	lr, pc
 	bx	r3
-	ldrh	r2, [r5]
 	ldrh	r3, [r4]
-	b	.L45
-.L59:
-	.align	2
+	ldrh	r2, [r6]
+	b	.L46
 .L58:
+	.align	2
+.L57:
 	.word	buttons
 	.word	initialize
 	.word	oldButtons
 	.word	waitForVBlank
 	.word	state
-	.word	start
-	.word	instructions
-	.word	pause
+	.word	mgba_printf
+	.word	gearFive
 	.word	67109120
+	.word	.LC0
 	.word	win
 	.word	lose
 	.word	goToStart
+	.word	pause
 	.word	goToKaido1
-	.word	kaido1
-	.word	gearFive
+	.word	kaido2
+	.word	goToPause
+	.word	instructions
 	.word	initLuffy
 	.word	initKaido
+	.word	kaido1
+	.word	start
 	.word	goToInstructions
-	.word	goToPause
 	.size	main, .-main
 	.text
 	.align	2
@@ -363,18 +391,18 @@ setupInterrupts:
 	mov	r2, #1
 	mov	lr, #8
 	mov	ip, #67108864
-	ldr	r3, .L62
-	ldr	r1, .L62+4
-	ldr	r0, .L62+8
+	ldr	r3, .L61
+	ldr	r1, .L61+4
+	ldr	r0, .L61+8
 	strh	r2, [r3]	@ movhi
 	strh	r2, [r3, #8]	@ movhi
 	strh	lr, [ip, #4]	@ movhi
 	str	r0, [r1, #4092]
 	ldr	lr, [sp], #4
 	bx	lr
-.L63:
-	.align	2
 .L62:
+	.align	2
+.L61:
 	.word	67109376
 	.word	50360320
 	.word	interruptHandler
@@ -388,5 +416,5 @@ setupInterrupts:
 	.comm	fireball,44,4
 	.comm	kaido,52,4
 	.comm	luffyFist,20,4
-	.comm	luffy,64,4
+	.comm	luffy,68,4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

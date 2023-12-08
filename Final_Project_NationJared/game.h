@@ -1,43 +1,7 @@
 #define ALIGN(x) __attribute__((aligned(x)))
 
-// Game State Prototypes
-void start();
-void instructions();
-void kaido1();
-void pause();
-void win();
-void lose();
-
-// Game State Change Prototypes
-void goToStart();
-void goToInstructions();
-void goToKaido1();
-void goToPause();
-void goToWin();
-void goToLose();
-
-// Luffy Functions
-void luffyUpdate();
-void initLuffy();
-void luffyPunching();
-void luffyJumping();
-void gearFive();
-
-// Kaido Functions
-void initKaido();
-void kaidoUpdate();
-// Fireball Functions
-void fireballUpdate();
-void shootFireball();
-
-// Collision Functions
-int fireballCollision();
-int punchCollision();
-
-// Sound Functions
-void setupSounds();
-void setupInterrupts();
-void interruptHandler();
+// Constants
+#define LIGHTNINGCOUNT 4
 
 
 // Object Structs
@@ -57,6 +21,7 @@ typedef struct {
     int punchingTime;
     int jumping;
     int jumpingTime;
+    int lightning;
     unsigned char oamIndex;
 } LUFFY;
 LUFFY luffy;
@@ -101,3 +66,65 @@ typedef struct {
     unsigned char oamIndex;
 } FIREBALL;
 FIREBALL fireball;
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int xVel;
+    int timeUntilNextFrame;
+    int numFrames;
+    int frame;
+    int shooting;
+    int timeUntilNextShot;
+    int active;
+    unsigned char oamIndex;
+} LIGHTNING;
+LIGHTNING lightning[LIGHTNINGCOUNT];
+
+// Game State Prototypes
+void start();
+void instructions();
+void kaido1();
+void kaido2();
+void pause();
+void win();
+void lose();
+
+// Game State Change Prototypes
+void goToStart();
+void goToInstructions();
+void goToKaido1();
+void goToKaido2();
+void goToPause();
+void goToWin();
+void goToLose();
+
+// Luffy Functions
+void luffyUpdate();
+void initLuffy();
+void luffyPunching();
+void luffyJumping();
+void gearFive();
+void groundChange();
+void luffyLightningThrow(LIGHTNING *lightning);
+void luffyUpdate2();
+
+// Kaido Functions
+void initKaido();
+void kaidoUpdate();
+void kaidoUpdate2();
+// Fireball Functions
+void fireballUpdate();
+void shootFireball();
+
+// Collision Functions
+int fireballCollision();
+int punchCollision();
+int lightningCollision(LIGHTNING *lightning);
+
+// Sound Functions
+void setupSounds();
+void setupInterrupts();
+void interruptHandler();
