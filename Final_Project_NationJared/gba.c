@@ -4,6 +4,8 @@
 unsigned volatile short* videoBuffer = (unsigned short*) 0x06000000;
 
 
+
+
 // Checks for collision between two rectangles
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2) {
     return y1 < y2 + height2 && y1 + height1 > y2 && x1 < x2 + width2 && x1 + width1 > x2;

@@ -6,6 +6,9 @@ void playSoundEffect(const signed char* soundData, int length);
 void stopSong();
 void stopSoundEffect();
 
+void pauseSong();
+void unpauseSong();
+
 #define SOUND_FREQ 11025
 #define REG_SOUNDCNT_X *(volatile unsigned short *)0x04000084
 

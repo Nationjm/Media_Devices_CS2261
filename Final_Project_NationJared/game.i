@@ -295,13 +295,7 @@ void mgba_break(void);
 void mgba_close(void);
 # 5 "game.c" 2
 # 1 "game.h" 1
-
-
-
-
-
-
-
+# 12 "game.h"
 typedef struct {
     int x;
     int y;
@@ -363,6 +357,7 @@ typedef struct {
     unsigned char oamIndex;
 } FIREBALL;
 FIREBALL fireball;
+FIREBALL fireballs[5];
 
 typedef struct {
     int x;
@@ -370,12 +365,9 @@ typedef struct {
     int width;
     int height;
     int xVel;
-    int timeUntilNextFrame;
-    int numFrames;
-    int frame;
-    int shooting;
     int timeUntilNextShot;
     int active;
+    int direction;
     unsigned char oamIndex;
 } LIGHTNING;
 LIGHTNING lightning[4];
@@ -405,8 +397,12 @@ void luffyPunching();
 void luffyJumping();
 void gearFive();
 void groundChange();
-void luffyLightningThrow(LIGHTNING *lightning);
 void luffyUpdate2();
+
+void lightningUpdate();
+void luffyLightningThrow();
+void initLightning();
+
 
 
 void initKaido();
@@ -415,11 +411,15 @@ void kaidoUpdate2();
 
 void fireballUpdate();
 void shootFireball();
+void fireballUpdate2();
+void initFireball2();
+void shootFireball2(FIREBALL *fireball);
 
 
 int fireballCollision();
 int punchCollision();
 int lightningCollision(LIGHTNING *lightning);
+int fireballCollision2(FIREBALL *fireball);
 
 
 void setupSounds();
@@ -489,7 +489,10 @@ void playSoundEffect(const signed char* soundData, int length);
 
 void stopSong();
 void stopSoundEffect();
-# 46 "digitalSound.h"
+
+void pauseSong();
+void unpauseSong();
+# 49 "digitalSound.h"
 typedef struct {
     const signed char* data;
     int dataLength;
@@ -1416,6 +1419,13 @@ extern const unsigned short CloudsMap[2048];
 
 extern const unsigned short MovingMountainsMap[2048];
 # 23 "game.c" 2
+# 1 "betweenFightScreen.h" 1
+# 21 "betweenFightScreen.h"
+extern const unsigned short betweenFightScreenBitmap[19200];
+
+
+extern const unsigned short betweenFightScreenPal[256];
+# 24 "game.c" 2
 
 
 extern unsigned short state;
@@ -1428,7 +1438,8 @@ enum {
     BIGMOM2,
     PAUSE,
     WIN,
-    LOSE
+    LOSE,
+    BETWEENFIGHT
 } STATE;
 
 
@@ -1459,6 +1470,7 @@ int groundChanging = 0;
 int groundFrames = 0;
 int tileTemp = 0;
 int luffyLightning = 0;
+int timeUntilNextFireball = 20;
 
 
 int offVariable = 0;
@@ -1508,10 +1520,18 @@ void kaido1() {
     (*(volatile unsigned short*) 0x04000018) = hOff * 2;
 }
 
+void betweenFight() {
+    DMANow(3, betweenFightScreenPal, ((unsigned short*) 0x05000000), 512 / 2);
+    drawFullscreenImage4(betweenFightScreenBitmap);
+    flipPage();
+}
+
 void kaido2() {
     hideSprites();
     luffyUpdate2();
     kaidoUpdate2();
+    lightningUpdate();
+    fireballUpdate2();
     DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
     if (offVariable % 2 == 0) {
         hOff++;
@@ -1519,6 +1539,7 @@ void kaido2() {
     offVariable++;
     (*(volatile unsigned short*) 0x04000014) = hOff;
     (*(volatile unsigned short*) 0x04000018) = hOff * 2;
+    mgba_printf("%d", lightning[0].direction );
 }
 
 void bigMom1() {
@@ -1550,6 +1571,8 @@ void lose() {
 
 
 void goToStart() {
+    punchDamage = 1;
+    gearFifth = 0;
     state = START;
 }
 
@@ -1565,7 +1588,6 @@ void goToKaido1() {
     (*(volatile unsigned short*) 0x0400000C) = ((0) << 2) | ((8) << 8) | (1 << 14);
     DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
     srand(rSeed);
-    playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO1);
     DMANow(3, LuffyandKaidoSpritesPal, ((u16*) 0x5000200), 256);
 
     DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &((CB*) 0x06000000)[0], 19200 / 2);
@@ -1576,6 +1598,11 @@ void goToKaido1() {
     DMANow(3, CloudsMap, &((SB*) 0x06000000)[8], (4096) / 2);
 }
 
+void goToBetweenFight() {
+    state = BETWEENFIGHT;
+    (*(volatile unsigned short*) 0x04000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
+}
+
 void goToKaido2() {
     state = KAIDO2;
     (*(volatile unsigned short*) 0x04000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4)));
@@ -1584,7 +1611,6 @@ void goToKaido2() {
     (*(volatile unsigned short*) 0x0400000C) = ((0) << 2) | ((8) << 8) | (1 << 14);
     DMANow(3, shadowOAM, ((OBJ_ATTR*) 0x7000000), 512);
     srand(rSeed);
-    playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO2);
 
     DMANow(3, Rooftop_Ground_TilesetBitmapTiles, &((CB*) 0x06000000)[0], 19200 / 2);
     DMANow(3, Rooftop_Ground_TilesetBitmapPal, ((unsigned short*) 0x05000000), 256);
@@ -1592,8 +1618,6 @@ void goToKaido2() {
     DMANow(3, LuffyandKaidoSpritesTiles, &((CB*) 0x06000000)[4], 32768 / 2);
     DMANow(3, MovingMountainsMap, &((SB*) 0x06000000)[16], (4096) / 2);
     DMANow(3, CloudsMap, &((SB*) 0x06000000)[8], (4096) / 2);
-    initLuffy();
-    initKaido();
 }
 
 void goToBigMom1() {
@@ -1629,7 +1653,7 @@ void initLuffy() {
     luffy.xVel = 2;
     luffy.direction = LEFT;
     luffy.frame = 0;
-    luffy.height = 44;
+    luffy.height = 40;
     luffy.width = 32;
     luffy.isMoving = 0;
     luffy.yVel = 1;
@@ -1711,7 +1735,7 @@ void luffyUpdate() {
     if ((!(~(oldButtons) & ((1 << 7))) && (~(buttons) & ((1 << 7)))) && luffy.jumping != 1 && gearFifth == 1 && groundChanging == 0) {
         groundChanging = 1;
         groundFrames = 45;
-        tileTemp = (luffy.x / 8) - 1;
+        tileTemp = (luffy.x / 8) - 2;
     }
 
     if (groundChanging == 1 && groundFrames > 0) {
@@ -1825,8 +1849,8 @@ void luffyPunching() {
         kaidoHealth -= punchDamage;
     }
 
-    if (kaidoHealth == 0 || kaidoHealth < 0) {
-        goToKaido2();
+    if (kaidoHealth <= 0) {
+        goToBetweenFight();
     }
 
     luffy.punchingTime--;
@@ -1882,6 +1906,7 @@ void gearFive() {
 }
 
 void groundChange() {
+    ((SB*) 0x06000000)[28].tilemap[((14) * (32) + (tileTemp))] = (5 & 1023);
     ((SB*) 0x06000000)[28].tilemap[((15) * (32) + (tileTemp))] = (5 & 1023);
     ((SB*) 0x06000000)[28].tilemap[((16) * (32) + (tileTemp))] = (5 & 1023);
     ((SB*) 0x06000000)[28].tilemap[((17) * (32) + (tileTemp))] = (5 & 1023);
@@ -1890,6 +1915,7 @@ void groundChange() {
     ((SB*) 0x06000000)[28].tilemap[((20) * (32) + (tileTemp))] = (5 & 1023);
     if (groundFrames == 0) {
         groundChanging = 0;
+        ((SB*) 0x06000000)[28].tilemap[((14) * (32) + (tileTemp))] = (0 & 1023);
         ((SB*) 0x06000000)[28].tilemap[((15) * (32) + (tileTemp))] = (0 & 1023);
         ((SB*) 0x06000000)[28].tilemap[((16) * (32) + (tileTemp))] = (0 & 1023);
         ((SB*) 0x06000000)[28].tilemap[((17) * (32) + (tileTemp))] = (0 & 1023);
@@ -1904,7 +1930,7 @@ void initKaido() {
     kaido.x = -25;
     kaido.y = 100;
     kaido.frame = 0;
-    kaido.height = 25;
+    kaido.height = 24;
     kaido.width = 58;
     kaido.isMoving = 0;
     kaido.oamIndex = 7;
@@ -1992,6 +2018,8 @@ void fireballUpdate() {
         fireball.shooting = 0;
         fireball.x = kaido.x + (kaido.width * 2) - 25;
         luffyLives--;
+        *(u32*)0x400004C = (1 << 8) + (1 << 12);
+        shadowOAM[luffy.oamIndex].attr0 |= (1 << 12);
         if (luffyLives == 0) {
             goToLose();
         }
@@ -2006,7 +2034,7 @@ void fireballUpdate() {
         fireball.timeUntilNextShot--;
     }
 
-    if (fireball.x + fireball.width > ((tileTemp + 1) * 8) && groundChanging == 1) {
+    if (fireball.x + fireball.width > ((tileTemp) * 8) && groundChanging == 1) {
         fireball.shooting = 0;
         fireball.x = kaido.x + kaido.width * 2 - 25;
     }
@@ -2018,14 +2046,14 @@ void shootFireball() {
     shadowOAM[fireball.oamIndex].attr2 = (((fireball.frame * 2) * (32) + (28)) & 0x3FF) | (((1) & 0xF) << 12);
     if (fireball.x > 240 + fireball.width) {
         fireball.shooting = 0;
-        fireball.x = kaido.x + kaido.width * 2 - 25;
+        fireball.x = kaido.x + (kaido.width * 2) - 25;
     } else {
         fireball.x += fireball.xVel;
     }
 }
 
 int fireballCollision() {
-    return collision(fireball.x, fireball.y, fireball.width, fireball.height, luffy.x, luffy.y, luffy.width, luffy.height);
+    return collision(fireball.x, fireball.y, fireball.width, fireball.height, luffy.x, luffy.y + 6, luffy.width, luffy.height);
 }
 
 int punchCollision() {
@@ -2086,7 +2114,9 @@ void luffyUpdate2() {
             if (lightning[i].active == 0) {
                 lightning[i].x = luffy.x;
                 lightning[i].y = luffy.y;
-                luffyLightningThrow(lightning[i]);
+                lightning[i].active = 1;
+                lightning[i].direction = luffy.direction;
+                luffyLightningThrow(&lightning[i]);
                 break;
             }
         }
@@ -2105,7 +2135,7 @@ void luffyUpdate2() {
     if ((!(~(oldButtons) & ((1 << 7))) && (~(buttons) & ((1 << 7)))) && luffy.jumping != 1 && gearFifth == 1 && groundChanging == 0) {
         groundChanging = 1;
         groundFrames = 45;
-        tileTemp = (luffy.x / 8) - 1;
+        tileTemp = (luffy.x / 8) - 2;
     }
 
     if (groundChanging == 1 && groundFrames > 0) {
@@ -2129,20 +2159,49 @@ void initLightning() {
         lightning[i].x = 0;
         lightning[i].y = 0;
         lightning[i].active = 0;
-        lightning[i].height = 16;
+        lightning[i].height = 15;
         lightning[i].width = 8 * 5;
         lightning[i].oamIndex = 38 + i;
-        lightning[i].shooting = 0;
+        lightning[i].direction = RIGHT;
     }
 }
 
 
-void luffyLightningThrow(LIGHTNING *lightning) {
-    shadowOAM[lightning->oamIndex].attr0 = (1 << 14) | ((lightning->y) & 0xFF);
-    shadowOAM[lightning->oamIndex].attr1 = (3 << 14) | ((lightning->x) & 0x1FF);
-    shadowOAM[lightning->oamIndex].attr2 = (((21) * (32) + (21)) & 0x3FF) | (((1) & 0xF) << 12);
+void luffyLightningThrow() {
+    luffy.lightning = 0;
 }
 
+void lightningUpdate() {
+    for (int i = 0; i < 4; i++) {
+        if (lightning[i].active) {
+            if (lightning[i].direction == LEFT) {
+                lightning[i].x -= 2;
+            } else if (lightning[i].direction == RIGHT) {
+                lightning[i].x += 2;
+            }
+
+            if (lightning[i].x + lightning[i].width < 0) {
+                lightning[i].active = 0;
+            } else if (lightning[i].x > 240) {
+                lightning[i].active = 0;
+            }
+            if (lightningCollision(&lightning[i])) {
+                lightning[i].active = 0;
+                kaidoHealth-= punchDamage;
+            }
+            shadowOAM[lightning[i].oamIndex].attr0 = (1 << 14) | ((lightning[i].y) & 0xFF);
+            shadowOAM[lightning[i].oamIndex].attr1 = (3 << 14) | ((lightning[i].x) & 0x1FF);
+            shadowOAM[lightning[i].oamIndex].attr2 = (((21) * (32) + (21)) & 0x3FF) | (((1) & 0xF) << 12);
+        }
+        if (lightning[i].active == 0) {
+            shadowOAM[lightning[i].oamIndex].attr0 = (2 << 8);
+        }
+    }
+
+    if (kaidoHealth <= 0) {
+        goToWin();
+    }
+}
 
 void kaidoUpdate2() {
 
@@ -2198,8 +2257,86 @@ void kaidoUpdate2() {
     } else if (kaido.y == 0) {
         kaido.direction = DOWN;
     }
+
+    if (timeUntilNextFireball == 0) {
+        for (int i = 0; i < 5; i++) {
+            if (fireballs[i].shooting == 0) {
+                fireballs[i].x = kaido.x + (kaido.width * 2) - 25;
+                fireballs[i].y = kaido.y;
+                fireballs[i].shooting = 1;
+                timeUntilNextFireball = rand() % 80 + 30;
+                break;
+            }
+        }
+    } else if (timeUntilNextFireball < 0) {
+        timeUntilNextFireball = rand() % 80 + 30;
+    }
+
+    timeUntilNextFireball--;
+}
+
+void initFireball2() {
+    for (int i = 0; i < 5; i++) {
+        fireballs[i].shooting = 0;
+        fireballs[i].frame = 0;
+        fireballs[i].height = 16;
+        fireballs[i].width = 32;
+        fireballs[i].numFrames = 2;
+        fireballs[i].oamIndex = 42 + i;
+        fireballs[i].x = 0;
+        fireballs[i].xVel = 1;
+        fireballs[i].y = 0;
+        fireballs[i].timeUntilNextFrame = 10;
+        fireballs[i].timeUntilNextShot = 0;
+    }
+}
+
+void fireballUpdate2() {
+    for (int i = 0; i < 5; i++) {
+        if (fireballs[i].shooting) {
+            shootFireball2(&fireballs[i]);
+
+            if (fireballs[i].timeUntilNextFrame == 0) {
+                fireballs[i].timeUntilNextFrame = 10;
+                fireballs[i].frame = (fireballs[i].frame + 1) & fireballs[i].numFrames;
+            } else if (fireballs[i].timeUntilNextFrame < 0) {
+                fireballs[i].timeUntilNextFrame = 10;
+            }
+            fireballs[i].timeUntilNextFrame--;
+
+            if (fireballCollision2(&fireballs[i])) {
+                fireballs[i].shooting = 0;
+                fireballs[i].x = kaido.x;
+                luffyLives--;
+                if (luffyLives == 0) {
+                    goToLose();
+                }
+            }
+        } else {
+            shadowOAM[fireballs[i].oamIndex].attr0 = (2 << 8);
+        }
+        if (fireballs[i].x + fireballs[i].width > ((tileTemp) * 8) && groundChanging == 1) {
+            fireballs[i].shooting = 0;
+            fireballs[i].x = kaido.x + kaido.width * 2 - 25;
+        }
+    }
+}
+
+void shootFireball2(FIREBALL *fireball) {
+    shadowOAM[fireball->oamIndex].attr0 = (1 << 14) | ((fireball->y) & 0xFF);
+    shadowOAM[fireball->oamIndex].attr1 = (2 << 14) | ((fireball->x) & 0x1FF);
+    shadowOAM[fireball->oamIndex].attr2 = (((fireball->frame * 2) * (32) + (28)) & 0x3FF) | (((1) & 0xF) << 12);
+    if (fireball->x > 240 + fireball->width) {
+        fireball->shooting = 0;
+    } else {
+        fireball->x += fireball->xVel;
+    }
 }
 
 int lightningCollision(LIGHTNING *lightning) {
-    return collision(kaido.x, kaido.y, kaido.width * 2, kaido.height * 2, lightning->x, lightning->y + 8, lightning->width, lightning->height);
+    return collision(kaido.x, kaido.y, kaido.width * 2, kaido.height * 2, lightning->x, lightning->y + 9, lightning->width, lightning->height);
+}
+
+int fireballCollision2(FIREBALL *fireball) {
+    return collision(fireball->x, fireball->y, fireball->width, fireball->height, luffy.x, luffy.y, luffy.width, luffy.height);
 }

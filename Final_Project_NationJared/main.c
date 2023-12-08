@@ -29,10 +29,12 @@ enum {
     BIGMOM2,
     PAUSE,
     WIN,
-    LOSE
+    LOSE,
+    BETWEENFIGHT
 } STATE;
 
 int state;
+int lastState = START;
 
 // function prototypes
 void initialize();
@@ -49,8 +51,6 @@ int main() {
         buttons = REG_BUTTONS;
 
         waitForVBlank();
-
-        mgba_printf("%d", state);
         
         // State Machine
         switch(state) {
@@ -63,6 +63,7 @@ int main() {
             case INSTRUCTIONS:
                 instructions();
                 if (BUTTON_PRESSED(BUTTON_START)) {
+                    playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO1);
                     goToKaido1();
                     initLuffy();
                     initKaido();
@@ -70,14 +71,19 @@ int main() {
                 break;
             case PAUSE:
                 pause();
-                if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                if (BUTTON_PRESSED(BUTTON_SELECT) && lastState == KAIDO1) {
+                    unpauseSong();
                     goToKaido1();
+                } else if (BUTTON_PRESSED(BUTTON_SELECT) && lastState == KAIDO2) {
+                    unpauseSong();
+                    goToKaido2();
                 }
                 break;
             case KAIDO1:
                 kaido1();
 
                 if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                    lastState = KAIDO1;
                     goToPause();
                 }
 
@@ -89,7 +95,9 @@ int main() {
             case KAIDO2:   
                 kaido2();
                 gearFive();
+
                 if (BUTTON_PRESSED(BUTTON_SELECT)) {
+                    lastState = KAIDO2;
                     goToPause();
                 }
                 break;
@@ -103,6 +111,17 @@ int main() {
                 lose();
                 if (BUTTON_PRESSED(BUTTON_START)) {
                     goToStart();
+                }
+                break;
+            case BETWEENFIGHT:
+                betweenFight();
+                if (BUTTON_PRESSED(BUTTON_START)) {
+                    playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO2);
+                    initLuffy();
+                    initKaido();
+                    initLightning();
+                    initFireball2();
+                    goToKaido2();
                 }
                 break;
         }
@@ -152,8 +171,11 @@ void interruptHandler() {
                     REG_TM0CNT = TIMER_OFF;
                 }
             }
-            if (!(state == song.state)) {
+            if (!(state == song.state || state == PAUSE)) {
                 stopSong();
+            }
+            if (state == PAUSE) {
+                pauseSong();
             }
         } 
         if (soundEffect.isPlaying) {
@@ -163,9 +185,10 @@ void interruptHandler() {
                 dma[2].cnt = 0;
                 REG_TM1CNT = TIMER_OFF;
             }
-            if (!(state == KAIDO1)) {
+            if (!(state == KAIDO1 || state == KAIDO2)) {
                 stopSoundEffect();
             }
+            
         }
     } 
 

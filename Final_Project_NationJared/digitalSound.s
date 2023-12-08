@@ -234,6 +234,53 @@ stopSoundEffect:
 	.word	dma
 	.word	soundEffect
 	.size	stopSoundEffect, .-stopSoundEffect
+	.align	2
+	.global	pauseSong
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	pauseSong, %function
+pauseSong:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	mov	r3, #0
+	ldr	r1, .L20
+	ldr	r2, .L20+4
+	str	r3, [r1, #8]
+	strh	r3, [r2, #2]	@ movhi
+	bx	lr
+.L21:
+	.align	2
+.L20:
+	.word	song
+	.word	67109120
+	.size	pauseSong, .-pauseSong
+	.align	2
+	.global	unpauseSong
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	unpauseSong, %function
+unpauseSong:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	mov	r0, #1
+	mov	r2, #128
+	ldr	r1, .L23
+	ldr	r3, .L23+4
+	str	r0, [r1, #8]
+	strh	r2, [r3, #2]	@ movhi
+	bx	lr
+.L24:
+	.align	2
+.L23:
+	.word	song
+	.word	67109120
+	.size	unpauseSong, .-unpauseSong
 	.comm	STATE,1,1
 	.comm	soundEffect,28,4
 	.comm	song,28,4

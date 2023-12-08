@@ -2,6 +2,10 @@
 
 // Constants
 #define LIGHTNINGCOUNT 4
+#define FIREBALLCOUNT 5
+#define LIGHTNINGSPEED 2
+
+#define REG_MOSAIC *(u32*)0x400004C
 
 
 // Object Structs
@@ -66,6 +70,7 @@ typedef struct {
     unsigned char oamIndex;
 } FIREBALL;
 FIREBALL fireball;
+FIREBALL fireballs[FIREBALLCOUNT];
 
 typedef struct {
     int x;
@@ -73,12 +78,9 @@ typedef struct {
     int width;
     int height;
     int xVel;
-    int timeUntilNextFrame;
-    int numFrames;
-    int frame;
-    int shooting;
     int timeUntilNextShot;
     int active;
+    int direction;
     unsigned char oamIndex;
 } LIGHTNING;
 LIGHTNING lightning[LIGHTNINGCOUNT];
@@ -108,8 +110,12 @@ void luffyPunching();
 void luffyJumping();
 void gearFive();
 void groundChange();
-void luffyLightningThrow(LIGHTNING *lightning);
 void luffyUpdate2();
+// Lightning Functions
+void lightningUpdate();
+void luffyLightningThrow();
+void initLightning();
+
 
 // Kaido Functions
 void initKaido();
@@ -118,11 +124,15 @@ void kaidoUpdate2();
 // Fireball Functions
 void fireballUpdate();
 void shootFireball();
+void fireballUpdate2();
+void initFireball2();
+void shootFireball2(FIREBALL *fireball);
 
 // Collision Functions
 int fireballCollision();
 int punchCollision();
 int lightningCollision(LIGHTNING *lightning);
+int fireballCollision2(FIREBALL *fireball);
 
 // Sound Functions
 void setupSounds();

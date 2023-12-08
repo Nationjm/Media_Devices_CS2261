@@ -82,3 +82,13 @@ void stopSoundEffect() {
     REG_TM1CNT = TIMER_OFF;
     dma[2].cnt = 0;
 }
+
+void pauseSong() {
+    song.isPlaying = 0;
+    REG_TM0CNT = TIMER_OFF;
+} 
+
+void unpauseSong() {
+    song.isPlaying = 1;
+    REG_TM0CNT = TIMER_ON;
+}

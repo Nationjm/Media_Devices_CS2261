@@ -296,53 +296,7 @@ void mgba_break(void);
 void mgba_close(void);
 # 13 "main.c" 2
 # 1 "game.h" 1
-
-
-
-void start();
-void instructions();
-void kaido1();
-void kaido2();
-void pause();
-void win();
-void lose();
-
-
-void goToStart();
-void goToInstructions();
-void goToKaido1();
-void goToKaido2();
-void goToPause();
-void goToWin();
-void goToLose();
-
-
-void luffyUpdate();
-void initLuffy();
-void luffyPunching();
-void luffyJumping();
-void gearFive();
-void groundChange();
-void luffyLightningThrow();
-
-
-void initKaido();
-void kaidoUpdate();
-
-void fireballUpdate();
-void shootFireball();
-
-
-int fireballCollision();
-int punchCollision();
-
-
-void setupSounds();
-void setupInterrupts();
-void interruptHandler();
-
-
-
+# 10 "game.h"
 typedef struct {
     int x;
     int y;
@@ -404,6 +358,74 @@ typedef struct {
     unsigned char oamIndex;
 } FIREBALL;
 FIREBALL fireball;
+FIREBALL fireballs[5];
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int xVel;
+    int timeUntilNextShot;
+    int active;
+    int direction;
+    unsigned char oamIndex;
+} LIGHTNING;
+LIGHTNING lightning[4];
+
+
+void start();
+void instructions();
+void kaido1();
+void kaido2();
+void pause();
+void win();
+void lose();
+
+
+void goToStart();
+void goToInstructions();
+void goToKaido1();
+void goToKaido2();
+void goToPause();
+void goToWin();
+void goToLose();
+
+
+void luffyUpdate();
+void initLuffy();
+void luffyPunching();
+void luffyJumping();
+void gearFive();
+void groundChange();
+void luffyUpdate2();
+
+void lightningUpdate();
+void luffyLightningThrow();
+void initLightning();
+
+
+
+void initKaido();
+void kaidoUpdate();
+void kaidoUpdate2();
+
+void fireballUpdate();
+void shootFireball();
+void fireballUpdate2();
+void initFireball2();
+void shootFireball2(FIREBALL *fireball);
+
+
+int fireballCollision();
+int punchCollision();
+int lightningCollision(LIGHTNING *lightning);
+int fireballCollision2(FIREBALL *fireball);
+
+
+void setupSounds();
+void setupInterrupts();
+void interruptHandler();
 # 14 "main.c" 2
 # 1 "digitalSound.h" 1
 
@@ -413,7 +435,10 @@ void playSoundEffect(const signed char* soundData, int length);
 
 void stopSong();
 void stopSoundEffect();
-# 46 "digitalSound.h"
+
+void pauseSong();
+void unpauseSong();
+# 49 "digitalSound.h"
 typedef struct {
     const signed char* data;
     int dataLength;
@@ -456,10 +481,12 @@ enum {
     BIGMOM2,
     PAUSE,
     WIN,
-    LOSE
+    LOSE,
+    BETWEENFIGHT
 } STATE;
 
 int state;
+int lastState = START;
 
 
 void initialize();
@@ -477,8 +504,6 @@ int main() {
 
         waitForVBlank();
 
-        mgba_printf("%d", state);
-
 
         switch(state) {
             case START:
@@ -490,6 +515,7 @@ int main() {
             case INSTRUCTIONS:
                 instructions();
                 if ((!(~(oldButtons) & ((1 << 3))) && (~(buttons) & ((1 << 3))))) {
+                    playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO1);
                     goToKaido1();
                     initLuffy();
                     initKaido();
@@ -497,14 +523,19 @@ int main() {
                 break;
             case PAUSE:
                 pause();
-                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
+                if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2)))) && lastState == KAIDO1) {
+                    unpauseSong();
                     goToKaido1();
+                } else if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2)))) && lastState == KAIDO2) {
+                    unpauseSong();
+                    goToKaido2();
                 }
                 break;
             case KAIDO1:
                 kaido1();
 
                 if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
+                    lastState = KAIDO1;
                     goToPause();
                 }
 
@@ -516,7 +547,9 @@ int main() {
             case KAIDO2:
                 kaido2();
                 gearFive();
+
                 if ((!(~(oldButtons) & ((1 << 2))) && (~(buttons) & ((1 << 2))))) {
+                    lastState = KAIDO2;
                     goToPause();
                 }
                 break;
@@ -530,6 +563,17 @@ int main() {
                 lose();
                 if ((!(~(oldButtons) & ((1 << 3))) && (~(buttons) & ((1 << 3))))) {
                     goToStart();
+                }
+                break;
+            case BETWEENFIGHT:
+                betweenFight();
+                if ((!(~(oldButtons) & ((1 << 3))) && (~(buttons) & ((1 << 3))))) {
+                    playSong(DrumsOfLiberation_data, DrumsOfLiberation_length, KAIDO2);
+                    initLuffy();
+                    initKaido();
+                    initLightning();
+                    initFireball2();
+                    goToKaido2();
                 }
                 break;
         }
@@ -579,8 +623,11 @@ void interruptHandler() {
                     (*(volatile unsigned short*) 0x04000102) = (0 << 7);
                 }
             }
-            if (!(state == song.state)) {
+            if (!(state == song.state || state == PAUSE)) {
                 stopSong();
+            }
+            if (state == PAUSE) {
+                pauseSong();
             }
         }
         if (soundEffect.isPlaying) {
@@ -590,9 +637,10 @@ void interruptHandler() {
                 dma[2].cnt = 0;
                 (*(volatile unsigned short*) 0x04000106) = (0 << 7);
             }
-            if (!(state == KAIDO1)) {
+            if (!(state == KAIDO1 || state == KAIDO2)) {
                 stopSoundEffect();
             }
+
         }
     }
 

@@ -1446,3 +1446,13 @@ void stopSoundEffect() {
     (*(volatile unsigned short*) 0x04000106) = (0 << 7);
     dma[2].cnt = 0;
 }
+
+void pauseSong() {
+    song.isPlaying = 0;
+    (*(volatile unsigned short*) 0x04000102) = (0 << 7);
+}
+
+void unpauseSong() {
+    song.isPlaying = 1;
+    (*(volatile unsigned short*) 0x04000102) = (1 << 7);
+}
